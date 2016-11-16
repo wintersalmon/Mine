@@ -2,14 +2,14 @@ package com.nnm.team91.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 public class TimelineActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 101;
-
-    private Button gotoTodoBtn, gotoDiaryBtn, gotoExpenseBtn;
+    private FloatingActionButton gotoListFloatBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +17,10 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         // find all widgets and save
-        gotoTodoBtn = (Button) findViewById(R.id.debug_goto_todo_btn);
-        gotoDiaryBtn = (Button) findViewById(R.id.debug_goto_diary_btn);
-        gotoExpenseBtn = (Button) findViewById(R.id.debug_goto_expense_btn);
+        gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.goto_list_float_btn);
 
         // set btn listeners
-        gotoTodoBtn.setOnClickListener(new View.OnClickListener() {
+         gotoListFloatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TimelineActivity.this, ListActivity.class);
@@ -30,22 +28,5 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
-        gotoDiaryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TimelineActivity.this, ListActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
-
-        gotoExpenseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TimelineActivity.this, ListActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
     }
-
-
 }
