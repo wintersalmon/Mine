@@ -3,4 +3,10 @@
     <string name="title_activity_list">ListActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="todo_blank_fragment">todo hello world</string>
+    <string name="diary_blank_fragment">diary hello world</string>
+    <string name="expense_blank_fragment">expense hello world</string>
 </resources>
