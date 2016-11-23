@@ -1,24 +1,20 @@
 package com.nnm.team91.mine;
 
+import android.content.Intent;
 import android.net.Uri;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +29,14 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
+    public static final int REQUEST_CODE = 101;
+
+    private boolean bTimeline;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private SectionsPagerAdapter mSectionsTimelinePagerAdapter;
+    private FloatingActionButton gotoListFloatBtn;
+
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -47,6 +50,7 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -54,23 +58,48 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
         mSectionsPagerAdapter.addFragment(new DiaryFragment(), "Diary");
         mSectionsPagerAdapter.addFragment(new ExpenseFragment(), "Expense");
 
+        mSectionsTimelinePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsTimelinePagerAdapter.addFragment(new TimelineFragment(), "Timeline");
+
+        // Set into timeline mode
+        bTimeline = true;
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        Toast.makeText(getApplicationContext(), "시작", Toast.LENGTH_SHORT).show();
 
+        // find all widgets and save
+        gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.goto_list_float_btn);
+
+        // set btn listeners
+        gotoListFloatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(), "터치", Toast.LENGTH_SHORT).show();
+                ChangePageMode();
+            }
+        });
+
+    }
+
+    private void ChangePageMode() {
+        if (bTimeline) {
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(mViewPager);
+            bTimeline = false;
+        } else {
+            mViewPager.setAdapter(mSectionsTimelinePagerAdapter);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(mViewPager);
+            bTimeline = true;
+        }
     }
 
 
