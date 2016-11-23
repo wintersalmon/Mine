@@ -1,6 +1,5 @@
 package com.nnm.team91.mine;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,9 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,11 +65,10 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mSectionsTimelinePagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        Toast.makeText(getApplicationContext(), "시작", Toast.LENGTH_SHORT).show();
 
         // find all widgets and save
         gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.goto_list_float_btn);
@@ -81,7 +77,6 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
         gotoListFloatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "터치", Toast.LENGTH_SHORT).show();
                 ChangePageMode();
             }
         });
