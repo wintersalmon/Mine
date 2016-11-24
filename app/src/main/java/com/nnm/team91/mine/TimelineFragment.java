@@ -24,7 +24,7 @@ public class TimelineFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
+    static final String[] LIST_MENU = {"TIMELINE-ITEM-01", "TIMELINE-ITEM-02", "TIMELINE-ITEM-03"};
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -67,11 +67,11 @@ public class TimelineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_timeline, container, false) ;
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU) ;
+        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
 
-        ListView listview = (ListView) view.findViewById(R.id.listview_timeline) ;
-        listview.setAdapter(adapter) ;
+        ListView listview = (ListView) view.findViewById(R.id.listview_timeline);
+        listview.setAdapter(adapter);
 
         return view;
     }

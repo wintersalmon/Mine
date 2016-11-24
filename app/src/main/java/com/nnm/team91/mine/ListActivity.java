@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -70,6 +71,7 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
         tabLayout.setupWithViewPager(mViewPager);
 
 
+
         // find all widgets and save
         gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.goto_list_float_btn);
 
@@ -84,6 +86,7 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     private void ChangePageMode() {
+        mViewPager.setAdapter(null);
         if (bTimeline) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -172,6 +175,16 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
             super(fm);
         }
 
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public int getItemPosition(Object object){
+            return PagerAdapter.POSITION_NONE;
+        }
+
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
@@ -183,11 +196,6 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
         public int getCount() {
             // Show 3 total pages.
             return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
         }
 
         @Override

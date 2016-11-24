@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 /**
@@ -22,6 +24,7 @@ public class TodoListFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    static final String[] LIST_MENU = {"TODO-ITEM-01", "TODO-ITEM-02", "TODO-ITEM-03"};
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,7 +67,13 @@ public class TodoListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todo_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
+
+        ListView listview = (ListView) view.findViewById(R.id.listview_todo);
+        listview.setAdapter(adapter);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
