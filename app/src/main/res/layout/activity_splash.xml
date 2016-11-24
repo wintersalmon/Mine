@@ -21,7 +21,7 @@
         android:layout_below="@id/logo"
         android:layout_centerHorizontal="true"
         android:textColor="#808181"
-        android:text="WRITE FOR YOUR LIFE" />
+        android:text="@string/slogan" />
 
     <ImageView
         android:id="@+id/companyLogo"

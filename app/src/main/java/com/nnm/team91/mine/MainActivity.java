@@ -1,9 +1,13 @@
 package com.nnm.team91.mine;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
      */
 
     public static final int REQUEST_CODE = 101;
+    Button DatePickerBtn, searchBtn, plusBtn, settingBtn;
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long   backPressedTime = 0;
+
 
     private boolean bTimeline;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -78,6 +88,47 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
             public void onClick(View v) {
                 ChangePageMode();
             }
+        });
+
+
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        DatePickerBtn = (Button) findViewById(R.id.datepicker_btn);
+        searchBtn = (Button) findViewById(R.id.search_btn);
+        plusBtn = (Button) findViewById(R.id.plus_btn);
+        settingBtn = (Button) findViewById(R.id.settings_btn);
+
+        DatePickerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { //TODO: 캘린더 버튼 클릭시 년/월/일 상자가 뜰 수 있도록 수정
+                DialogFragment picker = new DatePickerFragment();
+                picker.show(getSupportFragmentManager(), "DatePicker");
+            }
+        });
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
+        plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+
         });
 
     }
@@ -164,6 +215,26 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+    }
+
+    // BackKey Event
+    @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if(0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+            super.onBackPressed();
+        } else {
+            backPressedTime = tempTime;
+//            Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), R.string.two_time_back, Snackbar.LENGTH_LONG);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(Color.WHITE);
+            TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.DKGRAY);
+            snackbar.show();
         }
     }
 }

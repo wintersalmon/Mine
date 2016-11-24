@@ -9,4 +9,65 @@
     <string name="todo_blank_fragment">todo hello world</string>
     <string name="diary_blank_fragment">diary hello world</string>
     <string name="expense_blank_fragment">expense hello world</string>
+
+
+    <string name="slogan">My Time lINE, MINE</string>
+    <string name="two_time_back">버튼을 한 번 더 누르시면 종료됩니다.</string>
+
+    <string name="pref_setting_android">안드로이드 설정</string>
+    <string name="pref_setting_font">글꼴</string>
+    <string name="pref_setting_fontSize">글자 크기</string>
+    <string name="pref_setting_fontStyle">글씨체</string>
+    <string name="pref_setting_lock">잠금</string>
+    <string name="pref_setting_id">계정</string>
+    <string name="pref_setting_connect_id">연결된 계정</string>
+    <string name="pref_setting_alarm">알림</string>
+    <string name="pref_setting_alarm_set">알림 설정</string>
+    <string name="pref_setting_notice">공지사항</string>
+    <string name="pref_setting_customer">고객센터</string>
+    <string name="pref_setting_app_info">앱 정보</string>
+    <string name="search_txt">이전 검색어</string>
+    <string name="pref_company_help">도움말</string>
+    <string name="pref_company_inquiry">문의하기</string>
+    <string name="pref_company_policy">약관 및 정책</string>
+    <string name="pref_company_exploit">이용약관</string>
+    <string name="pref_company_personal">개인정보처리방침</string>
+    <string name="pref_company_manage">운영정책</string>
+    <string name="pref_company_name">상호</string>
+    <string name="pref_company_sns">SNS</string>
+    <string name="pref_company_facebook">페이스북</string>
+
+    <string name="pref_fontsize_settings">크기 설정</string>
+    <string name="pref_fontsize_content">
+        윤동주 - 서시
+        죽는 날까지 하늘을 우러러
+        한 점 부끄럼이 없기를,
+        잎새에 이는 바람에도
+        나는 괴로워했다.
+        별을 노래하는 마음으로
+        모든 죽어 가는 것을 사랑해야지
+        그리고 나한테 주어진 길을
+        걸어가야겠다.
+        오늘밤에도 별에 바람이 스치운다.
+    </string>
+    <string name="pref_fontsize_explain">글자 크기를 선택하여 주세요.</string>
+    <string name="pref_fontsize_nomal">보통</string>
+    <string name="pref_fontsize_big">크게</string>
+    <string name="pref_fontsize_biggest">매우 크게</string>
+
+    <string name="pref_lock_settings">잠금</string>
+    <string name="pref_lock_on">암호잠금 켜기</string>
+    <string name="pref_lock_change">암호 변경하기</string>
+
+    <string name="pref_setting_alarm_sound">소리</string>
+    <string name="pref_setting_alarm_vibes">진동</string>
+    <string name="pref_setting_alarm_popup">알림 팝업</string>
+
+    <!-- edit activity -->
+    <string name="edit_time">현재 시간</string>
+    <string name="edit_content">들어갈 내용 #태그도 사용해야한다. - 현재 장소</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+
 </resources>

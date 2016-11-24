@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_setting_android">
+        <!-- PreferenceScreen요소는 화면을 구분하는데 사용한다. -->
+        <PreferenceScreen
+            android:key="screen"
+            android:title="@string/pref_setting_font">
+            <PreferenceScreen
+                android:key="screen"
+                android:title="@string/pref_setting_fontSize">
+                <PreferenceScreen
+                    android:key="screen"
+                    android:layout="@layout/preference_fontsize"></PreferenceScreen>
+            </PreferenceScreen>
+            <PreferenceScreen
+                android:key="screen"
+                android:title="@string/pref_setting_fontStyle"></PreferenceScreen>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="screen"
+            android:title="@string/pref_setting_lock">
+            <!--Todo: 액션바, 암호잠금바, 주의하세요 메세지 작성 -->
+            <CheckBoxPreference
+                android:key="check"
+                android:title="@string/pref_lock_on"></CheckBoxPreference>
+            <PreferenceScreen
+                android:key="screen"
+                android:title="@string/pref_lock_change"></PreferenceScreen>
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_setting_id">
+        <PreferenceScreen
+            android:key="screen"
+            android:title="@string/pref_setting_connect_id"></PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_setting_id">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="switch_alarm"
+            android:summary="알림을 설정합니다"
+            android:switchTextOff="OFF"
+            android:switchTextOn="ON"
+            android:title="@string/pref_setting_alarm_set"></SwitchPreference>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="switch_alarm"
+            android:key="switch_sound"
+            android:switchTextOff="OFF"
+            android:switchTextOn="ON"
+            android:title="@string/pref_setting_alarm_sound"></SwitchPreference>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="switch_alarm"
+            android:key="switch_vibes"
+            android:switchTextOff="OFF"
+            android:switchTextOn="ON"
+            android:title="@string/pref_setting_alarm_vibes"></SwitchPreference>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="switch_alarm"
+            android:key="switch_popup"
+            android:switchTextOff="OFF"
+            android:switchTextOn="ON"
+            android:title="@string/pref_setting_alarm_popup"></SwitchPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_setting_notice">
+        <PreferenceScreen
+            android:key="screen"
+            android:title="@string/pref_setting_notice">
+            <PreferenceScreen
+                android:key="screen"
+                android:title="@string/pref_setting_notice"></PreferenceScreen>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="screen"
+            android:title="@string/pref_setting_customer">
+            <PreferenceCategory android:title="@string/pref_setting_customer">
+                <PreferenceScreen
+                    android:key="screen"
+                    android:title="@string/pref_company_help"></PreferenceScreen>
+                <PreferenceScreen
+                    android:key="screen"
+                    android:title="@string/pref_company_inquiry">
+                    <intent
+                        android:action="android.intent.action.SENDTO"
+                        android:data="mailto:voiddeveloper91@gmail.com" />
+                </PreferenceScreen>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/pref_company_policy">
+                <PreferenceScreen
+                    android:key="screen"
+                    android:title="@string/pref_company_exploit"></PreferenceScreen>
+                <PreferenceScreen
+                    android:key="screen"
+                    android:title="@string/pref_company_personal"></PreferenceScreen>
+                <PreferenceScreen
+                    android:key="screen"
+                    android:title="@string/pref_company_manage"></PreferenceScreen>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/pref_company_name">
+                <PreferenceScreen
+                    android:key="screen"
+                    android:title="@string/app_name"></PreferenceScreen>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/pref_company_sns">
+                <PreferenceScreen
+                    android:key="screen"
+                    android:title="@string/pref_company_facebook">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="https://www.facebook.com/nmsys/" />
+                </PreferenceScreen>
+            </PreferenceCategory>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="screen"
+            android:title="@string/pref_setting_app_info">
+            <PreferenceScreen
+                android:key="screen"
+                android:layout="@layout/preference_appinfo"></PreferenceScreen>
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>
