@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -46,11 +47,9 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addFragment(new TodoListFragment(), "ToDo");
         mSectionsPagerAdapter.addFragment(new DiaryFragment(), "Diary");
@@ -60,17 +59,15 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         mSectionsTimelinePagerAdapter.addFragment(new TimelineFragment(), "Timeline");
 
         // Set into timeline mode
-        bTimeline = true;
+        bTimeline = false;
 
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
-        mViewPager.setAdapter(mSectionsTimelinePagerAdapter);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
 
         // find all widgets and save
         gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.goto_list_float_btn);
@@ -132,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+        private List<Fragment> mFragmentList = new ArrayList<>();
+        private List<String> mFragmentTitleList = new ArrayList<>();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -144,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
 
         @Override
         public int getItemPosition(Object object){
