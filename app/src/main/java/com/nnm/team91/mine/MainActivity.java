@@ -21,10 +21,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.nnm.team91.mine.diary.DiaryListFragment;
+import com.nnm.team91.mine.expense.ExpenseFragment;
+import com.nnm.team91.mine.timeline.TimelineListFragment;
+import com.nnm.team91.mine.todo.TodoListFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener, TimelineFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener, TimelineListFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         mSectionsPagerAdapter.addFragment(new ExpenseFragment(), "Expense");
 
         mSectionsTimelinePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsTimelinePagerAdapter.addFragment(new TimelineFragment(), "Timeline");
+        mSectionsTimelinePagerAdapter.addFragment(new TimelineListFragment(), "Timeline");
 
         // Set into timeline mode
         bTimeline = false;

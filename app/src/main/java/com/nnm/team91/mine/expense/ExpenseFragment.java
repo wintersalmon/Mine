@@ -1,4 +1,4 @@
-package com.nnm.team91.mine;
+package com.nnm.team91.mine.expense;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.nnm.team91.mine.R;
 
 
 /**

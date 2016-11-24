@@ -1,4 +1,4 @@
-package com.nnm.team91.mine;
+package com.nnm.team91.mine.diary;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,21 +10,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.nnm.team91.mine.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TodoListFragment.OnFragmentInteractionListener} interface
+ * {@link DiaryListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TodoListFragment#newInstance} factory method to
+ * Use the {@link DiaryListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodoListFragment extends Fragment {
+public class DiaryListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    static final String[] LIST_MENU = {"TODO-ITEM-01", "TODO-ITEM-02", "TODO-ITEM-03"};
+    static final String[] LIST_MENU = {"DIARY-ITEM-01", "DIARY-ITEM-02", "DIARY-ITEM-03"};
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -32,7 +33,7 @@ public class TodoListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TodoListFragment() {
+    public DiaryListFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +43,11 @@ public class TodoListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TodoListFragment.
+     * @return A new instance of fragment DiaryListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TodoListFragment newInstance(String param1, String param2) {
-        TodoListFragment fragment = new TodoListFragment();
+    public static DiaryListFragment newInstance(String param1, String param2) {
+        DiaryListFragment fragment = new DiaryListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,10 +68,10 @@ public class TodoListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
 
-        ListView listview = (ListView) view.findViewById(R.id.listview_todo);
+        ListView listview = (ListView) view.findViewById(R.id.listview_diary);
         listview.setAdapter(adapter);
 
         return view;
