@@ -18,7 +18,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener, TimelineFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener, TimelineFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addFragment(new TodoListFragment(), "ToDo");
-        mSectionsPagerAdapter.addFragment(new DiaryFragment(), "Diary");
+        mSectionsPagerAdapter.addFragment(new DiaryListFragment(), "Diary");
         mSectionsPagerAdapter.addFragment(new ExpenseFragment(), "Expense");
 
         mSectionsTimelinePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
