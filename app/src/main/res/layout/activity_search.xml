@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nnm.team91.mine.SearchActivity">
+
+    <fragment
+        android:id="@+id/search_fm"
+        android:name="com.nnm.team91.mine.SearchFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
+    <!--
+    레이아웃에서 프래그먼트를 직접 추가해서 사용하기 위해서는
+    Fragment:name 속성에서 Fragment의 클래스를 지정해야함
+    새로운 클래스가 아닌 "android.support.v4.app.ListFragment"로 해도 무관
+    그러나 ListView 클릭 이벤트를 처리해주기 위해서 OnListItemClick() 함수를 override해야 하기 때문에 ListFragment를 상속받는 새로운
+    클래스를 입력해야하는 것.
+    -->
