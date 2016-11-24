@@ -23,7 +23,7 @@ public class SplashActivity extends Activity {
     private class SplashHandler implements Runnable { // TODO: mine_icon.png mipmap 으로 수정하기
         @Override
         public void run() {
-            startActivity(new Intent(getApplication(), ListActivity.class)); // 로딩이 끝난 후 이동할 Activity
+            startActivity(new Intent(getApplication(), MainActivity.class)); // 로딩이 끝난 후 이동할 Activity
             SplashActivity.this.finish(); // 로딩 페이지 Activity stack에서 제거
         }
     }

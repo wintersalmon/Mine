@@ -17,7 +17,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener, TimelineFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener, TimelineFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,7 +44,7 @@ public class ListActivity extends AppCompatActivity implements TodoListFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_main);
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
