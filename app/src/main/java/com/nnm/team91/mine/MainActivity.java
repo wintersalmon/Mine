@@ -22,14 +22,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.nnm.team91.mine.diary.DiaryListFragment;
-import com.nnm.team91.mine.expense.ExpenseFragment;
+import com.nnm.team91.mine.expense.ExpenseListFragment;
 import com.nnm.team91.mine.timeline.TimelineListFragment;
 import com.nnm.team91.mine.todo.TodoListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener, TimelineListFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnFragmentInteractionListener, ExpenseListFragment.OnFragmentInteractionListener, TimelineListFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addFragment(new TodoListFragment(), "ToDo");
         mSectionsPagerAdapter.addFragment(new DiaryListFragment(), "Diary");
-        mSectionsPagerAdapter.addFragment(new ExpenseFragment(), "Expense");
+        mSectionsPagerAdapter.addFragment(new ExpenseListFragment(), "Expense");
 
         mSectionsTimelinePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsTimelinePagerAdapter.addFragment(new TimelineListFragment(), "Timeline");

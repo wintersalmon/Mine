@@ -1,12 +1,15 @@
 package com.nnm.team91.mine.diary;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,7 +28,7 @@ public class DiaryListFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    static final String[] LIST_MENU = {"DIARY-ITEM-01", "DIARY-ITEM-02", "DIARY-ITEM-03"};
+    DiaryAdapater adapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -68,11 +71,44 @@ public class DiaryListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
+//        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
+//
+//        ListView listview = (ListView) view.findViewById(R.id.listview_diary);
+//        listview.setAdapter(adapter);
+//
+//        return view;
 
+        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
         ListView listview = (ListView) view.findViewById(R.id.listview_diary);
+
+        adapter = new DiaryAdapater();
+
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                // get item
+                DiaryItem item = (DiaryItem) parent.getItemAtPosition(position) ;
+
+                String titleStr = item.getTitle() ;
+                String descStr = item.getDesc() ;
+                Drawable iconDrawable = item.getIcon() ;
+
+                // TODO : use item data.
+            }
+        }) ;
+
+        // 첫 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_box_black_36dp),
+                "Box", "Account Box Black 36dp") ;
+        // 두 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_circle_black_36dp),
+                "Circle", "Account Circle Black 36dp") ;
+        // 세 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_assignment_ind_black_36dp),
+                "Ind", "Assignment Ind Black 36dp") ;
 
         return view;
     }

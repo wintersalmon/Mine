@@ -29,7 +29,6 @@ public class TodoListFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-//    static final String[] LIST_MENU = {"TODO-ITEM-01", "TODO-ITEM-02", "TODO-ITEM-03"};
     TodoAdapter adapter;
 
     // TODO: Rename and change types of parameters
@@ -81,8 +80,8 @@ public class TodoListFragment extends Fragment {
 //
 //        return view;
 
-        View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
-        ListView listview = (ListView) view.findViewById(R.id.listview_timeline);
+        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
+        ListView listview = (ListView) view.findViewById(R.id.listview_todo);
 
         // Adapter 생성
         adapter = new TodoAdapter();
