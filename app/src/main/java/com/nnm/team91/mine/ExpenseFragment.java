@@ -67,7 +67,7 @@ public class ExpenseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_expense, container, false);
+        View view = inflater.inflate(R.layout.fragment_expense_list, container, false);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
 
         ListView listview = (ListView) view.findViewById(R.id.listview_expense);

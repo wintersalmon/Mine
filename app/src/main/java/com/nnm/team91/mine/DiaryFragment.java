@@ -66,7 +66,7 @@ public class DiaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_diary, container, false);
+        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
 
         ListView listview = (ListView) view.findViewById(R.id.listview_diary);
