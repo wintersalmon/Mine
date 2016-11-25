@@ -40,13 +40,13 @@ public class DiaryAdapater extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.timeline_item, parent, false);
+            convertView = inflater.inflate(R.layout.diary_item, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.timelineImageView1) ;
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.timelineTextView1) ;
-        TextView descTextView = (TextView) convertView.findViewById(R.id.timelineImageView2) ;
+        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.diaryImageView1) ;
+        TextView titleTextView = (TextView) convertView.findViewById(R.id.diaryTextView1) ;
+        TextView descTextView = (TextView) convertView.findViewById(R.id.diaryImageView2) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         DiaryItem listViewItem = listViewItemList.get(position);
