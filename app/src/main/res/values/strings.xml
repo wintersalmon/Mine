@@ -11,7 +11,7 @@
     <string name="expense_blank_fragment">expense hello world</string>
 
 
-    <string name="slogan">My Time lINE, MINE</string>
+    <string name="slogan">My tIme liNE, MINE</string>
     <string name="two_time_back">버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <string name="pref_toolbar_title">Settings</string>
@@ -19,6 +19,16 @@
     <string name="pref_setting_font">글꼴</string>
     <string name="pref_setting_fontSize">글자 크기</string>
     <string name="pref_setting_fontStyle">글씨체</string>
+    <string-array name="pref_list_font_title">
+        <item>Basic</item>
+        <item>Notosans</item>
+        <item>Nanum</item>
+    </string-array>
+    <string-array name="pref_list_font_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
     <string name="pref_setting_lock">잠금</string>
     <string name="pref_setting_id">계정</string>
     <string name="pref_setting_connect_id">연결된 계정</string>
@@ -32,8 +42,30 @@
     <string name="pref_company_inquiry">문의하기</string>
     <string name="pref_company_policy">약관 및 정책</string>
     <string name="pref_company_exploit">이용약관</string>
+    <string name="pref_company_exploit_content">My tIme liNE, MINE 서비스를 이용해 주셔서 감사합니다. mine은 모바일 서비스를 여러분이 가장 편리하게 이용할 수 있는 방법으로 제공하고자 노력하고 있습니다.
+여러분이 조금만 시간을 내서 약관을 읽어주신다면, 여러분과 mine 개발자는 더욱 가까운 사이가 될 것입니다.
+
+여러분은 서비스 내에서 적용되는 모든 정책을 준수해야 합니다.
+
+mine 서비스의 오용을 삼가시기 바랍니다. 예를 들어 서비스를 방해하거나 mine이 제공하는 인터페이스 및 안내사항 이외의 다른 방법을 사용하여 액세스를 시도하지 않아야 합니다. 귀하는 관련 수출 및 재수출 통제 법규 및 규정 등 오직 법률상 허용되는 범위에서만 mine 서비스를 이용할 수 있습니다. 여러분이 mine 약관이나 정책을 준수하지 않거나 mine 이 부정행위 혐의를 조사하고 있는 경우, mine 서비스 제공이 일시 중지 또는 중단될 수 있습니다.
+
+mine 서비스를 사용한다고 해서 mine 서비스 또는 액세스하는 콘텐츠의 지적재산권을 소유하게 되는 것은 아닙니다. 콘텐츠 소유자로부터 허가를 받거나 달리 법률에 따라 허용되는 경우를 제외하고, mine 서비스의 콘텐츠를 사용할 수 없습니다. 본 약관은 귀하에게 mine 서비스에 사용된 브랜드나 로고를 사용할 권리를 부여하지 않습니다. mine 서비스에 또는 mine 서비스와 함께 게재된 어떠한 법적 고지도 삭제하거나 감추거나 변경하지 마십시오.
+
+mine 서비스는 mine이 소유하지 않은 일부 콘텐츠를 표시할 수 있습니다. 그러한 콘텐츠에 대해서는 제공한 주체가 단독으로 책임지게 됩니다. mine은 콘텐츠의 위법성 여부 또는 mine 정책 위반 여부를 결정하기 위해 검토할 수 있으며, 콘텐츠가 mine 정책 또는 법률에 위반된다고 합리적으로 판단하는 경우 이를 삭제하거나 게시를 거부할 수 있습니다. 그렇다고 반드시 콘텐츠를 검토한다는 의미는 아니므로, 콘텐츠를 검토할 것이라고 간주하지 마십시오.
+
+mine 서비스는 휴대기기에서 사용할 수 있습니다. 트래픽 또는 보안 관련 법규 준수를 방해하거나 막는 방식으로 서비스를 사용해서는 안 됩니다.</string>
     <string name="pref_company_personal">개인정보처리방침</string>
+    <string name="pref_company_personal_content">mine 서비스는 데이터저장방식을 “Google Drive”와 연동하는 것으로 선택함으로써 어떠한 개인정보도 가지고 있지 않습니다.
+</string>
     <string name="pref_company_manage">운영정책</string>
+    <string name="pref_company_manage_content">본 운영정책은 mine이 제공하는 서비스를 운영함에 잇어, 서비스 내에 발생할 수 있는 문제 상황에 대해서 일관성 있게 대처하기 위하여 서비스 운영의 기준과 이용자 여러분이 지켜주셔야 할 세부적인 사항이 규정되어 있습니다. 운영정책을 지키지 않을 경우 불이익을 당할 수 있으니 주의 깊게 읽어 주시기 바랍니다.
+
+회원의 권리와 의무
+가. 고객의 권리
+여러분은 온라인 문의, 전화 상담을 통해 카카오 서비스에 대한 각종 문의를 포함하여 요청 및 건의를 할 수 있습니다.
+[온라인문의] 상담이용시간 : 24시간
+나. 고객의 의무
+여러분은 mine 서비스 내에서 관계 법령을 위반하는 활동과 서비스 시스템 및 다른 회원의 정상적인 서비스 이용을 방해하는 활동을 하지 않습니다. 금지하는 활동을 하는 경우 정상적인 이용 회원의 신속한 보호를 위해 사전 안내 없이 위반/방해 활동 회원의 서비스 이용이 한시적, 영구적으로 제한할 수 있습니다.</string>
     <string name="pref_company_name">상호</string>
     <string name="pref_company_sns">SNS</string>
     <string name="pref_company_facebook">페이스북</string>
@@ -69,6 +101,81 @@
     <string name="edit_content">들어갈 내용 #태그도 사용해야한다. - 현재 장소</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="title_activity_settings1">Settings</string>
+
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

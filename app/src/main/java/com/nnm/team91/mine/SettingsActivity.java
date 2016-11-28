@@ -3,10 +3,6 @@ package com.nnm.team91.mine;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
 
 public class SettingsActivity extends PreferenceActivity {
 
