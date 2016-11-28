@@ -32,13 +32,17 @@
             android:enabled="true"
             android:exported="true" />
 
-        <!-- 지도 API Key 선언 -->
+        <!-- Google Map API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MapsActivity" />
 
+        <!-- Google Map Permission -->
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+        <!-- App Widget Permission -->
         <receiver android:name=".CustomWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -48,6 +52,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/custom_widget_info" />
         </receiver>
+
     </application>
 
 </manifest>
