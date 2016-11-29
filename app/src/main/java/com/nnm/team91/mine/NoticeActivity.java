@@ -26,6 +26,7 @@ public class NoticeActivity extends AppCompatActivity {
         mLayoutManager  = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        myDataset = new ArrayList<>();
         mAdapter = new MyAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
 
