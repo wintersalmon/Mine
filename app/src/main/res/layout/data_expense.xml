@@ -3,36 +3,47 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/expenseImageView1"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:id="@+id/expenseTextViewTime"
+        android:text="HH:mm"
+        android:gravity="center_vertical"/>
+
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="4">
-
+        android:orientation="vertical"
+        android:layout_weight="5">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\10,000"
+                android:textColor="#000000"
+                android:id="@+id/expenseTextViewAmount"
+                android:gravity="center_vertical"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/expenseTextViewUsage"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/expenseTextView1"
-            android:textSize="24sp"
-            android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:layout_weight="2" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/expenseImageView2"
+            android:id="@+id/expenseTextViewHastag"
+            android:text="#October #happy #halloween"
             android:textSize="16sp"
             android:textColor="#666666"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
     </LinearLayout>
 
 </LinearLayout>

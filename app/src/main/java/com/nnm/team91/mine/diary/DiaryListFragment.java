@@ -15,6 +15,9 @@ import android.widget.ListView;
 
 import com.nnm.team91.mine.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -90,27 +93,29 @@ public class DiaryListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
-                DiaryItem item = (DiaryItem) parent.getItemAtPosition(position) ;
-
-                String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
-                Drawable iconDrawable = item.getIcon() ;
+//                DiaryItem item = (DiaryItem) parent.getItemAtPosition(position) ;
+//
+//                String titleStr = item.getTitle() ;
+//                String descStr = item.getDesc() ;
+//                Drawable iconDrawable = item.getIcon() ;
 
                 // TODO : use item data.
             }
         }) ;
 
-        // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_box_black_36dp),
-                "Box", "Account Box Black 36dp") ;
-        // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_circle_black_36dp),
-                "Circle", "Account Circle Black 36dp") ;
-        // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_assignment_ind_black_36dp),
-                "Ind", "Assignment Ind Black 36dp") ;
+        addDummy();
 
         return view;
+    }
+
+    public void addDummy() {
+        // 첫 번째 아이템 추가.
+        // 첫 번째 아이템 추가.
+//        DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm");
+        Date datetime = Calendar.getInstance().getTime();
+        for (int i=0; i<20; i++) {
+            adapter.addItem(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....");
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

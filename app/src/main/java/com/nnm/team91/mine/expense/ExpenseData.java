@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
  * Created by wintersalmon on 2016. 11. 25..
  */
 
-public class ExpenseItem  {
+public class ExpenseData {
     private Drawable iconDrawable ;
     private String titleStr ;
     private String descStr ;

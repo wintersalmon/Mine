@@ -98,9 +98,9 @@ public class TodoListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
-                TodoItem item = (TodoItem) parent.getItemAtPosition(position) ;
-
-                String titleStr = item.getTitle() ;
+//                TodoItem item = (TodoItem) parent.getItemAtPosition(position) ;
+//
+//                String titleStr = item.getTitle() ;
                 // TODO : use item data.
             }
         }) ;

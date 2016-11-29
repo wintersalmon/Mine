@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.data.DiaryData;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 
 public class DiaryAdapater extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<DiaryItem> listViewItemList = new ArrayList<DiaryItem>() ;
+    private ArrayList<DiaryData> listViewItemList = new ArrayList<DiaryData>() ;
 
     // TimelineAdapter의 생성자
     public DiaryAdapater() {
@@ -44,17 +46,17 @@ public class DiaryAdapater extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.diaryImageView1) ;
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.diaryTextView1) ;
-        TextView descTextView = (TextView) convertView.findViewById(R.id.diaryImageView2) ;
+        TextView timeTextView = (TextView) convertView.findViewById(R.id.diaryTextViewTime);
+        TextView textTextView = (TextView) convertView.findViewById(R.id.diaryTextViewText);
+        TextView hashtagTextView = (TextView) convertView.findViewById(R.id.diaryTextViewHastag);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        DiaryItem listViewItem = listViewItemList.get(position);
+        DiaryData diary = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(listViewItem.getIcon());
-        titleTextView.setText(listViewItem.getTitle());
-        descTextView.setText(listViewItem.getDesc());
+        timeTextView.setText(diary.getTime());
+        textTextView.setText(diary.getText());
+        hashtagTextView.setText(diary.getHastagList());
 
         return convertView;
     }
@@ -72,13 +74,12 @@ public class DiaryAdapater extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String desc) {
-        DiaryItem item = new DiaryItem();
+    public void addItem(Date date, String text) {
+        DiaryData diary = new DiaryData();
 
-        item.setIcon(icon);
-        item.setTitle(title);
-        item.setDesc(desc);
+        diary.setDate(date);
+        diary.setText(text);
 
-        listViewItemList.add(item);
+        listViewItemList.add(diary);
     }
 }

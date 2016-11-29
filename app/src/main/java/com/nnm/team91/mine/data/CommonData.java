@@ -15,6 +15,7 @@ public class CommonData {
     static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     static private DateFormat dateFormat = new SimpleDateFormat("MM/dd");
     static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    static private String sampleHashTag = "#October#happy#halloween";
 
     Date datetime;
     TYPE dataType;
@@ -35,4 +36,6 @@ public class CommonData {
     public TYPE getDataType() {
         return dataType;
     }
+
+    public String getHastagList() { return sampleHashTag; }
 }

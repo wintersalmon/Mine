@@ -1,17 +1,19 @@
 package com.nnm.team91.mine.expense;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.data.ExpenseData;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 
 public class ExpenseAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<ExpenseItem> listViewItemList = new ArrayList<ExpenseItem>() ;
+    private ArrayList<ExpenseData> listViewItemList = new ArrayList<ExpenseData>() ;
 
     // TimelineAdapter의 생성자
     public ExpenseAdapter() {
@@ -44,17 +46,20 @@ public class ExpenseAdapter extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.expenseImageView1) ;
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.expenseTextView1) ;
-        TextView descTextView = (TextView) convertView.findViewById(R.id.expenseImageView2) ;
+        TextView timeTextView = (TextView) convertView.findViewById(R.id.expenseTextViewTime) ;
+        TextView amountTextView = (TextView) convertView.findViewById(R.id.expenseTextViewAmount) ;
+        TextView usageTextView = (TextView) convertView.findViewById(R.id.expenseTextViewUsage) ;
+        TextView hashtagTextView = (TextView) convertView.findViewById(R.id.expenseTextViewHastag) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        ExpenseItem expenseItem = listViewItemList.get(position);
+        ExpenseData expense = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(expenseItem.getIcon());
-        titleTextView.setText(expenseItem.getTitle());
-        descTextView.setText(expenseItem.getDesc());
+        timeTextView.setText(expense.getTime());
+        int amount = expense.getAmount();
+        amountTextView.setText(Currency.getInstance(Locale.KOREA).getSymbol() + amount);
+        usageTextView.setText(expense.getUsage());
+        hashtagTextView.setText(expense.getHastagList());
 
         return convertView;
     }
@@ -72,13 +77,13 @@ public class ExpenseAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String desc) {
-        ExpenseItem item = new ExpenseItem();
+    public void addItem(Date date, int amount, String usage) {
+        ExpenseData expense = new ExpenseData();
 
-        item.setIcon(icon);
-        item.setTitle(title);
-        item.setDesc(desc);
+        expense.setDate(date);
+        expense.setAmount(amount);
+        expense.setUsage(usage);
 
-        listViewItemList.add(item);
+        listViewItemList.add(expense);
     }
 }

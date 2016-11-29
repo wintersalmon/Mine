@@ -60,7 +60,7 @@ public class TodoAdapter  extends BaseAdapter {
         checkboxView.setChecked(todoItem.getStatus());
         titleView.setText(todoItem.getTitle());
 //        descView.setText(todoItem.getDescrition());
-        hashtagView.setText("#October #happy #halloween");
+        hashtagView.setText(todoItem.getHastagList());
         return convertView;
     }
 
