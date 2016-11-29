@@ -2,6 +2,7 @@ package com.nnm.team91.mine;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,14 +16,20 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nnm.team91.mine.diary.DiaryListFragment;
 import com.nnm.team91.mine.expense.ExpenseListFragment;
+import com.nnm.team91.mine.timeline.TimelineItem;
 import com.nnm.team91.mine.timeline.TimelineListFragment;
 import com.nnm.team91.mine.todo.TodoListFragment;
 
@@ -74,13 +81,13 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         mSectionsTimelinePagerAdapter.addFragment(new TimelineListFragment(), "Timeline");
 
         // Set into timeline mode
-        bTimeline = false;
+        bTimeline = true;
 
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mSectionsTimelinePagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -138,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
     }
 
-    private void ChangePageMode() {
+    public void ChangePageMode() {
         mViewPager.setAdapter(null);
         if (bTimeline) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -228,18 +235,21 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     public void onBackPressed() {
         long tempTime = System.currentTimeMillis();
         long intervalTime = tempTime - backPressedTime;
-
-        if(0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
-            super.onBackPressed();
-        } else {
-            backPressedTime = tempTime;
+        if (bTimeline) {
+            if(0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+                super.onBackPressed();
+            } else {
+                backPressedTime = tempTime;
 //            Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
-            Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), R.string.two_time_back, Snackbar.LENGTH_LONG);
-            View snackbarView = snackbar.getView();
-            snackbarView.setBackgroundColor(Color.WHITE);
-            TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.DKGRAY);
-            snackbar.show();
+                Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), R.string.two_time_back, Snackbar.LENGTH_LONG);
+                View snackbarView = snackbar.getView();
+                snackbarView.setBackgroundColor(Color.WHITE);
+                TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(Color.DKGRAY);
+                snackbar.show();
+            }
+        } else {
+            ChangePageMode();
         }
     }
 }

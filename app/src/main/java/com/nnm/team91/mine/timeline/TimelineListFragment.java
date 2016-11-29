@@ -10,10 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.support.v4.app.ListFragment;
 
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 
 
@@ -86,27 +85,44 @@ public class TimelineListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
-                TimelineItem item = (TimelineItem) parent.getItemAtPosition(position) ;
+                TimelineItem item = (TimelineItem) parent.getItemAtPosition(position);
 
-                String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
-                Drawable iconDrawable = item.getIcon() ;
+                String titleStr = item.getTitle();
+                String descStr = item.getDesc();
+                Drawable iconDrawable = item.getIcon();
 
                 // TODO : use item data.
-            }
-        }) ;
+//                Toast toast = Toast.makeText(getContext(),
+//                        position + " : " + titleStr + descStr, Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER, 0, 0);
+//                toast.show();
 
-        // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_box_black_36dp),
-                "Box", "Account Box Black 36dp") ;
-        // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_circle_black_36dp),
-                "Circle", "Account Circle Black 36dp") ;
-        // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_assignment_ind_black_36dp),
-                "Ind", "Assignment Ind Black 36dp") ;
+                MainActivity main = (MainActivity) getActivity();
+                main.ChangePageMode();
+            }
+        });
+
+
+
+        AddDummyItem();
+        AddDummyItem();
+        AddDummyItem();
+        AddDummyItem();
+        AddDummyItem();
 
         return view;
+    }
+
+    public void AddDummyItem() {
+        // 첫 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_box_black_36dp),
+                "Box", "Account Box Black 36dp");
+        // 두 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_circle_black_36dp),
+                "Circle", "Account Circle Black 36dp");
+        // 세 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_assignment_ind_black_36dp),
+                "Ind", "Assignment Ind Black 36dp");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
