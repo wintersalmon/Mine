@@ -1,7 +1,6 @@
 package com.nnm.team91.mine.todo;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class TodoAdapter  extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.todo_item, parent, false);
+            convertView = inflater.inflate(R.layout.data_todo, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
@@ -58,14 +57,10 @@ public class TodoAdapter  extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         // TODO : Hash Tag function add
         datetimeView.setText(todoItem.getTime());
-//        datetimeView.setMaxLines(1);
-//        datetimeView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         checkboxView.setChecked(todoItem.getStatus());
         titleView.setText(todoItem.getTitle());
 //        descView.setText(todoItem.getDescrition());
         hashtagView.setText("#October #happy #halloween");
-//        hashtagView.setMaxLines(1);
-//        hashtagView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         return convertView;
     }
 

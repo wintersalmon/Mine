@@ -100,10 +100,7 @@ public class TodoListFragment extends Fragment {
                 // get item
                 TodoItem item = (TodoItem) parent.getItemAtPosition(position) ;
 
-//                String titleStr = item.getTitle() ;
-//                String descStr = item.getDesc() ;
-//                Drawable iconDrawable = item.getIcon() ;
-
+                String titleStr = item.getTitle() ;
                 // TODO : use item data.
             }
         }) ;
