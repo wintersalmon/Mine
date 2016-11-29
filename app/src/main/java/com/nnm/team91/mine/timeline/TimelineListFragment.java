@@ -31,6 +31,7 @@ public class TimelineListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     TimelineAdapter adapter;
+    ListView timelineListview;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -75,23 +76,24 @@ public class TimelineListFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
-        ListView listview = (ListView) view.findViewById(R.id.listview_timeline);
+        timelineListview = (ListView) view.findViewById(R.id.listview_timeline);
 
         adapter = new TimelineAdapter();
 
-        listview.setAdapter(adapter);
+        timelineListview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Change MainActivity ViewMode if ListItem is selected
+        timelineListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-                TimelineItem item = (TimelineItem) parent.getItemAtPosition(position);
-
-                String titleStr = item.getTitle();
-                String descStr = item.getDesc();
-                Drawable iconDrawable = item.getIcon();
-
+//                // get item
+//                TimelineItem item = (TimelineItem) parent.getItemAtPosition(position);
+//
+//                String titleStr = item.getTitle();
+//                String descStr = item.getDesc();
+//                Drawable iconDrawable = item.getIcon();
                 // TODO : use item data.
+
 //                Toast toast = Toast.makeText(getContext(),
 //                        position + " : " + titleStr + descStr, Toast.LENGTH_SHORT);
 //                toast.setGravity(Gravity.CENTER, 0, 0);
@@ -102,7 +104,14 @@ public class TimelineListFragment extends Fragment {
             }
         });
 
-
+        // Set ListView Focus to Current Item
+        timelineListview.post(new Runnable() {
+            @Override
+            public void run() {
+//                timelineListview.scrollTo(0, timelineListview.getBottom());
+                timelineListview.setSelection(timelineListview.getAdapter().getCount() - 1);
+            }
+        });
 
         AddDummyItem();
         AddDummyItem();
