@@ -1,41 +1,39 @@
 package com.nnm.team91.mine.data;
 
-import java.text.SimpleDateFormat;
-
 /**
  * Created by wintersalmon on 2016-11-29.
  */
 
 public class TodoData extends CommonData {
-    int status;
-    String shortName;
-    String longName;
+    boolean status;
+    String title;
+    String descrition;
 
     public TodoData() {
         this.dataType = TYPE.Todo;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-    public void setShortName(String name) {
-        shortName = name;
+    public void setTitle(String name) {
+        title = name;
     }
 
-    public void setLongName(String name) {
-        longName = name;
+    public void setDescrition(String name) {
+        descrition = name;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public String getShortName() {
-        return shortName;
+    public String getTitle() {
+        return title;
     }
 
-    public String getLongName() {
-        return longName;
+    public String getDescrition() {
+        return descrition;
     }
 }

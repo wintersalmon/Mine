@@ -1,33 +1,45 @@
 package com.nnm.team91.mine.todo;
 
-import android.graphics.drawable.Drawable;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
  */
 
-public class TodoItem{
-    private Drawable iconDrawable ;
-    private String titleStr ;
-    private String descStr ;
+public class TodoItem {
+    private String time;
+    private boolean status;
+    private String title;
+    private String description;
 
-    public void setIcon(Drawable icon) {
-        iconDrawable = icon ;
-    }
-    public void setTitle(String title) {
-        titleStr = title ;
-    }
-    public void setDesc(String desc) {
-        descStr = desc ;
+    public String getTime() {
+        return time;
     }
 
-    public Drawable getIcon() {
-        return this.iconDrawable ;
+    public boolean getStatus() {
+        return status;
     }
+
     public String getTitle() {
-        return this.titleStr ;
+        return title;
     }
-    public String getDesc() {
-        return this.descStr ;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

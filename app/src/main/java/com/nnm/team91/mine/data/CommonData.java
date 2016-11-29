@@ -12,7 +12,9 @@ public class CommonData {
     static public enum TYPE {
         Todo, Diary, Expense
     }
-    static private DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm");
+    static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    static private DateFormat dateFormat = new SimpleDateFormat("MM/dd");
+    static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     Date datetime;
     TYPE dataType;
@@ -25,8 +27,10 @@ public class CommonData {
     }
 
     public String getDateTime() {
-        return dateFormat.format(datetime);
+        return datetimeFormat.format(datetime);
     }
+    public String getDate() { return dateFormat.format(datetime); }
+    public String getTime() { return timeFormat.format(datetime); }
 
     public TYPE getDataType() {
         return dataType;

@@ -3,36 +3,45 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/todoImageView1"
-        android:layout_weight="1" />
+        android:id="@+id/todoCheckBoxStatus"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/todoTextViewTime"
+        android:text="HH:mm"
+        android:gravity="center_vertical"/>
+
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_weight="4">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:id="@+id/todoTextView1"
+            android:id="@+id/todoTextViewTitle"
             android:textSize="24sp"
             android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:gravity="center_vertical"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/todoImageView2"
+            android:id="@+id/todoTextViewHastag"
+            android:text="#October #happy #halloween"
             android:textSize="16sp"
             android:textColor="#666666"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
     </LinearLayout>
 
 </LinearLayout>

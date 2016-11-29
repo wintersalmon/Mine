@@ -15,6 +15,11 @@ import android.widget.ListView;
 
 import com.nnm.team91.mine.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,25 +100,26 @@ public class TodoListFragment extends Fragment {
                 // get item
                 TodoItem item = (TodoItem) parent.getItemAtPosition(position) ;
 
-                String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
-                Drawable iconDrawable = item.getIcon() ;
+//                String titleStr = item.getTitle() ;
+//                String descStr = item.getDesc() ;
+//                Drawable iconDrawable = item.getIcon() ;
 
                 // TODO : use item data.
             }
         }) ;
 
-        // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_box_black_36dp),
-                "Box", "Account Box Black 36dp") ;
-        // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_circle_black_36dp),
-                "Circle", "Account Circle Black 36dp") ;
-        // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_assignment_ind_black_36dp),
-                "Ind", "Assignment Ind Black 36dp") ;
+        addDummy();
 
         return view;
+    }
+
+    void addDummy() {
+        // 첫 번째 아이템 추가.
+//        DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm");
+        Date datetime = Calendar.getInstance().getTime();
+        for (int i=0; i<20; i++) {
+            adapter.addItem(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명");
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
