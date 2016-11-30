@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
             public void onClick(View v) { //TODO: 캘린더 버튼 클릭시 년/월/일 상자가 뜰 수 있도록 수정
                 DialogFragment picker = new DatePickerFragment();
                 picker.show(getSupportFragmentManager(), "DatePicker");
+                //TODO: http://androidtrainningcenter.blogspot.kr/2012/10/creating-datepicker-using.html
             }
         });
 

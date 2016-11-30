@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.TodoAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -107,11 +108,14 @@ public class TodoListFragment extends Fragment {
     }
 
     void addDummy() {
-        // 첫 번째 아이템 추가.
-//        DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm");
+        ArrayList<String> hashtags = new ArrayList<String>();
+        hashtags.add("Happy");
+        hashtags.add("Halloween");
+        hashtags.add("October");
+
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
-            adapter.addItem(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명");
+            adapter.addItem(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
         }
     }
 

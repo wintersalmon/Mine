@@ -74,11 +74,13 @@ public class DiaryAdapater extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Date date, String text) {
+    public void addItem(Date date, String text, ArrayList<String> hastags, int keyTagIndex) {
         DiaryData diary = new DiaryData();
 
         diary.setDate(date);
         diary.setText(text);
+        diary.setHashTagList(hastags);
+        diary.setKeyTagIndex(keyTagIndex);
 
         listViewItemList.add(diary);
     }

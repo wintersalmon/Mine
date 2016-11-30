@@ -77,15 +77,16 @@ public class TodoAdapter  extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Date datetime, boolean status, String title, String desc) {
-        TodoData item = new TodoData();
+    public void addItem(Date datetime, boolean status, String title, String desc, ArrayList<String> hastags, int keyTagIndex) {
+        TodoData todo = new TodoData();
 
-        item.setDate(datetime);
-        item.setStatus(status);
-        item.setTitle(title);
-        item.setDescrition(desc);
-        // TODO : Hash Tag function add
+        todo.setDate(datetime);
+        todo.setStatus(status);
+        todo.setTitle(title);
+        todo.setDescrition(desc);
+        todo.setHashTagList(hastags);
+        todo.setKeyTagIndex(keyTagIndex);
 
-        todoItemList.add(item);
+        todoItemList.add(todo);
     }
 }

@@ -77,12 +77,14 @@ public class ExpenseAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Date date, int amount, String usage) {
+    public void addItem(Date date, int amount, String usage, ArrayList<String> hastags, int keyTagIndex) {
         ExpenseData expense = new ExpenseData();
 
         expense.setDate(date);
         expense.setAmount(amount);
         expense.setUsage(usage);
+        expense.setHashTagList(hastags);
+        expense.setKeyTagIndex(keyTagIndex);
 
         listViewItemList.add(expense);
     }

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.ExpenseAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -108,12 +109,14 @@ public class ExpenseListFragment extends Fragment {
     }
 
     public void addDummy() {
-        // 첫 번째 아이템 추가.
-        // 첫 번째 아이템 추가.
-//        DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm");
+        ArrayList<String> hashtags = new ArrayList<String>();
+
+        hashtags.add("Happy");
+        hashtags.add("Halloween");
+        hashtags.add("October");
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
-            adapter.addItem(datetime, i*1000, "사용 목적");
+            adapter.addItem(datetime, i*1000, "사용 목적", hashtags, i%3);
         }
     }
 
