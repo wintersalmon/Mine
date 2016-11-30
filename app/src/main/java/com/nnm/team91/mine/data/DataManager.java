@@ -17,13 +17,13 @@ public class DataManager {
     private int loadDayCountFront;
     private int loadDayCountBack;
 
-    private ArrayList<CommonData> loadedDataTimeline;
+    private ArrayList<TimelineData> loadedDataTimeline;
     private ArrayList<TodoData> loadedDataTodo;
     private ArrayList<DiaryData> loadedDataDiary;
     private ArrayList<ExpenseData> loadedDataExpense;
 
     public DataManager() {
-        loadedDataTimeline = new ArrayList<CommonData>();
+        loadedDataTimeline = new ArrayList<TimelineData>();
         loadedDataTodo = new ArrayList<TodoData>();
         loadedDataDiary = new ArrayList<DiaryData>();
         loadedDataExpense = new ArrayList<ExpenseData>();
@@ -123,7 +123,7 @@ public class DataManager {
 
     }
 
-    public ArrayList<CommonData> getLoadedDataTimeline() {
+    public ArrayList<TimelineData> getLoadedDataTimeline() {
         return loadedDataTimeline;
     }
 

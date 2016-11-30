@@ -4,11 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
@@ -79,6 +81,7 @@ public class TimelineListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
         timelineListview = (ListView) view.findViewById(R.id.listview_timeline);
+        timelineListview.setItemsCanFocus(false);
 
         adapter = new TimelineAdapter();
 
@@ -88,16 +91,8 @@ public class TimelineListFragment extends Fragment {
         timelineListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-//                // get item
-//                TimelineItem item = (TimelineItem) parent.getItemAtPosition(position);
-//
-//                String titleStr = item.getTitle();
-//                String descStr = item.getDesc();
-//                Drawable iconDrawable = item.getIcon();
-                // TODO : use item data.
 
-//                Toast toast = Toast.makeText(getContext(),
-//                        position + " : " + titleStr + descStr, Toast.LENGTH_SHORT);
+//                Toast toast = Toast.makeText(getContext(), position + " : Hello!!", Toast.LENGTH_SHORT);
 //                toast.setGravity(Gravity.CENTER, 0, 0);
 //                toast.show();
 
@@ -116,7 +111,6 @@ public class TimelineListFragment extends Fragment {
         });
 
         addDummy();
-
         return view;
     }
 
