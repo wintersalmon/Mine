@@ -1,30 +1,35 @@
-package com.nnm.team91.mine;
+package com.nnm.team91.mine.expense;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.nnm.team91.mine.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TimelineFragment.OnFragmentInteractionListener} interface
+ * {@link ExpenseListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TimelineFragment#newInstance} factory method to
+ * Use the {@link ExpenseListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TimelineFragment extends Fragment {
+public class ExpenseListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    static final String[] LIST_MENU = {"TIMELINE-ITEM-01", "TIMELINE-ITEM-02", "TIMELINE-ITEM-03"};
+    ExpenseAdapter adapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -32,7 +37,7 @@ public class TimelineFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TimelineFragment() {
+    public ExpenseListFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +47,11 @@ public class TimelineFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TimelineFragment.
+     * @return A new instance of fragment ExpenseListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TimelineFragment newInstance(String param1, String param2) {
-        TimelineFragment fragment = new TimelineFragment();
+    public static ExpenseListFragment newInstance(String param1, String param2) {
+        ExpenseListFragment fragment = new ExpenseListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,11 +72,44 @@ public class TimelineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
+//        View view = inflater.inflate(R.layout.fragment_expense_list, container, false);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
+//
+//        ListView listview = (ListView) view.findViewById(R.id.listview_expense);
+//        listview.setAdapter(adapter);
+//
+//        return view;
 
-        ListView listview = (ListView) view.findViewById(R.id.listview_timeline);
+        View view = inflater.inflate(R.layout.fragment_expense_list, container, false);
+        ListView listview = (ListView) view.findViewById(R.id.listview_expense);
+
+        adapter = new ExpenseAdapter();
+
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                // get item
+                ExpenseItem item = (ExpenseItem) parent.getItemAtPosition(position) ;
+
+                String titleStr = item.getTitle() ;
+                String descStr = item.getDesc() ;
+                Drawable iconDrawable = item.getIcon() ;
+
+                // TODO : use item data.
+            }
+        }) ;
+
+        // 첫 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_box_black_36dp),
+                "Box", "Account Box Black 36dp") ;
+        // 두 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_circle_black_36dp),
+                "Circle", "Account Circle Black 36dp") ;
+        // 세 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_assignment_ind_black_36dp),
+                "Ind", "Assignment Ind Black 36dp") ;
 
         return view;
     }
