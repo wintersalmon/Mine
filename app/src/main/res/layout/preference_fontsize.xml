@@ -7,16 +7,16 @@
 
     <!--TODO: 레이아웃 배치, 아이템 border 제거 -->
 
-    <android.support.v7.widget.Toolbar
+    <TextView
         android:id="@+id/font_settings"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginBottom="20dp"
-        android:background="#ccc"
-        android:elevation="4dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
         android:text="@string/pref_fontsize_settings"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="14dp" />
 
     <TextView
         android:id="@+id/font_content"
