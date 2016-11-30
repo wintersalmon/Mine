@@ -81,6 +81,8 @@ public class TimelineListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
         timelineListview = (ListView) view.findViewById(R.id.listview_timeline);
+
+        // Make Checkbox not to conflict with setOnItemClickListener
         timelineListview.setItemsCanFocus(false);
 
         adapter = new TimelineAdapter();
@@ -135,7 +137,7 @@ public class TimelineListFragment extends Fragment {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDiaryListFragmentInteractionListener");
         }
     }
 

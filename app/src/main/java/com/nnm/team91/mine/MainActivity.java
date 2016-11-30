@@ -15,21 +15,27 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.nnm.team91.mine.adapter.DiaryAdapater;
+import com.nnm.team91.mine.data.DataManager;
 import com.nnm.team91.mine.fragments.DiaryListFragment;
 import com.nnm.team91.mine.fragments.ExpenseListFragment;
 import com.nnm.team91.mine.fragments.TimelineListFragment;
 import com.nnm.team91.mine.fragments.TodoListFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnFragmentInteractionListener, ExpenseListFragment.OnFragmentInteractionListener, TimelineListFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnFragmentInteractionListener, TimelineListFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private SectionsPagerAdapter mSectionsTimelinePagerAdapter;
     private FloatingActionButton gotoListFloatBtn;
+
+    private DataManager datamanager;
 
 
     /**
@@ -137,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         });
 
+        datamanager = new DataManager();
+        datamanager.updateLoadedData(2016,12,1);
     }
 
     public void ChangePageMode() {
@@ -180,6 +190,26 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onDiaryItemSelected(int position) {
+        // TODO : study and fill this part
+    }
+
+    @Override
+    public void updateDiaryData() {
+//        DiaryListFragment diaryFrag = (DiaryListFragment) getSupportFragmentManager().findFragmentById(R.id.listview_diary);
+//        DiaryAdapater adapter = diaryFrag.getAdapter();
+//
+//        ArrayList<String> hashtags = new ArrayList<String>();
+//        hashtags.add("Happy");
+//        hashtags.add("Halloween");
+//        hashtags.add("October");
+//        Date datetime = Calendar.getInstance().getTime();
+//        for (int i=0; i<20; i++) {
+//            adapter.addItem(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
+//        }
     }
 
     /**

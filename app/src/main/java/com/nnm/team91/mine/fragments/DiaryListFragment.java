@@ -4,11 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.DiaryAdapater;
@@ -20,7 +22,7 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DiaryListFragment.OnFragmentInteractionListener} interface
+ * {@link OnDiaryListFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link DiaryListFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -30,13 +32,18 @@ public class DiaryListFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    DiaryAdapater adapter;
+
+    public DiaryAdapater getAdapter() {
+        return adapter;
+    }
+
+    private DiaryAdapater adapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnDiaryListFragmentInteractionListener mListener;
 
     public DiaryListFragment() {
         // Required empty public constructor
@@ -102,20 +109,24 @@ public class DiaryListFragment extends Fragment {
             }
         }) ;
 
-        addDummy();
+        mListener.updateDiaryData();
+
+//        Toast toast = Toast.makeText(getContext(),"diary refresh", Toast.LENGTH_SHORT);
+//        toast.setGravity(Gravity.CENTER, 0, 0);
+//        toast.show();
 
         return view;
     }
 
     public void addDummy() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
-        Date datetime = Calendar.getInstance().getTime();
-        for (int i=0; i<20; i++) {
-            adapter.addItem(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
-        }
+//        ArrayList<String> hashtags = new ArrayList<String>();
+//        hashtags.add("Happy");
+//        hashtags.add("Halloween");
+//        hashtags.add("October");
+//        Date datetime = Calendar.getInstance().getTime();
+//        for (int i=0; i<20; i++) {
+//            adapter.addItem(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
+//        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -128,11 +139,11 @@ public class DiaryListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnDiaryListFragmentInteractionListener) {
+            mListener = (OnDiaryListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDiaryListFragmentInteractionListener");
         }
     }
 
@@ -152,8 +163,11 @@ public class DiaryListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnDiaryListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        // TODO : study and fill this part
+        public void onFragmentInteraction(Uri uri);
+        public void onDiaryItemSelected(int position);
+        public void updateDiaryData();
     }
 }

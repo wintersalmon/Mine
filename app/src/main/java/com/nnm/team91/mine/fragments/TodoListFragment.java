@@ -85,6 +85,9 @@ public class TodoListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
         ListView listview = (ListView) view.findViewById(R.id.listview_todo);
 
+        // Make Checkbox not to conflict with setOnItemClickListener
+        listview.setItemsCanFocus(false);
+
         // Adapter 생성
         adapter = new TodoAdapter();
 
@@ -133,7 +136,7 @@ public class TodoListFragment extends Fragment {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDiaryListFragmentInteractionListener");
         }
     }
 
