@@ -1,30 +1,30 @@
-package com.nnm.team91.mine.expense;
+package com.nnm.team91.mine.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nnm.team91.mine.R;
-import com.nnm.team91.mine.data.ExpenseData;
+import com.nnm.team91.mine.data.DiaryData;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
  */
 
-public class ExpenseAdapter extends BaseAdapter {
+public class DiaryAdapater extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<ExpenseData> listViewItemList = new ArrayList<ExpenseData>() ;
+    private ArrayList<DiaryData> listViewItemList = new ArrayList<DiaryData>() ;
 
     // TimelineAdapter의 생성자
-    public ExpenseAdapter() {
+    public DiaryAdapater() {
 
     }
 
@@ -42,24 +42,21 @@ public class ExpenseAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.data_expense, parent, false);
+            convertView = inflater.inflate(R.layout.data_diary, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        TextView timeTextView = (TextView) convertView.findViewById(R.id.expenseTextViewTime) ;
-        TextView amountTextView = (TextView) convertView.findViewById(R.id.expenseTextViewAmount) ;
-        TextView usageTextView = (TextView) convertView.findViewById(R.id.expenseTextViewUsage) ;
-        TextView hashtagTextView = (TextView) convertView.findViewById(R.id.expenseTextViewHastag) ;
+        TextView timeTextView = (TextView) convertView.findViewById(R.id.diaryTextViewTime);
+        TextView textTextView = (TextView) convertView.findViewById(R.id.diaryTextViewText);
+        TextView hashtagTextView = (TextView) convertView.findViewById(R.id.diaryTextViewHastag);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        ExpenseData expense = listViewItemList.get(position);
+        DiaryData diary = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        timeTextView.setText(expense.getTime());
-        int amount = expense.getAmount();
-        amountTextView.setText(Currency.getInstance(Locale.KOREA).getSymbol() + amount);
-        usageTextView.setText(expense.getUsage());
-        hashtagTextView.setText(expense.getHastagList());
+        timeTextView.setText(diary.getTime());
+        textTextView.setText(diary.getText());
+        hashtagTextView.setText(diary.getHastagList());
 
         return convertView;
     }
@@ -77,13 +74,12 @@ public class ExpenseAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Date date, int amount, String usage) {
-        ExpenseData expense = new ExpenseData();
+    public void addItem(Date date, String text) {
+        DiaryData diary = new DiaryData();
 
-        expense.setDate(date);
-        expense.setAmount(amount);
-        expense.setUsage(usage);
+        diary.setDate(date);
+        diary.setText(text);
 
-        listViewItemList.add(expense);
+        listViewItemList.add(diary);
     }
 }

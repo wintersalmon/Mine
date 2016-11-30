@@ -1,25 +1,28 @@
-package com.nnm.team91.mine.timeline;
+package com.nnm.team91.mine.adapter;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
  */
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.data.TimelineData;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Date;
+import java.util.Locale;
 
 public class TimelineAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<TimelineItem> listViewItemList = new ArrayList<TimelineItem>() ;
+    private ArrayList<TimelineData> listViewItemList = new ArrayList<TimelineData>() ;
 
     // TimelineAdapter의 생성자
     public TimelineAdapter() {
@@ -44,17 +47,26 @@ public class TimelineAdapter extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.timelineImageView1) ;
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.timelineTextView1) ;
-        TextView descTextView = (TextView) convertView.findViewById(R.id.timelineImageView2) ;
+        TextView timeTextView = (TextView) convertView.findViewById(R.id.timelineTimeTextView);
+
+        CheckBox todoCheckbox = (CheckBox) convertView.findViewById(R.id.timelineTodoCheckbox);
+        TextView todoTextView = (TextView) convertView.findViewById(R.id.timelineTodoTextView);
+
+        TextView diaryTextView = (TextView) convertView.findViewById(R.id.timelineDiaryTextView);
+
+        TextView expenseAmountTextView = (TextView) convertView.findViewById(R.id.timelineExpenseAmount);
+        TextView expenseTextView = (TextView) convertView.findViewById(R.id.timelineExpenseTextView);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        TimelineItem listViewItem = listViewItemList.get(position);
+        TimelineData timeline = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(listViewItem.getIcon());
-        titleTextView.setText(listViewItem.getTitle());
-        descTextView.setText(listViewItem.getDesc());
+        timeTextView.setText(timeline.getTime());
+        todoCheckbox.setChecked(timeline.getTodoStatus());
+        todoTextView.setText(timeline.getTodoHashTag());
+        diaryTextView.setText(timeline.getDiaryHashTag());
+        expenseAmountTextView.setText(Currency.getInstance(Locale.KOREA).getSymbol() + timeline.getExpenseAmount());
+        expenseTextView.setText(timeline.getExpenseHashTag());
 
         return convertView;
     }
@@ -72,13 +84,16 @@ public class TimelineAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String desc) {
-        TimelineItem item = new TimelineItem();
+    public void addItem(Date date, boolean todoStatus, String todoHashTag, String diaryHashTag, int expenseAmount, String expenseHashTag) {
+        TimelineData timeline = new TimelineData();
 
-        item.setIcon(icon);
-        item.setTitle(title);
-        item.setDesc(desc);
+        timeline.setDate(date);
+        timeline.setTodoStatus(todoStatus);
+        timeline.setTodoHashTag(todoHashTag);
+        timeline.setDiaryHashTag(diaryHashTag);
+        timeline.setExpenseAmount(expenseAmount);
+        timeline.setExpenseHashTag(expenseHashTag);
 
-        listViewItemList.add(item);
+        listViewItemList.add(timeline);
     }
 }

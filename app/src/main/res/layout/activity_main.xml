@@ -80,7 +80,7 @@
     <android.support.design.widget.FloatingActionButton
         app:fabSize="normal"
         android:id="@+id/goto_list_float_btn"
-        android:src="@drawable/ic_plus_box"
+        android:src="@drawable/ic_apps_black"
         android:layout_gravity="center|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:layout_width="wrap_content"

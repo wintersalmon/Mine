@@ -1,16 +1,15 @@
-package com.nnm.team91.mine.diary;
+package com.nnm.team91.mine.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.nnm.team91.mine.R;
-import com.nnm.team91.mine.data.DiaryData;
+import com.nnm.team91.mine.data.TodoData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,19 +18,19 @@ import java.util.Date;
  * Created by wintersalmon on 2016. 11. 25..
  */
 
-public class DiaryAdapater extends BaseAdapter {
+public class TodoAdapter  extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<DiaryData> listViewItemList = new ArrayList<DiaryData>() ;
+    private ArrayList<TodoData> todoItemList = new ArrayList<TodoData>() ;
 
     // TimelineAdapter의 생성자
-    public DiaryAdapater() {
+    public TodoAdapter() {
 
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
     public int getCount() {
-        return listViewItemList.size() ;
+        return todoItemList.size() ;
     }
 
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
@@ -42,22 +41,26 @@ public class DiaryAdapater extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.data_diary, parent, false);
+            convertView = inflater.inflate(R.layout.data_todo, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        TextView timeTextView = (TextView) convertView.findViewById(R.id.diaryTextViewTime);
-        TextView textTextView = (TextView) convertView.findViewById(R.id.diaryTextViewText);
-        TextView hashtagTextView = (TextView) convertView.findViewById(R.id.diaryTextViewHastag);
+        TextView datetimeView = (TextView) convertView.findViewById(R.id.todoTextViewTime);
+        CheckBox checkboxView = (CheckBox) convertView.findViewById(R.id.todoCheckBoxStatus);
+        TextView titleView = (TextView) convertView.findViewById(R.id.todoTextViewTitle);
+//        TextView descView = (TextView) convertView.findViewById(R.id.todoTextViewDesc);
+        TextView hashtagView = (TextView) convertView.findViewById(R.id.todoTextViewHastag);
 
-        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        DiaryData diary = listViewItemList.get(position);
+        // Data Set(todoItemList)에서 position에 위치한 데이터 참조 획득
+        TodoData todoItem = todoItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        timeTextView.setText(diary.getTime());
-        textTextView.setText(diary.getText());
-        hashtagTextView.setText(diary.getHastagList());
-
+        // TODO : Hash Tag function add
+        datetimeView.setText(todoItem.getTime());
+        checkboxView.setChecked(todoItem.getStatus());
+        titleView.setText(todoItem.getTitle());
+//        descView.setText(todoItem.getDescrition());
+        hashtagView.setText(todoItem.getHastagList());
         return convertView;
     }
 
@@ -70,16 +73,19 @@ public class DiaryAdapater extends BaseAdapter {
     // 지정한 위치(position)에 있는 데이터 리턴 : 필수 구현
     @Override
     public Object getItem(int position) {
-        return listViewItemList.get(position) ;
+        return todoItemList.get(position) ;
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Date date, String text) {
-        DiaryData diary = new DiaryData();
+    public void addItem(Date datetime, boolean status, String title, String desc) {
+        TodoData item = new TodoData();
 
-        diary.setDate(date);
-        diary.setText(text);
+        item.setDate(datetime);
+        item.setStatus(status);
+        item.setTitle(title);
+        item.setDescrition(desc);
+        // TODO : Hash Tag function add
 
-        listViewItemList.add(diary);
+        todoItemList.add(item);
     }
 }

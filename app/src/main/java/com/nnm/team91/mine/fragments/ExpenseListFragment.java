@@ -1,11 +1,9 @@
-package com.nnm.team91.mine.expense;
+package com.nnm.team91.mine.fragments;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.adapter.ExpenseAdapter;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -2,7 +2,6 @@ package com.nnm.team91.mine;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,22 +15,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nnm.team91.mine.diary.DiaryListFragment;
-import com.nnm.team91.mine.expense.ExpenseListFragment;
-import com.nnm.team91.mine.timeline.TimelineItem;
-import com.nnm.team91.mine.timeline.TimelineListFragment;
-import com.nnm.team91.mine.todo.TodoListFragment;
+import com.nnm.team91.mine.fragments.DiaryListFragment;
+import com.nnm.team91.mine.fragments.ExpenseListFragment;
+import com.nnm.team91.mine.fragments.TimelineListFragment;
+import com.nnm.team91.mine.fragments.TodoListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

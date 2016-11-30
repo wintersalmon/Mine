@@ -1,11 +1,9 @@
-package com.nnm.team91.mine.timeline;
+package com.nnm.team91.mine.fragments;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,10 @@ import android.widget.ListView;
 
 import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.adapter.TimelineAdapter;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -113,25 +115,16 @@ public class TimelineListFragment extends Fragment {
             }
         });
 
-        AddDummyItem();
-        AddDummyItem();
-        AddDummyItem();
-        AddDummyItem();
-        AddDummyItem();
+        addDummy();
 
         return view;
     }
 
-    public void AddDummyItem() {
-        // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_box_black_36dp),
-                "Box", "Account Box Black 36dp");
-        // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_account_circle_black_36dp),
-                "Circle", "Account Circle Black 36dp");
-        // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_assignment_ind_black_36dp),
-                "Ind", "Assignment Ind Black 36dp");
+    public void addDummy() {
+        Date datetime = Calendar.getInstance().getTime();
+        for (int i=0; i<20; i++) {
+            adapter.addItem(datetime, (i%2) == 0 ? true : false, "#" + i, "#" + i*10, i*1000, "#" + i);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
