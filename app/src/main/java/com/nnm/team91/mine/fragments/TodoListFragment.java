@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TodoListFragment.OnFragmentInteractionListener} interface
+ * {@link OnTodoFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link TodoListFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -37,7 +37,7 @@ public class TodoListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnTodoFragmentInteractionListener mListener;
 
     public TodoListFragment() {
         // Required empty public constructor
@@ -105,35 +105,36 @@ public class TodoListFragment extends Fragment {
             }
         }) ;
 
-        addDummy();
+//        addDummy();
+        mListener.updateTodoAdapter(adapter);
 
         return view;
     }
 
-    void addDummy() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
-
-        Date datetime = Calendar.getInstance().getTime();
-        for (int i=0; i<20; i++) {
-            adapter.addItem(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
-        }
-    }
+//    void addDummy() {
+//        ArrayList<String> hashtags = new ArrayList<String>();
+//        hashtags.add("Happy");
+//        hashtags.add("Halloween");
+//        hashtags.add("October");
+//
+//        Date datetime = Calendar.getInstance().getTime();
+//        for (int i=0; i<20; i++) {
+//            adapter.addItem(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
+//        }
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onTodoFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnTodoFragmentInteractionListener) {
+            mListener = (OnTodoFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnDiaryListFragmentInteractionListener");
@@ -156,8 +157,9 @@ public class TodoListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnTodoFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onTodoFragmentInteraction(Uri uri);
+        void updateTodoAdapter(TodoAdapter adapter);
     }
 }

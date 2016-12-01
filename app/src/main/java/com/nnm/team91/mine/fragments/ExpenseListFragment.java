@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ExpenseListFragment.OnFragmentInteractionListener} interface
+ * {@link OnExpenseFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ExpenseListFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -37,7 +37,7 @@ public class ExpenseListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnExpenseFragmentInteractionListener mListener;
 
     public ExpenseListFragment() {
         // Required empty public constructor
@@ -103,35 +103,37 @@ public class ExpenseListFragment extends Fragment {
             }
         }) ;
 
-        addDummy();
+//        addDummy();
+
+        mListener.updateExpenseAdapter(adapter);
 
         return view;
     }
 
-    public void addDummy() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
-        Date datetime = Calendar.getInstance().getTime();
-        for (int i=0; i<20; i++) {
-            adapter.addItem(datetime, i*1000, "사용 목적", hashtags, i%3);
-        }
-    }
+//    public void addDummy() {
+//        ArrayList<String> hashtags = new ArrayList<String>();
+//
+//        hashtags.add("Happy");
+//        hashtags.add("Halloween");
+//        hashtags.add("October");
+//        Date datetime = Calendar.getInstance().getTime();
+//        for (int i=0; i<20; i++) {
+//            adapter.addItem(datetime, i*1000, "사용 목적", hashtags, i%3);
+//        }
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onExpenseFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnExpenseFragmentInteractionListener) {
+            mListener = (OnExpenseFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnDiaryListFragmentInteractionListener");
@@ -154,8 +156,9 @@ public class ExpenseListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnExpenseFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onExpenseFragmentInteraction(Uri uri);
+        void updateExpenseAdapter(ExpenseAdapter adapter);
     }
 }

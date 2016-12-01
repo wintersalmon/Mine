@@ -15,29 +15,30 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nnm.team91.mine.adapter.DiaryAdapater;
+import com.nnm.team91.mine.adapter.ExpenseAdapter;
+import com.nnm.team91.mine.adapter.TimelineAdapter;
+import com.nnm.team91.mine.adapter.TodoAdapter;
 import com.nnm.team91.mine.data.DataManager;
 import com.nnm.team91.mine.data.DiaryData;
+import com.nnm.team91.mine.data.ExpenseData;
 import com.nnm.team91.mine.data.TimelineData;
+import com.nnm.team91.mine.data.TodoData;
 import com.nnm.team91.mine.fragments.DiaryListFragment;
 import com.nnm.team91.mine.fragments.ExpenseListFragment;
 import com.nnm.team91.mine.fragments.TimelineListFragment;
 import com.nnm.team91.mine.fragments.TodoListFragment;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnFragmentInteractionListener, TimelineListFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -193,14 +194,53 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onTimelineFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onDiaryFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onTodoFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onExpenseFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void updateTimelineAdapter(TimelineAdapter adapter) {
+        adapter.clear();
+        for (TimelineData data : datamanager.getLoadedDataTimeline()) {
+            adapter.addItem(data);
+        }
+    }
+
+    @Override
+    public void updateTodoAdapter(TodoAdapter adapter) {
+        adapter.clear();
+        for (TodoData data : datamanager.getLoadedDataTodo()) {
+            adapter.addItem(data);
+        }
     }
 
     @Override
     public void updateDairyAdapater(DiaryAdapater adapter) {
         adapter.clear();
         for (DiaryData data : datamanager.getLoadedDataDiary()) {
+            adapter.addItem(data);
+        }
+    }
+
+    @Override
+    public void updateExpenseAdapter(ExpenseAdapter adapter) {
+        adapter.clear();
+        for (ExpenseData data : datamanager.getLoadedDataExpense()) {
             adapter.addItem(data);
         }
     }

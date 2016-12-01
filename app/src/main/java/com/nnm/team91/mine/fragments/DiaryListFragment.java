@@ -12,14 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.DiaryAdapater;
-import com.nnm.team91.mine.data.DiaryData;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -113,9 +107,10 @@ public class DiaryListFragment extends Fragment {
 
         mListener.updateDairyAdapater(adapter);
 
-        Toast toast = Toast.makeText(getContext(),"diary refresh " + adapter.getCount(), Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+//        Toast toast = Toast.makeText(getContext(),"diary refresh " + adapter.getCount(), Toast.LENGTH_SHORT);
+//        toast.setGravity(Gravity.CENTER, 0, 0);
+//        toast.show();
+
         return view;
     }
 
@@ -123,7 +118,7 @@ public class DiaryListFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onDiaryFragmentInteraction(uri);
         }
     }
 
@@ -157,7 +152,7 @@ public class DiaryListFragment extends Fragment {
     public interface OnDiaryListFragmentInteractionListener {
         // TODO: Update argument type and name
         // TODO : study and fill this part
-        public void onFragmentInteraction(Uri uri);
-        public void updateDairyAdapater(DiaryAdapater adapater);
+        void onDiaryFragmentInteraction(Uri uri);
+        void updateDairyAdapater(DiaryAdapater adapater);
     }
 }

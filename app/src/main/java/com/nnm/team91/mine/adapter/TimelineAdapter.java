@@ -84,16 +84,11 @@ public class TimelineAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Date date, boolean todoStatus, String todoHashTag, String diaryHashTag, int expenseAmount, String expenseHashTag) {
-        TimelineData timeline = new TimelineData();
-
-        timeline.setDate(date);
-        timeline.setTodoStatus(todoStatus);
-        timeline.setTodoHashTag(todoHashTag);
-        timeline.setDiaryHashTag(diaryHashTag);
-        timeline.setExpenseAmount(expenseAmount);
-        timeline.setExpenseHashTag(expenseHashTag);
-
+    public void addItem(TimelineData timeline) {
         listViewItemList.add(timeline);
+    }
+
+    public void clear() {
+        listViewItemList.clear();
     }
 }

@@ -50,9 +50,9 @@ public class DataManager {
         // create common data
         Date datetime = Calendar.getInstance().getTime();
         ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
+        hashtags.add("TodoHappy");
+        hashtags.add("TodoHalloween");
+        hashtags.add("TodoOctober");
 
         for (int i=0; i<20; i++) {
             addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
@@ -75,9 +75,9 @@ public class DataManager {
 
     private void updateDiaryData() {
         ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
+        hashtags.add("DiaryHappy");
+        hashtags.add("DiaryHalloween");
+        hashtags.add("DiaryOctober");
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
             addDiary(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
@@ -98,9 +98,9 @@ public class DataManager {
     private void updateExpenseData() {
         ArrayList<String> hashtags = new ArrayList<String>();
 
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
+        hashtags.add("ExpenseHappy");
+        hashtags.add("ExpenseHalloween");
+        hashtags.add("ExpenseOctober");
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
             addExpense(datetime, i*1000, "사용 목적", hashtags, i%3);

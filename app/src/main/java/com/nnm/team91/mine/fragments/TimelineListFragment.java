@@ -4,26 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.TimelineAdapter;
 
-import java.util.Calendar;
-import java.util.Date;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TimelineListFragment.OnFragmentInteractionListener} interface
+ * {@link OnTimelineFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link TimelineListFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -41,7 +36,7 @@ public class TimelineListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnTimelineFragmentInteractionListener mListener;
 
     public TimelineListFragment() {
         // Required empty public constructor
@@ -112,29 +107,30 @@ public class TimelineListFragment extends Fragment {
             }
         });
 
-        addDummy();
+//        addDummy();
+        mListener.updateTimelineAdapter(adapter);
         return view;
     }
 
-    public void addDummy() {
-        Date datetime = Calendar.getInstance().getTime();
-        for (int i=0; i<20; i++) {
-            adapter.addItem(datetime, (i%2) == 0 ? true : false, "#" + i, "#" + i*10, i*1000, "#" + i);
-        }
-    }
+//    public void addDummy() {
+//        Date datetime = Calendar.getInstance().getTime();
+//        for (int i=0; i<20; i++) {
+//            adapter.addItem(datetime, (i%2) == 0 ? true : false, "#" + i, "#" + i*10, i*1000, "#" + i);
+//        }
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onTimelineFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnTimelineFragmentInteractionListener) {
+            mListener = (OnTimelineFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnDiaryListFragmentInteractionListener");
@@ -157,8 +153,9 @@ public class TimelineListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnTimelineFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        public void onTimelineFragmentInteraction(Uri uri);
+        public void updateTimelineAdapter(TimelineAdapter adapter);
     }
 }
