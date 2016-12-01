@@ -50,9 +50,10 @@ public class DataManager {
         // create common data
         Date datetime = Calendar.getInstance().getTime();
         ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("TodoHappy");
-        hashtags.add("TodoHalloween");
-        hashtags.add("TodoOctober");
+        hashtags.add("Todo");
+        hashtags.add("Happy");
+        hashtags.add("Halloween");
+        hashtags.add("October");
 
         for (int i=0; i<20; i++) {
             addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
@@ -75,9 +76,10 @@ public class DataManager {
 
     private void updateDiaryData() {
         ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("DiaryHappy");
-        hashtags.add("DiaryHalloween");
-        hashtags.add("DiaryOctober");
+        hashtags.add("Diary");
+        hashtags.add("Happy");
+        hashtags.add("Halloween");
+        hashtags.add("October");
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
             addDiary(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
@@ -97,10 +99,10 @@ public class DataManager {
 
     private void updateExpenseData() {
         ArrayList<String> hashtags = new ArrayList<String>();
-
-        hashtags.add("ExpenseHappy");
-        hashtags.add("ExpenseHalloween");
-        hashtags.add("ExpenseOctober");
+        hashtags.add("Expense");
+        hashtags.add("Happy");
+        hashtags.add("Halloween");
+        hashtags.add("October");
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
             addExpense(datetime, i*1000, "사용 목적", hashtags, i%3);
@@ -120,7 +122,19 @@ public class DataManager {
     }
 
     private void updateTimelineData() {
+        for(int i=0; i<getLoadedDataTodo().size(); i++) {
+            addTimeline(getLoadedDataTodo().get(i), getLoadedDataDiary().get(i),getLoadedDataExpense().get(i));
+        }
+    }
 
+    private void addTimeline(TodoData todo, DiaryData diary, ExpenseData expense) {
+        TimelineData timeline = new TimelineData();
+        timeline.setDate(todo.getRawDateTime());
+        timeline.setTodo(todo);
+        timeline.setDiary(diary);
+        timeline.setExpense(expense);
+
+        loadedDataTimeline.add(timeline);
     }
 
     public ArrayList<TimelineData> getLoadedDataTimeline() {

@@ -5,49 +5,40 @@ package com.nnm.team91.mine.data;
  */
 
 public class TimelineData extends CommonData {
-    private boolean todoStatus;
-    private String todoHashTag;
-    private String diaryHashTag;
-    private String expenseHashTag;
-    private int expenseAmount;
-
-    public boolean getTodoStatus() {
-        return todoStatus;
+    public void setTodo(TodoData todo) {
+        this.todo = todo;
     }
 
-    public void setTodoStatus(boolean todoStatus) {
-        this.todoStatus = todoStatus;
+    public void setDiary(DiaryData diary) {
+        this.diary = diary;
+    }
+
+    public void setExpense(ExpenseData expense) {
+        this.expense = expense;
+    }
+
+    private TodoData todo;
+    private DiaryData diary;
+    private ExpenseData expense;
+
+    public boolean getTodoStatus() {
+        return this.todo.getStatus();
     }
 
     public String getTodoHashTag() {
-        return todoHashTag;
-    }
-
-    public void setTodoHashTag(String todoHashTag) {
-        this.todoHashTag = todoHashTag;
+        return this.todo.getKeyTag();
     }
 
     public String getDiaryHashTag() {
-        return diaryHashTag;
-    }
-
-    public void setDiaryHashTag(String diaryHashTag) {
-        this.diaryHashTag = diaryHashTag;
+        return this.diary.getKeyTag();
     }
 
     public String getExpenseHashTag() {
-        return expenseHashTag;
-    }
-
-    public void setExpenseHashTag(String expenseHashTag) {
-        this.expenseHashTag = expenseHashTag;
+        return this.expense.getKeyTag();
     }
 
     public int getExpenseAmount() {
-        return expenseAmount;
+        return this.expense.getAmount();
     }
 
-    public void setExpenseAmount(int expenseAmount) {
-        this.expenseAmount = expenseAmount;
-    }
 }

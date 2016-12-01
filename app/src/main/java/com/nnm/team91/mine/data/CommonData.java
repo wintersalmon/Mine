@@ -49,7 +49,7 @@ public class CommonData {
             this.keyTagIndex = keyTagIndex;
         }
     }
-
+    public Date getRawDateTime() { return datetime; }
     public String getDateTime() {
         return datetimeFormat.format(datetime);
     }
