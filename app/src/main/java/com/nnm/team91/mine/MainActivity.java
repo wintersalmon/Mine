@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.nnm.team91.mine.adapter.DiaryAdapater;
 import com.nnm.team91.mine.data.DataManager;
+import com.nnm.team91.mine.data.DiaryData;
+import com.nnm.team91.mine.data.TimelineData;
 import com.nnm.team91.mine.fragments.DiaryListFragment;
 import com.nnm.team91.mine.fragments.ExpenseListFragment;
 import com.nnm.team91.mine.fragments.TimelineListFragment;
@@ -164,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         }
     }
 
+    public DataManager getDatamanager() {
+        return datamanager;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -193,23 +198,11 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     @Override
-    public void onDiaryItemSelected(int position) {
-        // TODO : study and fill this part
-    }
-
-    @Override
-    public void updateDiaryData() {
-//        DiaryListFragment diaryFrag = (DiaryListFragment) getSupportFragmentManager().findFragmentById(R.id.listview_diary);
-//        DiaryAdapater adapter = diaryFrag.getAdapter();
-//
-//        ArrayList<String> hashtags = new ArrayList<String>();
-//        hashtags.add("Happy");
-//        hashtags.add("Halloween");
-//        hashtags.add("October");
-//        Date datetime = Calendar.getInstance().getTime();
-//        for (int i=0; i<20; i++) {
-//            adapter.addItem(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
-//        }
+    public void updateDairyAdapater(DiaryAdapater adapter) {
+        adapter.clear();
+        for (DiaryData data : datamanager.getLoadedDataDiary()) {
+            adapter.addItem(data);
+        }
     }
 
     /**

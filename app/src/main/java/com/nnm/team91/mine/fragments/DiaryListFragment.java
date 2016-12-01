@@ -12,8 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.DiaryAdapater;
+import com.nnm.team91.mine.data.DiaryData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -109,25 +111,14 @@ public class DiaryListFragment extends Fragment {
             }
         }) ;
 
-        mListener.updateDiaryData();
+        mListener.updateDairyAdapater(adapter);
 
-//        Toast toast = Toast.makeText(getContext(),"diary refresh", Toast.LENGTH_SHORT);
-//        toast.setGravity(Gravity.CENTER, 0, 0);
-//        toast.show();
-
+        Toast toast = Toast.makeText(getContext(),"diary refresh " + adapter.getCount(), Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
         return view;
     }
 
-    public void addDummy() {
-//        ArrayList<String> hashtags = new ArrayList<String>();
-//        hashtags.add("Happy");
-//        hashtags.add("Halloween");
-//        hashtags.add("October");
-//        Date datetime = Calendar.getInstance().getTime();
-//        for (int i=0; i<20; i++) {
-//            adapter.addItem(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
-//        }
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -167,7 +158,6 @@ public class DiaryListFragment extends Fragment {
         // TODO: Update argument type and name
         // TODO : study and fill this part
         public void onFragmentInteraction(Uri uri);
-        public void onDiaryItemSelected(int position);
-        public void updateDiaryData();
+        public void updateDairyAdapater(DiaryAdapater adapater);
     }
 }
