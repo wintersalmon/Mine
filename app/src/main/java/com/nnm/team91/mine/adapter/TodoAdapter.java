@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.data.TodoData;
+import com.nnm.team91.mine.data.TodoEmptyData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +58,15 @@ public class TodoAdapter  extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         // TODO : Hash Tag function add
         datetimeView.setText(todoItem.getTime());
+
         checkboxView.setChecked(todoItem.getStatus());
+        // TODO: 2016. 12. 1. Set CheckBox hidden if item is Empty instance
+//        if (todoItem instanceof TodoEmptyData) {
+//            todoItem.setVisibility(View.GONE);
+//        } else {
+//            todoItem.setVisibility(View.VISIBLE);
+//        }
+
         titleView.setText(todoItem.getTitle());
 //        descView.setText(todoItem.getDescrition());
         hashtagView.setText(todoItem.getHastagList());

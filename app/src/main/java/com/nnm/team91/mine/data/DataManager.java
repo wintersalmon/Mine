@@ -56,7 +56,12 @@ public class DataManager {
         hashtags.add("October");
 
         for (int i=0; i<20; i++) {
-            addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
+            if (i%3 == 0) {
+                addEmptyTodo(datetime);
+            } else {
+                addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
+            }
+
         }
     }
 
@@ -71,6 +76,14 @@ public class DataManager {
         todo.setKeyTagIndex(keyTagIndex);
 
         loadedDataTodo.add(todo);
+    }
+
+    private void addEmptyTodo(Date datetime) {
+        TodoData emptyTodo = new TodoEmptyData();
+
+        emptyTodo.setDate(datetime);
+
+        loadedDataTodo.add(emptyTodo);
     }
 
 
