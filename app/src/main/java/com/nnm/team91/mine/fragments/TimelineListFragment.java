@@ -95,8 +95,9 @@ public class TimelineListFragment extends Fragment {
         timelineListview.post(new Runnable() {
             @Override
             public void run() {
+                // TODO: 2016. 12. 2. add listview focus change function here
 //                timelineListview.scrollTo(0, timelineListview.getBottom());
-                timelineListview.setSelection(timelineListview.getAdapter().getCount() - 1);
+//                timelineListview.setSelection(timelineListview.getAdapter().getCount() - 1);
             }
         });
 

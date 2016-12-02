@@ -1,48 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="40dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/todoTextViewTime"
         android:text="HH:mm"
         android:gravity="center_vertical"/>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/todoCheckBoxStatus"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="center_vertical"/>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="5">
+        android:layout_weight="6"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="New Text"
-            android:textColor="#000000"
-            android:id="@+id/todoTextViewTitle" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/todoCheckBoxStatus"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center_vertical"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/todoTextViewHastag"
-            android:text="#October #happy #halloween"
-            android:textSize="16sp"
-            android:textColor="#666666"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="5">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Title"
+                android:textColor="#000000"
+                android:id="@+id/todoTextViewTitle" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/todoTextViewHastag"
+                android:text="HashTag HashTag HashTag"
+                android:textColor="#666666"
+                android:layout_weight="1" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
