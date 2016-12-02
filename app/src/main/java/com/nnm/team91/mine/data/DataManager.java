@@ -61,7 +61,6 @@ public class DataManager {
             } else {
                 addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
             }
-
         }
     }
 
@@ -95,7 +94,11 @@ public class DataManager {
         hashtags.add("October");
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
-            addDiary(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
+            if (i%4 == 0) {
+                addEmptyDiary(datetime);
+            } else {
+                addDiary(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
+            }
         }
     }
 
@@ -110,6 +113,14 @@ public class DataManager {
         loadedDataDiary.add(diary);
     }
 
+    private void addEmptyDiary(Date datetime) {
+        DiaryEmtpyData emptyDiary = new DiaryEmtpyData();
+
+        emptyDiary.setDate(datetime);
+
+        loadedDataDiary.add(emptyDiary);
+    }
+
     private void updateExpenseData() {
         ArrayList<String> hashtags = new ArrayList<String>();
         hashtags.add("Expense");
@@ -118,7 +129,11 @@ public class DataManager {
         hashtags.add("October");
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
-            addExpense(datetime, i*1000, "사용 목적", hashtags, i%3);
+            if (i%2 == 0) {
+                addEmptyExpense(datetime);
+            } else {
+                addExpense(datetime, i*1000, "사용 목적", hashtags, i%3);
+            }
         }
     }
 
@@ -132,6 +147,14 @@ public class DataManager {
         expense.setKeyTagIndex(keyTagIndex);
 
         loadedDataExpense.add(expense);
+    }
+
+    private void addEmptyExpense(Date datetime) {
+        ExpenseEmptyData emptyExpense = new ExpenseEmptyData();
+
+        emptyExpense.setDate(datetime);
+
+        loadedDataExpense.add(emptyExpense);
     }
 
     private void updateTimelineData() {
