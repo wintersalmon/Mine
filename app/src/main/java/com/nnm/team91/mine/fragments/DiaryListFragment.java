@@ -75,15 +75,6 @@ public class DiaryListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
-//
-//        ListView listview = (ListView) view.findViewById(R.id.listview_diary);
-//        listview.setAdapter(adapter);
-//
-//        return view;
-
         View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
         ListView listview = (ListView) view.findViewById(R.id.listview_diary);
 
@@ -94,22 +85,11 @@ public class DiaryListFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-//                DiaryItem item = (DiaryItem) parent.getItemAtPosition(position) ;
-//
-//                String titleStr = item.getTitle() ;
-//                String descStr = item.getDesc() ;
-//                Drawable iconDrawable = item.getIcon() ;
-
-                // TODO : use item data.
+                // TODO: 2016. 12. 2. add function to OnItemClickListener
             }
         }) ;
 
         mListener.updateDairyAdapater(adapter);
-
-//        Toast toast = Toast.makeText(getContext(),"diary refresh " + adapter.getCount(), Toast.LENGTH_SHORT);
-//        toast.setGravity(Gravity.CENTER, 0, 0);
-//        toast.show();
 
         return view;
     }
@@ -151,7 +131,6 @@ public class DiaryListFragment extends Fragment {
      */
     public interface OnDiaryListFragmentInteractionListener {
         // TODO: Update argument type and name
-        // TODO : study and fill this part
         void onDiaryFragmentInteraction(Uri uri);
         void updateDairyAdapater(DiaryAdapater adapater);
     }

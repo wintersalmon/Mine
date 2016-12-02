@@ -2,6 +2,7 @@ package com.nnm.team91.mine.data;
 
 /**
  * Created by wintersalmon on 2016. 12. 1..
+ * TodoEmptyData
  */
 
 public class TodoEmptyData extends TodoData {
@@ -12,7 +13,7 @@ public class TodoEmptyData extends TodoData {
 
     @Override
     public boolean getStatus() {
-        // TODO: 2016. 12. 1. Change getStatus() return type to somethingelse to adapte for Empty Data
+        // TODO: 2016. 12. 1. Change getStatus() return type to something else to adapte for Empty Data
         return false;
     }
 

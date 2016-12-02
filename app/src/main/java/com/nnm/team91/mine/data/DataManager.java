@@ -8,14 +8,15 @@ import static android.R.attr.data;
 
 /**
  * Created by wintersalmon on 2016. 12. 1..
+ * DataManager
  */
 
 public class DataManager {
     private int loadYear;
     private int loadMonth;
     private int loadDay;
-    private int loadDayCountFront;
-    private int loadDayCountBack;
+//    private int loadDayCountFront;
+//    private int loadDayCountBack;
 
     private ArrayList<TimelineData> loadedDataTimeline;
     private ArrayList<TodoData> loadedDataTodo;
@@ -28,8 +29,8 @@ public class DataManager {
         loadedDataDiary = new ArrayList<DiaryData>();
         loadedDataExpense = new ArrayList<ExpenseData>();
 
-        this.loadDayCountFront = 10;
-        this.loadDayCountBack = 10;
+//        this.loadDayCountFront = 10;
+//        this.loadDayCountBack = 10;
     }
 
     public void updateLoadedData(int year, int month, int day) {

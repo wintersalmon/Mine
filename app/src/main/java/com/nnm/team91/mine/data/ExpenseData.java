@@ -5,6 +5,7 @@ import java.util.Locale;
 
 /**
  * Created by wintersalmon on 2016-11-29.
+ * ExpenseData
  */
 
 public class ExpenseData extends CommonData implements ExpenseInterface {

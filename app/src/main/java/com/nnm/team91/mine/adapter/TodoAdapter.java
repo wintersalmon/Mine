@@ -17,6 +17,7 @@ import java.util.Date;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
+ * TodoAdapter
  */
 
 public class TodoAdapter  extends BaseAdapter {
@@ -56,11 +57,10 @@ public class TodoAdapter  extends BaseAdapter {
         TodoData todoItem = todoItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        // TODO : Hash Tag function add
         datetimeView.setText(todoItem.getTime());
 
         checkboxView.setChecked(todoItem.getStatus());
-        // TODO: 2016. 12. 1. Set CheckBox hidden if item is Empty instance
+        // set checkbox hidden if it's data is empty
         if (todoItem instanceof TodoEmptyData) {
             checkboxView.setVisibility(View.GONE);
         } else {

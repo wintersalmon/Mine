@@ -2,6 +2,7 @@ package com.nnm.team91.mine.data;
 
 /**
  * Created by wintersalmon on 2016-11-29.
+ * DiaryData
  */
 
 public class DiaryData extends CommonData implements DiaryInterface {

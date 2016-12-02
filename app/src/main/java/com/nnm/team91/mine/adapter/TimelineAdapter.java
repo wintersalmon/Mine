@@ -2,6 +2,7 @@ package com.nnm.team91.mine.adapter;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
+ * TimelineAdapter
  */
 
 import android.content.Context;

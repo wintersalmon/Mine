@@ -17,6 +17,7 @@ import java.util.Date;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
+ * DiaryAdapter
  */
 
 public class DiaryAdapater extends BaseAdapter {

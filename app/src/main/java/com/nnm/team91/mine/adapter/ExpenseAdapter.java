@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
+ * ExpenseAdapter
  */
 
 public class ExpenseAdapter extends BaseAdapter {

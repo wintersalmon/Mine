@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * Created by wintersalmon on 2016-11-29.
+ * CommonData
  */
 
 public class CommonData {

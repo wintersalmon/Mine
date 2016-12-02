@@ -73,15 +73,6 @@ public class TodoListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, LIST_MENU);
-//
-//        ListView listview = (ListView) view.findViewById(R.id.listview_todo);
-//        listview.setAdapter(adapter);
-//
-//        return view;
-
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
         ListView listview = (ListView) view.findViewById(R.id.listview_todo);
 
@@ -97,31 +88,14 @@ public class TodoListFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-//                TodoItem item = (TodoItem) parent.getItemAtPosition(position) ;
-//
-//                String titleStr = item.getTitle() ;
-                // TODO : use item data.
+                // TODO: 2016. 12. 2. add function to OnItemClickListener
             }
         }) ;
 
-//        addDummy();
         mListener.updateTodoAdapter(adapter);
 
         return view;
     }
-
-//    void addDummy() {
-//        ArrayList<String> hashtags = new ArrayList<String>();
-//        hashtags.add("Happy");
-//        hashtags.add("Halloween");
-//        hashtags.add("October");
-//
-//        Date datetime = Calendar.getInstance().getTime();
-//        for (int i=0; i<20; i++) {
-//            adapter.addItem(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
-//        }
-//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

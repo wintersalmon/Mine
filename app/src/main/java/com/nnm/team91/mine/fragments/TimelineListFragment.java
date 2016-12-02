@@ -72,8 +72,6 @@ public class TimelineListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
         timelineListview = (ListView) view.findViewById(R.id.listview_timeline);
 
@@ -88,11 +86,6 @@ public class TimelineListFragment extends Fragment {
         timelineListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-
-//                Toast toast = Toast.makeText(getContext(), position + " : Hello!!", Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.CENTER, 0, 0);
-//                toast.show();
-
                 MainActivity main = (MainActivity) getActivity();
                 main.ChangePageMode();
             }
@@ -107,17 +100,9 @@ public class TimelineListFragment extends Fragment {
             }
         });
 
-//        addDummy();
         mListener.updateTimelineAdapter(adapter);
         return view;
     }
-
-//    public void addDummy() {
-//        Date datetime = Calendar.getInstance().getTime();
-//        for (int i=0; i<20; i++) {
-//            adapter.addItem(datetime, (i%2) == 0 ? true : false, "#" + i, "#" + i*10, i*1000, "#" + i);
-//        }
-//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
