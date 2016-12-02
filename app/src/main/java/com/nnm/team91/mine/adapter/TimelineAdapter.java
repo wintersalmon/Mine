@@ -66,7 +66,7 @@ public class TimelineAdapter extends BaseAdapter {
         todoCheckbox.setChecked(timeline.getTodoStatus());
         todoTextView.setText(timeline.getTodoHashTag());
         diaryTextView.setText(timeline.getDiaryHashTag());
-        expenseAmountTextView.setText(Currency.getInstance(Locale.KOREA).getSymbol() + timeline.getExpenseAmount());
+        expenseAmountTextView.setText(timeline.getExpenseAmount());
         expenseTextView.setText(timeline.getExpenseHashTag());
 
         if (timeline.getTodo() instanceof TodoEmptyData) {

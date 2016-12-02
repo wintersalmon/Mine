@@ -13,9 +13,8 @@ public class ExpenseEmptyData extends ExpenseData {
     }
 
     @Override
-    public int getAmount() {
-        // TODO: 2016. 12. 1. change getAmount() return type to String
-        return 0;
+    public String getAmount() {
+        return emptyString;
     }
 
     @Override

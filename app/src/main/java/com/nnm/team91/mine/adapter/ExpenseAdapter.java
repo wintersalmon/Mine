@@ -11,9 +11,6 @@ import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.data.ExpenseData;
 
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
@@ -56,8 +53,7 @@ public class ExpenseAdapter extends BaseAdapter {
 
         // 아이템 내 각 위젯에 데이터 반영
         timeTextView.setText(expense.getTime());
-        int amount = expense.getAmount();
-        amountTextView.setText(Currency.getInstance(Locale.KOREA).getSymbol() + amount);
+        amountTextView.setText(expense.getAmount());
         usageTextView.setText(expense.getUsage());
         hashtagTextView.setText(expense.getHastagList());
 

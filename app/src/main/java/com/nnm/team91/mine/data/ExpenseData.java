@@ -1,5 +1,8 @@
 package com.nnm.team91.mine.data;
 
+import java.util.Currency;
+import java.util.Locale;
+
 /**
  * Created by wintersalmon on 2016-11-29.
  */
@@ -7,8 +10,11 @@ package com.nnm.team91.mine.data;
 public class ExpenseData extends CommonData implements ExpenseInterface {
     int amount;
     String usage;
+    String currency;
+
     public ExpenseData() {
         this.dataType = TYPE.Expense;
+        currency = Currency.getInstance(Locale.KOREA).getSymbol();
     }
 
     @Override
@@ -22,8 +28,8 @@ public class ExpenseData extends CommonData implements ExpenseInterface {
     }
 
     @Override
-    public int getAmount() {
-        return amount;
+    public String getAmount() {
+        return currency + String.valueOf(amount);
     }
 
     @Override

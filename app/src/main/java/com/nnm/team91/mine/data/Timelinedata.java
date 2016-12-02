@@ -49,7 +49,7 @@ public class TimelineData extends CommonData {
         return this.expense.getKeyTag();
     }
 
-    public int getExpenseAmount() {
+    public String getExpenseAmount() {
         return this.expense.getAmount();
     }
 
