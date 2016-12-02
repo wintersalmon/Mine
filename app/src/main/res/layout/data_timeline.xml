@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:minHeight="40dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/timelineTimeTextView"
@@ -12,9 +13,9 @@
         android:gravity="center_vertical"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="2" >
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -25,36 +26,39 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="#Happy"
+            android:text="KeyTag"
             android:gravity="center_vertical"
             android:id="@+id/timelineTodoTextView"
             />
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="#October"
+        android:layout_weight="2"
+        android:text="KeyTag"
         android:gravity="center_vertical"
         android:id="@+id/timelineDiaryTextView"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:layout_weight="1" >
+        android:orientation="vertical"
+        android:layout_weight="2" >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="$100"
+            android:text="$9999"
             android:id="@+id/timelineExpenseAmount"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="#Holloween"
+            android:text="KeyTag"
             android:id="@+id/timelineExpenseTextView"
             />
     </LinearLayout>

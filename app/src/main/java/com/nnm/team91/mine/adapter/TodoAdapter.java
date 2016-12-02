@@ -62,7 +62,7 @@ public class TodoAdapter  extends BaseAdapter {
         checkboxView.setChecked(todoItem.getStatus());
         // set checkbox hidden if it's data is empty
         if (todoItem instanceof TodoEmptyData) {
-            checkboxView.setVisibility(View.GONE);
+            checkboxView.setVisibility(View.INVISIBLE);
         } else {
             checkboxView.setVisibility(View.VISIBLE);
         }

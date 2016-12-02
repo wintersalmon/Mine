@@ -71,7 +71,7 @@ public class TimelineAdapter extends BaseAdapter {
         expenseTextView.setText(timeline.getExpenseHashTag());
 
         if (timeline.getTodo() instanceof TodoEmptyData) {
-            todoCheckbox.setVisibility(View.GONE);
+            todoCheckbox.setVisibility(View.INVISIBLE);
         } else {
             todoCheckbox.setVisibility(View.VISIBLE);
         }
