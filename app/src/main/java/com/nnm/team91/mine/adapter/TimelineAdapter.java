@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.data.TimelineData;
+import com.nnm.team91.mine.data.TodoEmptyData;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -67,6 +68,12 @@ public class TimelineAdapter extends BaseAdapter {
         diaryTextView.setText(timeline.getDiaryHashTag());
         expenseAmountTextView.setText(Currency.getInstance(Locale.KOREA).getSymbol() + timeline.getExpenseAmount());
         expenseTextView.setText(timeline.getExpenseHashTag());
+
+        if (timeline.getTodo() instanceof TodoEmptyData) {
+            todoCheckbox.setVisibility(View.GONE);
+        } else {
+            todoCheckbox.setVisibility(View.VISIBLE);
+        }
 
         return convertView;
     }

@@ -17,6 +17,18 @@ public class TimelineData extends CommonData {
         this.expense = expense;
     }
 
+    public TodoData getTodo() {
+        return todo;
+    }
+
+    public DiaryData getDiary() {
+        return diary;
+    }
+
+    public ExpenseData getExpense() {
+        return expense;
+    }
+
     private TodoData todo;
     private DiaryData diary;
     private ExpenseData expense;

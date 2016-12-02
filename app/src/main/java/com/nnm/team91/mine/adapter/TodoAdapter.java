@@ -61,11 +61,11 @@ public class TodoAdapter  extends BaseAdapter {
 
         checkboxView.setChecked(todoItem.getStatus());
         // TODO: 2016. 12. 1. Set CheckBox hidden if item is Empty instance
-//        if (todoItem instanceof TodoEmptyData) {
-//            todoItem.setVisibility(View.GONE);
-//        } else {
-//            todoItem.setVisibility(View.VISIBLE);
-//        }
+        if (todoItem instanceof TodoEmptyData) {
+            checkboxView.setVisibility(View.GONE);
+        } else {
+            checkboxView.setVisibility(View.VISIBLE);
+        }
 
         titleView.setText(todoItem.getTitle());
 //        descView.setText(todoItem.getDescrition());
