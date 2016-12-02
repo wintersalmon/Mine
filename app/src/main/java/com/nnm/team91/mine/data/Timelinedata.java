@@ -6,6 +6,14 @@ package com.nnm.team91.mine.data;
  */
 
 public class TimelineData extends CommonData {
+    private TodoData todo;
+    private DiaryData diary;
+    private ExpenseData expense;
+
+    public TimelineData() {
+
+    }
+
     public void setTodo(TodoData todo) {
         this.todo = todo;
     }
@@ -29,10 +37,6 @@ public class TimelineData extends CommonData {
     public ExpenseData getExpense() {
         return expense;
     }
-
-    private TodoData todo;
-    private DiaryData diary;
-    private ExpenseData expense;
 
     public boolean getTodoStatus() {
         return this.todo.getStatus();

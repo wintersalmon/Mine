@@ -11,7 +11,6 @@ public class TodoData extends CommonData implements TodoInterface {
     String descrition;
 
     public TodoData() {
-        this.dataType = TYPE.Todo;
     }
 
     @Override

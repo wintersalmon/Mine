@@ -14,7 +14,6 @@ public class ExpenseData extends CommonData implements ExpenseInterface {
     String currency;
 
     public ExpenseData() {
-        this.dataType = TYPE.Expense;
         currency = Currency.getInstance(Locale.KOREA).getSymbol();
     }
 

@@ -9,7 +9,6 @@ public class DiaryData extends CommonData implements DiaryInterface {
     String text;
 
     public DiaryData() {
-        this.dataType = TYPE.Diary;
     }
 
     @Override

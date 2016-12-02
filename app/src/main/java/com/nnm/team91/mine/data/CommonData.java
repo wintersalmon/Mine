@@ -11,17 +11,11 @@ import java.text.SimpleDateFormat;
  */
 
 public class CommonData {
-    static public enum TYPE {
-        Todo, Diary, Expense
-    }
-
     static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     static private DateFormat dateFormat = new SimpleDateFormat("MM/dd");
     static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-    static private String sampleHashTag = "#October#happy#halloween";
 
     Date datetime;
-    TYPE dataType;
     int keyTagIndex;
     ArrayList<String> hashTagList;
 
@@ -33,9 +27,6 @@ public class CommonData {
 
     public void setDate(Date date) {
         datetime = date;
-    }
-    public void setType(TYPE type) {
-        dataType = type;
     }
     public void setHashTagList(ArrayList<String> list) {
         hashTagList.clear();
@@ -56,10 +47,6 @@ public class CommonData {
     }
     public String getDate() { return dateFormat.format(datetime); }
     public String getTime() { return timeFormat.format(datetime); }
-
-    public TYPE getDataType() {
-        return dataType;
-    }
 
     public String getHastagList() {
         String output = "";
