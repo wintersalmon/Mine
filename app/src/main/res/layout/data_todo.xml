@@ -14,25 +14,25 @@
         android:gravity="center_vertical"/>
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:orientation="horizontal">
+        android:layout_weight="6" >
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/todoCheckBoxStatus"
+            android:gravity="center_vertical"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:gravity="center_vertical"/>
+            android:id="@+id/todoCheckBoxStatus" />
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="5">
+            android:layout_weight="5" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -45,10 +45,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/todoTextViewHastag"
+                android:layout_weight="1"
                 android:text="HashTag HashTag HashTag"
                 android:textColor="#666666"
-                android:layout_weight="1" />
+                android:id="@+id/todoTextViewHastag" />
+
         </LinearLayout>
 
     </LinearLayout>

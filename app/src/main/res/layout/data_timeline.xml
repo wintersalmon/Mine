@@ -9,14 +9,15 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/timelineTimeTextView"
+        android:gravity="center_vertical"
         android:text="HH:mm"
-        android:gravity="center_vertical"/>
+        android:id="@+id/timelineTimeTextView" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2" >
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -24,44 +25,47 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:id="@+id/timelineTodoCheckbox"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="KeyTag"
             android:gravity="center_vertical"
-            android:id="@+id/timelineTodoTextView"
-            />
+            android:text="KeyTag"
+            android:id="@+id/timelineTodoTextView" />
+
     </LinearLayout>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:text="KeyTag"
         android:gravity="center_vertical"
-        android:id="@+id/timelineDiaryTextView"/>
+        android:text="KeyTag"
+        android:id="@+id/timelineDiaryTextView" />
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:layout_weight="2" >
+        android:layout_weight="2"
+        android:gravity="center_vertical" >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="$9999"
-            android:id="@+id/timelineExpenseAmount"/>
+            android:id="@+id/timelineExpenseAmount" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="KeyTag"
-            android:id="@+id/timelineExpenseTextView"
-            />
+            android:id="@+id/timelineExpenseTextView" />
+
     </LinearLayout>
 
 </LinearLayout>
