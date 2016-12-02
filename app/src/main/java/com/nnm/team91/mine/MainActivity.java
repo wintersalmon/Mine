@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addFragment(new TodoListFragment(), "ToDo");
-        mSectionsPagerAdapter.addFragment(new DiaryListFragment(), "DiaryInterface");
+        mSectionsPagerAdapter.addFragment(new DiaryListFragment(), "Diary");
         mSectionsPagerAdapter.addFragment(new ExpenseListFragment(), "Expense");
 
         mSectionsTimelinePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
