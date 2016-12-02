@@ -89,7 +89,7 @@ public class DataManager {
 
     private void updateDiaryData() {
         ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("DiaryInterface");
+        hashtags.add("Diary");
         hashtags.add("Happy");
         hashtags.add("Halloween");
         hashtags.add("October");

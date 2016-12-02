@@ -2,6 +2,7 @@ package com.nnm.team91.mine.data;
 
 /**
  * Created by wintersalmon on 2016. 11. 30..
+ * TimelineData
  */
 
 public class TimelineData extends CommonData {
