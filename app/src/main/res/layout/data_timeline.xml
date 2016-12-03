@@ -31,6 +31,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="KeyTag"
+            android:textColor="#000000"
             android:minLines="2"
             android:maxLines="2"
             android:ellipsize="end"
@@ -44,6 +45,7 @@
         android:layout_weight="2"
         android:gravity="center_vertical"
         android:text="KeyTag"
+        android:textColor="#000000"
         android:minLines="2"
         android:maxLines="2"
         android:ellipsize="end"
@@ -72,6 +74,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="KeyTag"
+            android:textColor="#000000"
             android:maxLines="1"
             android:ellipsize="end"
             android:id="@+id/timelineExpenseTextView" />
