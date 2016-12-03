@@ -55,12 +55,13 @@ public class DataManager {
         hashtags.add("Happy");
         hashtags.add("Halloween");
         hashtags.add("October");
+        hashtags.add("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
         for (int i=0; i<20; i++) {
             if (i%3 == 0) {
                 addEmptyTodo(datetime);
             } else {
-                addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%3);
+                addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%5);
             }
         }
     }
@@ -93,12 +94,14 @@ public class DataManager {
         hashtags.add("Happy");
         hashtags.add("Halloween");
         hashtags.add("October");
+        hashtags.add("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
             if (i%4 == 0) {
                 addEmptyDiary(datetime);
             } else {
-                addDiary(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%3);
+                addDiary(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%5);
             }
         }
     }
@@ -128,12 +131,15 @@ public class DataManager {
         hashtags.add("Happy");
         hashtags.add("Halloween");
         hashtags.add("October");
+        hashtags.add("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
             if (i%2 == 0) {
                 addEmptyExpense(datetime);
             } else {
-                addExpense(datetime, i*1000, "사용 목적", hashtags, i%3);
+                addExpense(datetime, i*1000, "사용 목적", hashtags, i%5);
             }
         }
     }
