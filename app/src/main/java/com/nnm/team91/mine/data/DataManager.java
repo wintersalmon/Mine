@@ -52,10 +52,10 @@ public class DataManager {
         Date datetime = Calendar.getInstance().getTime();
         ArrayList<String> hashtags = new ArrayList<String>();
         hashtags.add("Todo");
+        hashtags.add("Weekly");
         hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
-        hashtags.add("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        hashtags.add("VeryVeryLongHashTagForTodo");
+        hashtags.add("Energy");
 
         for (int i=0; i<20; i++) {
             if (i%3 == 0) {
@@ -89,17 +89,67 @@ public class DataManager {
     private void updateDiaryData() {
         ArrayList<String> hashtags = new ArrayList<String>();
         hashtags.add("Diary");
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
-        hashtags.add("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        hashtags.add("Monthly");
+        hashtags.add("Sad");
+        hashtags.add("ThisIsAVeryLongHashTagForDiary");
+        hashtags.add("NotHungry");
+
+        String text = "일기의 내용을 아무거나 집어넣어 보자\n" +
+                "물은 춤을 추는 뱀이다.\n" +
+                "\n" +
+                "물을 늘리려고\n" +
+                "\n" +
+                "손으로 억지로 짓이겨 죽이면,\n" +
+                "\n" +
+                "흐리게 터진다.\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "감정 표현이 극과 극인 사람은\n" +
+                "\n" +
+                "쇠, 매끄러운 가죽이다.\n" +
+                "\n" +
+                "한 쪽 면은 아주 진하고\n" +
+                "\n" +
+                "다른 면은 아주 광채가 난다.\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "나는 레오나르도 다빈치를 닮았다.\n" +
+                "\n" +
+                "여러 방면의 세계를 맛보는걸 즐기며,\n" +
+                "\n" +
+                "나보다는 나의 후손들에게 이로운걸 남긴다.\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "자동차는 오리다.\n" +
+                "\n" +
+                "꽥꽥거린다.\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "한국인은 고블린이다.\n" +
+                "\n" +
+                "생긴거도 고블린이고\n" +
+                "\n" +
+                "사기치는거도 그 종족과 흡사 하다.\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "올림픽은 악마의 눈가림이다.\n" +
+                "\n" +
+                "선수들은 열정을 다 하지만\n" +
+                "\n" +
+                "결국 남는건 후회일 것이다.";
 
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
             if (i%4 == 0) {
                 addEmptyDiary(datetime);
             } else {
-                addDiary(datetime, i + "일기 내용의 첫부분이 여기에 들어간다....", hashtags, i%5);
+                addDiary(datetime, text, hashtags, i%5);
             }
         }
     }
@@ -125,12 +175,11 @@ public class DataManager {
 
     private void updateExpenseData() {
         ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Expense");
-        hashtags.add("Happy");
-        hashtags.add("Halloween");
-        hashtags.add("October");
-        hashtags.add("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
+        hashtags.add("Brunch");
+        hashtags.add("Lunch");
+        hashtags.add("Dinner");
+        hashtags.add("HashTagThatCouldBeQuiteLong");
+        hashtags.add("Hello");
 
         Date datetime = Calendar.getInstance().getTime();
         for (int i=0; i<20; i++) {
