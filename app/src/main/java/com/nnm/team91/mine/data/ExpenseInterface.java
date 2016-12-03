@@ -7,7 +7,5 @@ package com.nnm.team91.mine.data;
 
 public interface ExpenseInterface {
     void setAmount(int amount);
-    void setUsage(String usage);
     String getAmount();
-    String getUsage();
 }

@@ -28,18 +28,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="$10,000"
+                android:text="Usage"
                 android:textColor="#000000"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:id="@+id/expenseTextViewAmount" />
+                android:id="@+id/expenseTextViewKeyTag" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="Usage"
-                android:id="@+id/expenseTextViewUsage" />
+                android:text="$10,000"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:id="@+id/expenseTextViewAmount" />
 
         </LinearLayout>
 
@@ -51,7 +51,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="#666666"
-            android:id="@+id/expenseTextViewHastag" />
+            android:id="@+id/expenseTextViewHasTag" />
 
     </LinearLayout>
 

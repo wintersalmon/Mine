@@ -10,7 +10,6 @@ import java.util.Locale;
 
 public class ExpenseData extends CommonData implements ExpenseInterface {
     int amount;
-    String usage;
     String currency;
 
     public ExpenseData() {
@@ -23,17 +22,8 @@ public class ExpenseData extends CommonData implements ExpenseInterface {
     }
 
     @Override
-    public void setUsage(String usage) {
-        this.usage = usage;
-    }
-
-    @Override
     public String getAmount() {
         return currency + String.valueOf(amount);
     }
 
-    @Override
-    public String getUsage() {
-        return usage;
-    }
 }

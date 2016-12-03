@@ -46,8 +46,8 @@ public class ExpenseAdapter extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView timeTextView = (TextView) convertView.findViewById(R.id.expenseTextViewTime) ;
         TextView amountTextView = (TextView) convertView.findViewById(R.id.expenseTextViewAmount) ;
-        TextView usageTextView = (TextView) convertView.findViewById(R.id.expenseTextViewUsage) ;
-        TextView hashtagTextView = (TextView) convertView.findViewById(R.id.expenseTextViewHastag) ;
+        TextView keyTagTextView = (TextView) convertView.findViewById(R.id.expenseTextViewKeyTag) ;
+        TextView hashTagTextView = (TextView) convertView.findViewById(R.id.expenseTextViewHasTag) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ExpenseData expense = listViewItemList.get(position);
@@ -55,8 +55,8 @@ public class ExpenseAdapter extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         timeTextView.setText(expense.getTime());
         amountTextView.setText(expense.getAmount());
-        usageTextView.setText(expense.getUsage());
-        hashtagTextView.setText(expense.getHasTagList());
+        keyTagTextView.setText(expense.getKeyTag());
+        hashTagTextView.setText(expense.getHasTagList());
 
         return convertView;
     }

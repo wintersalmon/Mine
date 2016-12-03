@@ -19,11 +19,6 @@ public class ExpenseEmptyData extends ExpenseData {
     }
 
     @Override
-    public String getUsage() {
-        return emptyString;
-    }
-
-    @Override
     public String getHasTagList() {
         return emptyString;
     }

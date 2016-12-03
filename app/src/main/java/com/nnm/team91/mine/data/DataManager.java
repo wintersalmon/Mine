@@ -137,17 +137,16 @@ public class DataManager {
             if (i%2 == 0) {
                 addEmptyExpense(datetime);
             } else {
-                addExpense(datetime, i*1000, "사용 목적", hashtags, i%5);
+                addExpense(datetime, i*1000, hashtags, i%5);
             }
         }
     }
 
-    private void addExpense(Date date, int amount, String usage, ArrayList<String> hastags, int keyTagIndex) {
+    private void addExpense(Date date, int amount, ArrayList<String> hastags, int keyTagIndex) {
         ExpenseData expense = new ExpenseData();
 
         expense.setDate(date);
         expense.setAmount(amount);
-        expense.setUsage(usage);
         expense.setHashTagList(hastags);
         expense.setKeyTagIndex(keyTagIndex);
 
