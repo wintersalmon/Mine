@@ -24,7 +24,7 @@ public class ExpenseEmptyData extends ExpenseData {
     }
 
     @Override
-    public String getHastagList() {
+    public String getHasTagList() {
         return emptyString;
     }
 

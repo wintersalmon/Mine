@@ -48,7 +48,7 @@ public class CommonData {
     public String getDate() { return dateFormat.format(datetime); }
     public String getTime() { return timeFormat.format(datetime); }
 
-    public String getHastagList() {
+    public String getHasTagList() {
         String output = "";
         for (String tag : hashTagList) {
             output += tag + " ";

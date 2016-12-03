@@ -24,11 +24,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Title"
+            android:text="KeyTag"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="#000000"
-            android:id="@+id/diaryTextViewText" />
+            android:id="@+id/diaryTextViewKeyTag" />
 
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:text="HashTag HashTag HashTag"
             android:maxLines="1"
             android:ellipsize="end"
-            android:id="@+id/diaryTextViewHastag" />
+            android:id="@+id/diaryTextViewHasTag" />
 
     </LinearLayout>
 
