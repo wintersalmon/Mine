@@ -7,9 +7,5 @@ package com.nnm.team91.mine.data;
 
 public interface TodoInterface {
     void setStatus(boolean status);
-    void setTitle(String name);
-    void setDescrition(String name);
     boolean getStatus();
-    String getTitle();
-    String getDescrition();
 }

@@ -18,16 +18,6 @@ public class TodoEmptyData extends TodoData {
     }
 
     @Override
-    public String getTitle() {
-        return emptyString;
-    }
-
-    @Override
-    public String getDescrition() {
-        return emptyString;
-    }
-
-    @Override
     public String getKeyTag() {
         return emptyString;
     }

@@ -7,8 +7,6 @@ package com.nnm.team91.mine.data;
 
 public class TodoData extends CommonData implements TodoInterface {
     boolean status;
-    String title;
-    String descrition;
 
     public TodoData() {
     }
@@ -19,27 +17,7 @@ public class TodoData extends CommonData implements TodoInterface {
     }
 
     @Override
-    public void setTitle(String name) {
-        title = name;
-    }
-
-    @Override
-    public void setDescrition(String name) {
-        descrition = name;
-    }
-
-    @Override
     public boolean getStatus() {
         return status;
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String getDescrition() {
-        return descrition;
     }
 }

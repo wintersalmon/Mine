@@ -37,11 +37,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Title"
+                android:text="KeyTag"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="#000000"
-                android:id="@+id/todoTextViewTitle" />
+                android:id="@+id/todoTextViewKeyTag" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="#666666"
-                android:id="@+id/todoTextViewHastag" />
+                android:id="@+id/todoTextViewHasTag" />
 
         </LinearLayout>
 

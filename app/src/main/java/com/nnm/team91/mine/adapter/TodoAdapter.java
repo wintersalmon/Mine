@@ -13,7 +13,6 @@ import com.nnm.team91.mine.data.TodoData;
 import com.nnm.team91.mine.data.TodoEmptyData;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by wintersalmon on 2016. 11. 25..
@@ -49,9 +48,8 @@ public class TodoAdapter  extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView datetimeView = (TextView) convertView.findViewById(R.id.todoTextViewTime);
         CheckBox checkboxView = (CheckBox) convertView.findViewById(R.id.todoCheckBoxStatus);
-        TextView titleView = (TextView) convertView.findViewById(R.id.todoTextViewTitle);
-//        TextView descView = (TextView) convertView.findViewById(R.id.todoTextViewDesc);
-        TextView hashtagView = (TextView) convertView.findViewById(R.id.todoTextViewHastag);
+        TextView keyTagView = (TextView) convertView.findViewById(R.id.todoTextViewKeyTag);
+        TextView hashTagView = (TextView) convertView.findViewById(R.id.todoTextViewHasTag);
 
         // Data Set(todoItemList)에서 position에 위치한 데이터 참조 획득
         TodoData todoItem = todoItemList.get(position);
@@ -67,9 +65,8 @@ public class TodoAdapter  extends BaseAdapter {
             checkboxView.setVisibility(View.VISIBLE);
         }
 
-        titleView.setText(todoItem.getTitle());
-//        descView.setText(todoItem.getDescrition());
-        hashtagView.setText(todoItem.getHastagList());
+        keyTagView.setText(todoItem.getKeyTag());
+        hashTagView.setText(todoItem.getHastagList());
         return convertView;
     }
 

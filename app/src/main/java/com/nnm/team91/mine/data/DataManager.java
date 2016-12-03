@@ -61,18 +61,16 @@ public class DataManager {
             if (i%3 == 0) {
                 addEmptyTodo(datetime);
             } else {
-                addTodo(datetime, (i%2) == 0 ? true : false, i + "제목", i + "상세한 설명", hashtags, i%5);
+                addTodo(datetime, (i%2) == 0 ? true : false, hashtags, i%5);
             }
         }
     }
 
-    private void addTodo(Date datetime, boolean status, String title, String desc, ArrayList<String> hastags, int keyTagIndex) {
+    private void addTodo(Date datetime, boolean status, ArrayList<String> hastags, int keyTagIndex) {
         TodoData todo = new TodoData();
 
         todo.setDate(datetime);
         todo.setStatus(status);
-        todo.setTitle(title);
-        todo.setDescrition(desc);
         todo.setHashTagList(hastags);
         todo.setKeyTagIndex(keyTagIndex);
 
