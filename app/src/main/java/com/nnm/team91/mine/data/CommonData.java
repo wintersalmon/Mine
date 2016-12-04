@@ -17,6 +17,7 @@ public class CommonData {
 
     Date datetime;
     int keyTagIndex;
+    String keyTag;
     ArrayList<String> hashTagList;
 
     public CommonData() {
@@ -33,6 +34,9 @@ public class CommonData {
         for(String tag : list) {
             hashTagList.add(tag);
         }
+    }
+    public void setKeyTag(String keyTag) {
+        this.keyTag = keyTag;
     }
     public void setKeyTagIndex(int keyTagIndex) {
         if (keyTagIndex < 0 || keyTagIndex > hashTagList.size()){
@@ -57,7 +61,8 @@ public class CommonData {
     }
 
     public String getKeyTag() {
-        return hashTagList.get(keyTagIndex);
+        return keyTag;
     }
+
 
 }

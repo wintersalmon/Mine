@@ -24,13 +24,14 @@ public class MineSQLiteOpenHelper extends SQLiteOpenHelper {
         String sql_create_table_common =
                 " CREATE TABLE common (" +
                         "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "datetime DATETIME NOT NULL,";
+                        "datetime DATETIME NOT NULL);";
 
         String sql_create_table_hashtag_in_common =
                 "CREATE TABLE hashtag_in_common (" +
                         "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "common_id INTEGER," +
                         "hashtag_id INTEGER," +
+                        "is_key_tag INTEGER," +
                         "FOREIGN KEY(common_id) REFERENCES common(_id)" +
                         "FOREIGN KEY(hashtag_id) REFERENCES hashtag(_id));";
 

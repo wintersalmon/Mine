@@ -39,6 +39,10 @@ public class DataManager {
         loadedDataExpense = new ArrayList<ExpenseData>();
 
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
+//        insertDummyTodoData();
+//        insertDummyDiaryData();
+//        insertDummyExpenseData();
+//        context.deleteDatabase("mine.db");
     }
 
     public void updateLoadedData(int year, int month, int day) {
@@ -57,6 +61,398 @@ public class DataManager {
         loadedDataTodo.clear();
         // select all data from db_mine_todo
         // fill array with selected data
+        selectTodo();
+    }
+
+    private void addTodo(Date datetime, int status, ArrayList<String> hastags, String keyTag) {
+        TodoData todo = new TodoData();
+
+        todo.setDate(datetime);
+        if (status == 1) todo.setStatus(true);
+        else todo.setStatus(false);
+        todo.setHashTagList(hastags);
+        todo.setKeyTag(keyTag);
+
+        loadedDataTodo.add(todo);
+    }
+
+    private void addEmptyTodo(Date datetime) {
+        TodoData emptyTodo = new TodoEmptyData();
+
+        emptyTodo.setDate(datetime);
+
+        loadedDataTodo.add(emptyTodo);
+    }
+
+    private void updateDiaryData() {
+        loadedDataDiary.clear();
+        // select all data from db_mine_todo
+        // fill array with selected data
+        selectDiary();
+    }
+
+
+    private void addDiary(Date date, String text, ArrayList<String> hastags, String keyTag) {
+        DiaryData diary = new DiaryData();
+
+        diary.setDate(date);
+        diary.setText(text);
+        diary.setHashTagList(hastags);
+        diary.setKeyTag(keyTag);
+
+        loadedDataDiary.add(diary);
+    }
+
+    private void addEmptyDiary(Date datetime) {
+        DiaryEmtpyData emptyDiary = new DiaryEmtpyData();
+
+        emptyDiary.setDate(datetime);
+
+        loadedDataDiary.add(emptyDiary);
+    }
+
+    private void updateExpenseData() {
+        loadedDataExpense.clear();
+        // select all data from db_mine_todo
+        // fill array with selected data
+        selectExpense();
+    }
+
+
+
+    private void addExpense(Date date, int amount, ArrayList<String> hastags, String keyTag) {
+        ExpenseData expense = new ExpenseData();
+
+        expense.setDate(date);
+        expense.setAmount(amount);
+        expense.setHashTagList(hastags);
+        expense.setKeyTag(keyTag);
+
+        loadedDataExpense.add(expense);
+    }
+
+    private void addEmptyExpense(Date datetime) {
+        ExpenseEmptyData emptyExpense = new ExpenseEmptyData();
+
+        emptyExpense.setDate(datetime);
+
+        loadedDataExpense.add(emptyExpense);
+    }
+
+    private void updateTimelineData() {
+        TodoData todo = null;
+        DiaryData diary = null;
+        ExpenseData expense = null;
+        TodoEmptyData emptyTodo = null;
+        DiaryEmtpyData emptyDiary = null;
+        ExpenseEmptyData expenseEmpty = null;
+        Date datetime = null;
+        int todoIdx = 0, todoCount = getLoadedDataTodo().size();
+        int diaryIdx = 0, diaryCount = getLoadedDataDiary().size();
+        int expenseIdx = 0, expenseCount = getLoadedDataExpense().size();
+
+
+        while (todoIdx < todoCount ||
+                diaryIdx < diaryCount ||
+                expenseIdx < expenseCount) {
+            if (todoIdx < todoCount) {
+                todo = getLoadedDataTodo().get(todoIdx++);
+                datetime = todo.getRawDateTime();
+                emptyTodo = null;
+            } else {
+                emptyTodo = new TodoEmptyData();
+                todo = emptyTodo;
+            }
+
+            if (diaryIdx < diaryCount) {
+                diary = getLoadedDataDiary().get(diaryIdx++);
+                datetime = diary.getRawDateTime();
+                emptyDiary = null;
+            } else {
+                emptyDiary = new DiaryEmtpyData();
+                diary = emptyDiary;
+            }
+
+            if (expenseIdx < expenseCount) {
+                expense = getLoadedDataExpense().get(expenseIdx++);
+                datetime = expense.getRawDateTime();
+                expenseEmpty = null;
+            } else {
+                expenseEmpty = new ExpenseEmptyData();
+                expense = expenseEmpty;
+            }
+
+            if (emptyTodo != null) emptyTodo.setDate(datetime);
+            if (emptyDiary != null) emptyDiary.setDate(datetime);
+            if (expenseEmpty != null) expenseEmpty.setDate(datetime);
+
+//            todo =  (todoIdx < todoCount) ? getLoadedDataTodo().get(todoIdx++) : new TodoEmptyData();
+//            diary =  (diaryIdx < diaryCount) ? getLoadedDataDiary().get(diaryIdx++) : new DiaryEmtpyData();
+//            expense =  (expenseIdx < expenseCount) ? getLoadedDataExpense().get(expenseIdx++) : new ExpenseEmptyData();
+            addTimeline(todo,diary,expense);
+        }
+//        for(int i=0; i<getLoadedDataTodo().size(); i++) {
+//            addTimeline(getLoadedDataTodo().get(i), getLoadedDataDiary().get(i),getLoadedDataExpense().get(i));
+//        }
+    }
+
+    private void addTimeline(TodoData todo, DiaryData diary, ExpenseData expense) {
+        TimelineData timeline = new TimelineData();
+
+        timeline.setDate(todo.getRawDateTime());
+        timeline.setTodo(todo);
+        timeline.setDiary(diary);
+        timeline.setExpense(expense);
+
+        loadedDataTimeline.add(timeline);
+    }
+
+    private long insertHashtag(String tag) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("tag", tag);
+
+        return db.insert("hashtag", null, values);
+    }
+
+    private long insertCommon(Date datetime) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String datetimeStr = datetimeFormat.format(datetime);
+
+        values.put("datetime", datetimeStr);
+
+        return db.insert("common", null, values);
+    }
+
+    private void insertHashtagInCommon(long common_id, ArrayList<String> hashtags, int keyTagIndex) {
+        if (hashtags != null) {
+            for (String tag : hashtags) {
+                long hashtag_id = insertHashtag(tag);
+                int bIsKeyTag = 0;
+                if (keyTagIndex >= 0 &&
+                    keyTagIndex < hashtags.size() &&
+                    tag.equals(hashtags.get(keyTagIndex))) {
+                    bIsKeyTag = 1;
+                }
+                insertHashtagInCommon(common_id,hashtag_id,bIsKeyTag);
+            }
+        }
+    }
+
+    private void insertHashtagInCommon(long commonId, long hashtagId, int isKeyTag) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("common_id", commonId);
+        values.put("hashtag_id", hashtagId);
+        values.put("is_key_tag", isKeyTag);
+
+        db.insert("hashtag_in_common", null, values);
+    }
+
+    public void insertTodo(Date datetime, int status, ArrayList<String> hashtags, int keyTagIndex) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        long common_id = insertCommon(datetime);
+
+        values.put("status", status);
+        values.put("common_id", common_id);
+
+        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
+
+        db.insert("todo", null, values);
+    }
+
+    public void insertDiary(Date datetime, String contents, ArrayList<String> hashtags, int keyTagIndex) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        long common_id = insertCommon(datetime);
+
+        values.put("contents", contents);
+        values.put("common_id", common_id);
+
+        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
+
+        db.insert("diary", null, values);
+    }
+
+    public void insertExpense(Date datetime, int amount, ArrayList<String> hashtags, int keyTagIndex) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        long common_id = insertCommon(datetime);
+
+        values.put("amount", amount);
+        values.put("common_id", common_id);
+
+        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
+
+        db.insert("expense", null, values);
+    }
+
+    private String selectDatetimeFromCommon(int _id) {
+        String datetime = "";
+        db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT datetime FROM common WHERE _id = '" + String.valueOf(_id) + "'",null);
+
+        if (c != null) {
+            c.moveToFirst();
+            Log.i("db_select_common","success id:" + String.valueOf(_id));
+            datetime = c.getString(c.getColumnIndex("datetime"));
+        }
+
+        c.close();
+        return datetime;
+    }
+
+    private ArrayList<String> selectHashtagInCommon(int common_id) {
+        ArrayList<String> hashtags = new ArrayList<String>();
+        db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM hashtag_in_common LEFT OUTER JOIN hashtag ON hashtag_in_common.hashtag_id = hashtag._id where common_id = '" + common_id + "'",null);
+
+        while (c.moveToNext()) {
+            String tag = c.getString(c.getColumnIndex("tag"));
+            hashtags.add(tag);
+        }
+
+        return hashtags;
+    }
+
+    private String selectKeyTagInCommon(int common_id) {
+        String keyTag = "";
+        db = helper.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM hashtag_in_common LEFT OUTER JOIN hashtag ON hashtag_in_common.hashtag_id = hashtag._id where common_id = '" + common_id + "'",null);
+
+        while (c.moveToNext()) {
+            String tag = c.getString(c.getColumnIndex("tag"));
+            int is_key_tag = c.getInt(c.getColumnIndex("is_key_tag"));
+            if (is_key_tag == 1) {
+                keyTag = tag;
+                break;
+            }
+        }
+        return keyTag;
+    }
+
+    public void selectTodo() {
+        TodoData todo = null;
+        db = helper.getReadableDatabase();
+        Cursor c = db.query("todo", null, null, null, null, null, null);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            int status = c.getInt(c.getColumnIndex("status"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+
+            Date datetime = null;
+            String datetimeStr = selectDatetimeFromCommon(common_id);
+            try {
+                datetime = datetimeFormat.parse(datetimeStr);
+            } catch (Exception e) {
+                Log.i("db_select_exception", "err");
+            }
+
+            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
+            String keyTag = selectKeyTagInCommon(common_id);
+
+            addTodo(datetime,status,hashtags,keyTag);
+
+            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
+            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+        }
+
+        c.close();
+    }
+
+    public void selectDiary() {
+        db = helper.getReadableDatabase();
+        Cursor c = db.query("diary",null,null,null,null,null,null);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            String contents = c.getString(c.getColumnIndex("contents"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+
+            Date datetime = null;
+            String datetimeStr = selectDatetimeFromCommon(common_id);
+            try {
+                datetime = datetimeFormat.parse(datetimeStr);
+            } catch (Exception e) {
+                Log.i("db_select_exception", "err");
+            }
+
+            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
+            String keyTag = selectKeyTagInCommon(common_id);
+
+            addDiary(datetime,contents,hashtags,keyTag);
+
+            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
+            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+        }
+
+        c.close();
+    }
+
+    public void selectExpense() {
+        db = helper.getReadableDatabase();
+        Cursor c = db.query("expense",null,null,null,null,null,null);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            int amount = c.getInt(c.getColumnIndex("amount"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+
+            Date datetime = null;
+            String datetimeStr = selectDatetimeFromCommon(common_id);
+            try {
+                datetime = datetimeFormat.parse(datetimeStr);
+            } catch (Exception e) {
+                Log.i("db_select_exception", "err");
+            }
+
+            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
+            String keyTag = selectKeyTagInCommon(common_id);
+
+            addExpense(datetime,amount,hashtags,keyTag);
+
+
+            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
+            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+        }
+
+        c.close();
+    }
+
+    public ArrayList<TimelineData> getLoadedDataTimeline() {
+        return loadedDataTimeline;
+    }
+
+    public ArrayList<TodoData> getLoadedDataTodo() {
+        return loadedDataTodo;
+    }
+
+    public ArrayList<DiaryData> getLoadedDataDiary() {
+        return loadedDataDiary;
+    }
+
+    public ArrayList<ExpenseData> getLoadedDataExpense() {
+        return loadedDataExpense;
+    }
+
+    public int getLoadDay() {
+        return loadDay;
+    }
+
+    public int getLoadMonth() {
+        return loadMonth;
+    }
+
+    public int getLoadYear() {
+        return loadYear;
     }
 
     private void insertDummyTodoData() {
@@ -78,31 +474,6 @@ public class DataManager {
                 insertTodo(datetime, (i%2) == 0 ? 1 : 0, hashtags, i%5);
             }
         }
-    }
-
-    private void addTodo(Date datetime, boolean status, ArrayList<String> hastags, int keyTagIndex) {
-        TodoData todo = new TodoData();
-
-        todo.setDate(datetime);
-        todo.setStatus(status);
-        todo.setHashTagList(hastags);
-        todo.setKeyTagIndex(keyTagIndex);
-
-        loadedDataTodo.add(todo);
-    }
-
-    private void addEmptyTodo(Date datetime) {
-        TodoData emptyTodo = new TodoEmptyData();
-
-        emptyTodo.setDate(datetime);
-
-        loadedDataTodo.add(emptyTodo);
-    }
-
-    private void updateDiaryData() {
-        loadedDataTodo.clear();
-        // select all data from db_mine_todo
-        // fill array with selected data
     }
 
     private void insertDummyDiaryData() {
@@ -172,32 +543,6 @@ public class DataManager {
             }
         }
     }
-
-    private void addDiary(Date date, String text, ArrayList<String> hastags, int keyTagIndex) {
-        DiaryData diary = new DiaryData();
-
-        diary.setDate(date);
-        diary.setText(text);
-        diary.setHashTagList(hastags);
-        diary.setKeyTagIndex(keyTagIndex);
-
-        loadedDataDiary.add(diary);
-    }
-
-    private void addEmptyDiary(Date datetime) {
-        DiaryEmtpyData emptyDiary = new DiaryEmtpyData();
-
-        emptyDiary.setDate(datetime);
-
-        loadedDataDiary.add(emptyDiary);
-    }
-
-    private void updateExpenseData() {
-        loadedDataTodo.clear();
-        // select all data from db_mine_todo
-        // fill array with selected data
-    }
-
     private void insertDummyExpenseData() {
         ArrayList<String> hashtags = new ArrayList<String>();
         hashtags.add("Brunch");
@@ -214,187 +559,5 @@ public class DataManager {
                 insertExpense(datetime, i*1000 + 1000, hashtags, i%5);
             }
         }
-    }
-
-    private void addExpense(Date date, int amount, ArrayList<String> hastags, int keyTagIndex) {
-        ExpenseData expense = new ExpenseData();
-
-        expense.setDate(date);
-        expense.setAmount(amount);
-        expense.setHashTagList(hastags);
-        expense.setKeyTagIndex(keyTagIndex);
-
-        loadedDataExpense.add(expense);
-    }
-
-    private void addEmptyExpense(Date datetime) {
-        ExpenseEmptyData emptyExpense = new ExpenseEmptyData();
-
-        emptyExpense.setDate(datetime);
-
-        loadedDataExpense.add(emptyExpense);
-    }
-
-    private void updateTimelineData() {
-        for(int i=0; i<getLoadedDataTodo().size(); i++) {
-            addTimeline(getLoadedDataTodo().get(i), getLoadedDataDiary().get(i),getLoadedDataExpense().get(i));
-        }
-    }
-
-    private void addTimeline(TodoData todo, DiaryData diary, ExpenseData expense) {
-        TimelineData timeline = new TimelineData();
-        timeline.setDate(todo.getRawDateTime());
-        timeline.setTodo(todo);
-        timeline.setDiary(diary);
-        timeline.setExpense(expense);
-
-        loadedDataTimeline.add(timeline);
-    }
-
-    public long insertHashtag(String tag) {
-        db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put("tag", tag);
-
-        return db.insert("hashtag", null, values);
-    }
-
-    public long insertCommon(Date datetime) {
-        db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        String datetimeStr = datetimeFormat.format(datetime);
-
-        values.put("datetime", datetimeStr);
-
-        return db.insert("common", null, values);
-    }
-
-    private void insertHashtagInCommon(long common_id, ArrayList<String> hashtags, int keyTagIndex) {
-        if (hashtags != null) {
-            for (String tag : hashtags) {
-                long hashtag_id = insertHashtag(tag);
-                int bIsKeyTag = (tag == hashtags.get(keyTagIndex) ? 1 : 0 );
-                insertHashtagInCommon(common_id,hashtag_id,bIsKeyTag);
-            }
-        }
-    }
-
-    public void insertHashtagInCommon(long commonId, long hashtagId, int isKeyTag) {
-        db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put("common_id", commonId);
-        values.put("hashtag_id", hashtagId);
-        values.put("is_key_tag", isKeyTag);
-
-        db.insert("hashtag_in_common", null, values);
-        db.close();
-    }
-
-    public void insertTodo(Date datetime, int status, ArrayList<String> hashtags, int keyTagIndex) {
-        db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        long common_id = insertCommon(datetime);
-
-        values.put("status", status);
-        values.put("common_id", common_id);
-
-        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
-
-        db.insert("todo", null, values);
-    }
-
-    public void insertDiary(Date datetime, String contents, ArrayList<String> hashtags, int keyTagIndex) {
-        db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        long common_id = insertCommon(datetime);
-
-        values.put("contents", contents);
-        values.put("common_id", common_id);
-
-        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
-
-        db.insert("diary", null, values);
-    }
-
-    public void insertExpense(Date datetime, int amount, ArrayList<String> hashtags, int keyTagIndex) {
-        db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        long common_id = insertCommon(datetime);
-
-        values.put("amount", amount);
-        values.put("common_id", common_id);
-
-        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
-
-        db.insert("expense", null, values);
-    }
-
-    public void selectTodo() {
-        db = helper.getReadableDatabase();
-        Cursor c = db.query("todo", null, null, null, null, null, null);
-
-        while (c.moveToNext()) {
-            int _id = c.getInt(c.getColumnIndex("_id"));
-            int status = c.getInt(c.getColumnIndex("status"));
-            int common_id = c.getInt(c.getColumnIndex("common_id"));
-            Log.i("db_select_todo", "id:" + _id + ", status:" + status + ", common_id:" + common_id);
-        }
-    }
-
-    public void selectDiary() {
-        db = helper.getReadableDatabase();
-        Cursor c = db.query("diary",null,null,null,null,null,null);
-
-        while (c.moveToNext()) {
-            int _id = c.getInt(c.getColumnIndex("_id"));
-            String contents = c.getString(c.getColumnIndex("contents"));
-            int common_id = c.getInt(c.getColumnIndex("common_id"));
-            Log.i("db_select_diary", "id:" + _id + ", contents:" + contents + ", common_id:" + common_id);
-        }
-    }
-
-    public void selectExpense() {
-        db = helper.getReadableDatabase();
-        Cursor c = db.query("expense",null,null,null,null,null,null);
-
-        while (c.moveToNext()) {
-            int _id = c.getInt(c.getColumnIndex("_id"));
-            int amount = c.getInt(c.getColumnIndex("amount"));
-            int common_id = c.getInt(c.getColumnIndex("common_id"));
-            Log.i("db_select_expense", "id:" + _id + ", amount:" + amount + ", common_id:" + common_id);
-        }
-    }
-
-    public ArrayList<TimelineData> getLoadedDataTimeline() {
-        return loadedDataTimeline;
-    }
-
-    public ArrayList<TodoData> getLoadedDataTodo() {
-        return loadedDataTodo;
-    }
-
-    public ArrayList<DiaryData> getLoadedDataDiary() {
-        return loadedDataDiary;
-    }
-
-    public ArrayList<ExpenseData> getLoadedDataExpense() {
-        return loadedDataExpense;
-    }
-
-    public int getLoadDay() {
-        return loadDay;
-    }
-
-    public int getLoadMonth() {
-        return loadMonth;
-    }
-
-    public int getLoadYear() {
-        return loadYear;
     }
 }
