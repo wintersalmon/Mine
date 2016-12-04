@@ -1,6 +1,7 @@
 package com.nnm.team91.mine.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.nnm.team91.mine.DetailTodoActivity;
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.TodoAdapter;
 
@@ -89,6 +92,8 @@ public class TodoListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // TODO: 2016. 12. 2. add function to OnItemClickListener
+                MainActivity main = (MainActivity) getActivity();
+                main.DetailTodo();
             }
         }) ;
 

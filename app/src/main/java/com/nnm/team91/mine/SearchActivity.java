@@ -15,8 +15,8 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        actionBar = getSupportActionBar();
-        actionBar.hide();
+//        actionBar = getSupportActionBar();
+//        actionBar.hide();
 
         fragmentManager = getSupportFragmentManager();
         searchFragment = (SearchFragment) fragmentManager.findFragmentById(R.id.search_fm);
