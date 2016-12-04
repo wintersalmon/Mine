@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         });
 
-        datamanager = new DataManager();
+        datamanager = new DataManager(MainActivity.this, 1);
         datamanager.updateLoadedData(2016,12,1);
     }
 

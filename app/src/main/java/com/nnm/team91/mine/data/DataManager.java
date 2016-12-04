@@ -1,5 +1,7 @@
 package com.nnm.team91.mine.data;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,14 +25,27 @@ public class DataManager {
     private ArrayList<DiaryData> loadedDataDiary;
     private ArrayList<ExpenseData> loadedDataExpense;
 
-    public DataManager() {
+    private MineSQLiteOpenHelper sqliteHelper;
+
+//    public DataManager() {
+//        loadedDataTimeline = new ArrayList<TimelineData>();
+//        loadedDataTodo = new ArrayList<TodoData>();
+//        loadedDataDiary = new ArrayList<DiaryData>();
+//        loadedDataExpense = new ArrayList<ExpenseData>();
+//
+//        sqliteHelper = null;
+//
+////        this.loadDayCountFront = 10;
+////        this.loadDayCountBack = 10;
+//    }
+
+    public DataManager(Context context, int version) {
         loadedDataTimeline = new ArrayList<TimelineData>();
         loadedDataTodo = new ArrayList<TodoData>();
         loadedDataDiary = new ArrayList<DiaryData>();
         loadedDataExpense = new ArrayList<ExpenseData>();
 
-//        this.loadDayCountFront = 10;
-//        this.loadDayCountBack = 10;
+        sqliteHelper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
     }
 
     public void updateLoadedData(int year, int month, int day) {
@@ -224,6 +239,30 @@ public class DataManager {
         timeline.setExpense(expense);
 
         loadedDataTimeline.add(timeline);
+    }
+
+    public void insertCommon(Date datetime) {
+
+    }
+
+    public void insertHashtag(String tag) {
+
+    }
+
+    public void insertHashtagInCommon(int commonId, int hashtagId) {
+
+    }
+
+    public void insertTodo(Date datetime,  boolean status, ArrayList<String> hastags, int keyTagIndex) {
+
+    }
+
+    public void insertDiary(Date date, String text, ArrayList<String> hastags, int keyTagIndex) {
+
+    }
+
+    public void insertExpense(Date date, int amount, ArrayList<String> hastags, int keyTagIndex) {
+
     }
 
     public ArrayList<TimelineData> getLoadedDataTimeline() {
