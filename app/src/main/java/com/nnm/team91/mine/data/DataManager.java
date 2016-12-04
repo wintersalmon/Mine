@@ -1,12 +1,16 @@
 package com.nnm.team91.mine.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import static android.R.attr.data;
 
 /**
  * Created by wintersalmon on 2016. 12. 1..
@@ -14,30 +18,19 @@ import static android.R.attr.data;
  */
 
 public class DataManager {
+    static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
     private int loadYear;
     private int loadMonth;
     private int loadDay;
-//    private int loadDayCountFront;
-//    private int loadDayCountBack;
 
     private ArrayList<TimelineData> loadedDataTimeline;
     private ArrayList<TodoData> loadedDataTodo;
     private ArrayList<DiaryData> loadedDataDiary;
     private ArrayList<ExpenseData> loadedDataExpense;
 
-    private MineSQLiteOpenHelper sqliteHelper;
-
-//    public DataManager() {
-//        loadedDataTimeline = new ArrayList<TimelineData>();
-//        loadedDataTodo = new ArrayList<TodoData>();
-//        loadedDataDiary = new ArrayList<DiaryData>();
-//        loadedDataExpense = new ArrayList<ExpenseData>();
-//
-//        sqliteHelper = null;
-//
-////        this.loadDayCountFront = 10;
-////        this.loadDayCountBack = 10;
-//    }
+    private SQLiteDatabase db;
+    private MineSQLiteOpenHelper helper;
 
     public DataManager(Context context, int version) {
         loadedDataTimeline = new ArrayList<TimelineData>();
@@ -45,7 +38,7 @@ public class DataManager {
         loadedDataDiary = new ArrayList<DiaryData>();
         loadedDataExpense = new ArrayList<ExpenseData>();
 
-        sqliteHelper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
+        helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
     }
 
     public void updateLoadedData(int year, int month, int day) {
@@ -62,6 +55,12 @@ public class DataManager {
 
     private void updateTodoData() {
         loadedDataTodo.clear();
+        // select all data from db_mine_todo
+        // fill array with selected data
+    }
+
+    private void insertDummyTodoData() {
+        loadedDataTodo.clear();
 
         // create common data
         Date datetime = Calendar.getInstance().getTime();
@@ -76,7 +75,7 @@ public class DataManager {
             if (i%3 == 0) {
                 addEmptyTodo(datetime);
             } else {
-                addTodo(datetime, (i%2) == 0 ? true : false, hashtags, i%5);
+                insertTodo(datetime, (i%2) == 0 ? 1 : 0, hashtags, i%5);
             }
         }
     }
@@ -100,8 +99,13 @@ public class DataManager {
         loadedDataTodo.add(emptyTodo);
     }
 
-
     private void updateDiaryData() {
+        loadedDataTodo.clear();
+        // select all data from db_mine_todo
+        // fill array with selected data
+    }
+
+    private void insertDummyDiaryData() {
         ArrayList<String> hashtags = new ArrayList<String>();
         hashtags.add("Diary");
         hashtags.add("Monthly");
@@ -164,7 +168,7 @@ public class DataManager {
             if (i%4 == 0) {
                 addEmptyDiary(datetime);
             } else {
-                addDiary(datetime, text, hashtags, i%5);
+                insertDiary(datetime, text, hashtags, i%5);
             }
         }
     }
@@ -189,6 +193,12 @@ public class DataManager {
     }
 
     private void updateExpenseData() {
+        loadedDataTodo.clear();
+        // select all data from db_mine_todo
+        // fill array with selected data
+    }
+
+    private void insertDummyExpenseData() {
         ArrayList<String> hashtags = new ArrayList<String>();
         hashtags.add("Brunch");
         hashtags.add("Lunch");
@@ -201,7 +211,7 @@ public class DataManager {
             if (i%2 == 0) {
                 addEmptyExpense(datetime);
             } else {
-                addExpense(datetime, i*1000, hashtags, i%5);
+                insertExpense(datetime, i*1000 + 1000, hashtags, i%5);
             }
         }
     }
@@ -241,28 +251,123 @@ public class DataManager {
         loadedDataTimeline.add(timeline);
     }
 
-    public void insertCommon(Date datetime) {
+    public long insertHashtag(String tag) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put("tag", tag);
+
+        return db.insert("hashtag", null, values);
     }
 
-    public void insertHashtag(String tag) {
+    public long insertCommon(Date datetime) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String datetimeStr = datetimeFormat.format(datetime);
 
+        values.put("datetime", datetimeStr);
+
+        return db.insert("common", null, values);
     }
 
-    public void insertHashtagInCommon(int commonId, int hashtagId) {
-
+    private void insertHashtagInCommon(long common_id, ArrayList<String> hashtags, int keyTagIndex) {
+        if (hashtags != null) {
+            for (String tag : hashtags) {
+                long hashtag_id = insertHashtag(tag);
+                int bIsKeyTag = (tag == hashtags.get(keyTagIndex) ? 1 : 0 );
+                insertHashtagInCommon(common_id,hashtag_id,bIsKeyTag);
+            }
+        }
     }
 
-    public void insertTodo(Date datetime,  boolean status, ArrayList<String> hastags, int keyTagIndex) {
+    public void insertHashtagInCommon(long commonId, long hashtagId, int isKeyTag) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put("common_id", commonId);
+        values.put("hashtag_id", hashtagId);
+        values.put("is_key_tag", isKeyTag);
+
+        db.insert("hashtag_in_common", null, values);
+        db.close();
     }
 
-    public void insertDiary(Date date, String text, ArrayList<String> hastags, int keyTagIndex) {
+    public void insertTodo(Date datetime, int status, ArrayList<String> hashtags, int keyTagIndex) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        long common_id = insertCommon(datetime);
+
+        values.put("status", status);
+        values.put("common_id", common_id);
+
+        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
+
+        db.insert("todo", null, values);
     }
 
-    public void insertExpense(Date date, int amount, ArrayList<String> hastags, int keyTagIndex) {
+    public void insertDiary(Date datetime, String contents, ArrayList<String> hashtags, int keyTagIndex) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        long common_id = insertCommon(datetime);
+
+        values.put("contents", contents);
+        values.put("common_id", common_id);
+
+        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
+
+        db.insert("diary", null, values);
+    }
+
+    public void insertExpense(Date datetime, int amount, ArrayList<String> hashtags, int keyTagIndex) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        long common_id = insertCommon(datetime);
+
+        values.put("amount", amount);
+        values.put("common_id", common_id);
+
+        insertHashtagInCommon(common_id, hashtags, keyTagIndex);
+
+        db.insert("expense", null, values);
+    }
+
+    public void selectTodo() {
+        db = helper.getReadableDatabase();
+        Cursor c = db.query("todo", null, null, null, null, null, null);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            int status = c.getInt(c.getColumnIndex("status"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+            Log.i("db_select_todo", "id:" + _id + ", status:" + status + ", common_id:" + common_id);
+        }
+    }
+
+    public void selectDiary() {
+        db = helper.getReadableDatabase();
+        Cursor c = db.query("diary",null,null,null,null,null,null);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            String contents = c.getString(c.getColumnIndex("contents"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+            Log.i("db_select_diary", "id:" + _id + ", contents:" + contents + ", common_id:" + common_id);
+        }
+    }
+
+    public void selectExpense() {
+        db = helper.getReadableDatabase();
+        Cursor c = db.query("expense",null,null,null,null,null,null);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            int amount = c.getInt(c.getColumnIndex("amount"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+            Log.i("db_select_expense", "id:" + _id + ", amount:" + amount + ", common_id:" + common_id);
+        }
     }
 
     public ArrayList<TimelineData> getLoadedDataTimeline() {

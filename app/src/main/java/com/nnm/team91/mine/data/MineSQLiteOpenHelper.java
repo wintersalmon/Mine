@@ -44,7 +44,7 @@ public class MineSQLiteOpenHelper extends SQLiteOpenHelper {
         String sql_create_table_diary =
                 "CREATE TABLE diary (" +
                         "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "content TEXT NOT NULL," +
+                        "contents TEXT NOT NULL," +
                         "common_id INTEGER," +
                         "FOREIGN KEY(common_id) REFERENCES common(_id));";
 
