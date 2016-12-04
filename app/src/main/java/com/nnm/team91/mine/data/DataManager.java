@@ -65,9 +65,10 @@ public class DataManager {
         selectTodo();
     }
 
-    private void addTodo(Date datetime, int status, ArrayList<String> hastags, String keyTag) {
+    private void addTodo(int id, Date datetime, int status, ArrayList<String> hastags, String keyTag) {
         TodoData todo = new TodoData();
 
+        todo.setId(id);
         todo.setDate(datetime);
         if (status == 1) todo.setStatus(true);
         else todo.setStatus(false);
@@ -80,6 +81,7 @@ public class DataManager {
     private void addEmptyTodo(Date datetime) {
         TodoData emptyTodo = new TodoEmptyData();
 
+        emptyTodo.setId(0);
         emptyTodo.setDate(datetime);
 
         loadedDataTodo.add(emptyTodo);
@@ -93,9 +95,10 @@ public class DataManager {
     }
 
 
-    private void addDiary(Date date, String text, ArrayList<String> hastags, String keyTag) {
+    private void addDiary(int id, Date date, String text, ArrayList<String> hastags, String keyTag) {
         DiaryData diary = new DiaryData();
 
+        diary.setId(id);
         diary.setDate(date);
         diary.setText(text);
         diary.setHashTagList(hastags);
@@ -107,6 +110,7 @@ public class DataManager {
     private void addEmptyDiary(Date datetime) {
         DiaryEmtpyData emptyDiary = new DiaryEmtpyData();
 
+        emptyDiary.setId(0);
         emptyDiary.setDate(datetime);
 
         loadedDataDiary.add(emptyDiary);
@@ -121,9 +125,10 @@ public class DataManager {
 
 
 
-    private void addExpense(Date date, int amount, ArrayList<String> hastags, String keyTag) {
+    private void addExpense(int id, Date date, int amount, ArrayList<String> hastags, String keyTag) {
         ExpenseData expense = new ExpenseData();
 
+        expense.setId(id);
         expense.setDate(date);
         expense.setAmount(amount);
         expense.setHashTagList(hastags);
@@ -135,6 +140,7 @@ public class DataManager {
     private void addEmptyExpense(Date datetime) {
         ExpenseEmptyData emptyExpense = new ExpenseEmptyData();
 
+        emptyExpense.setId(0);
         emptyExpense.setDate(datetime);
 
         loadedDataExpense.add(emptyExpense);
@@ -353,7 +359,7 @@ public class DataManager {
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
             String keyTag = selectKeyTagInCommon(common_id);
 
-            addTodo(datetime,status,hashtags,keyTag);
+            addTodo(common_id,datetime,status,hashtags,keyTag);
 
             Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
             Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
@@ -382,7 +388,7 @@ public class DataManager {
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
             String keyTag = selectKeyTagInCommon(common_id);
 
-            addDiary(datetime,contents,hashtags,keyTag);
+            addDiary(common_id,datetime,contents,hashtags,keyTag);
 
             Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
             Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
@@ -411,8 +417,7 @@ public class DataManager {
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
             String keyTag = selectKeyTagInCommon(common_id);
 
-            addExpense(datetime,amount,hashtags,keyTag);
-
+            addExpense(common_id,datetime,amount,hashtags,keyTag);
 
             Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
             Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
