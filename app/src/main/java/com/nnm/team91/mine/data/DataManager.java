@@ -59,8 +59,8 @@ public class DataManager {
 
     private void updateTodoData() {
         loadedDataTodo.clear();
-        // select all data from db_mine_todo
-        // fill array with selected data
+        // TODO: 2016-12-04 select all data from db_mine_todo
+        // TODO: 2016-12-04 fill array with selected data
         selectTodo();
     }
 
@@ -86,8 +86,8 @@ public class DataManager {
 
     private void updateDiaryData() {
         loadedDataDiary.clear();
-        // select all data from db_mine_todo
-        // fill array with selected data
+        // TODO: 2016-12-04 select all data from db_mine_todo
+        // TODO: 2016-12-04 fill array with selected data
         selectDiary();
     }
 
@@ -113,8 +113,8 @@ public class DataManager {
 
     private void updateExpenseData() {
         loadedDataExpense.clear();
-        // select all data from db_mine_todo
-        // fill array with selected data
+        // TODO: 2016-12-04 select all data from db_mine_todo
+        // TODO: 2016-12-04 fill array with selected data
         selectExpense();
     }
 
@@ -151,7 +151,6 @@ public class DataManager {
         int diaryIdx = 0, diaryCount = getLoadedDataDiary().size();
         int expenseIdx = 0, expenseCount = getLoadedDataExpense().size();
 
-
         while (todoIdx < todoCount ||
                 diaryIdx < diaryCount ||
                 expenseIdx < expenseCount) {
@@ -186,14 +185,8 @@ public class DataManager {
             if (emptyDiary != null) emptyDiary.setDate(datetime);
             if (expenseEmpty != null) expenseEmpty.setDate(datetime);
 
-//            todo =  (todoIdx < todoCount) ? getLoadedDataTodo().get(todoIdx++) : new TodoEmptyData();
-//            diary =  (diaryIdx < diaryCount) ? getLoadedDataDiary().get(diaryIdx++) : new DiaryEmtpyData();
-//            expense =  (expenseIdx < expenseCount) ? getLoadedDataExpense().get(expenseIdx++) : new ExpenseEmptyData();
             addTimeline(todo,diary,expense);
         }
-//        for(int i=0; i<getLoadedDataTodo().size(); i++) {
-//            addTimeline(getLoadedDataTodo().get(i), getLoadedDataDiary().get(i),getLoadedDataExpense().get(i));
-//        }
     }
 
     private void addTimeline(TodoData todo, DiaryData diary, ExpenseData expense) {
