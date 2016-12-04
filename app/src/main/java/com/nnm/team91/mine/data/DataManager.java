@@ -16,7 +16,7 @@ import java.util.Date;
  * Created by wintersalmon on 2016. 12. 1..
  * DataManager
  */
-
+// TODO: 2016-12-04 remove Logs from db connection methods
 public class DataManager {
     static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
@@ -39,6 +39,7 @@ public class DataManager {
         loadedDataExpense = new ArrayList<ExpenseData>();
 
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
+        // TODO: 2016-12-04 remove unused dummy insert statements
 //        insertDummyTodoData();
 //        insertDummyDiaryData();
 //        insertDummyExpenseData();
