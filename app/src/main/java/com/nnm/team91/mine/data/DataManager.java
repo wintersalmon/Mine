@@ -19,6 +19,9 @@ import java.util.Date;
 
 public class DataManager {
     static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    static private String dateFmtStr = "%4d/%02d/%02d";
+    static private String timeFmtStr = "%02d:%02d";
+    static private String datetimeFmtStr = "%s %s";
 
     private int loadYear;
     private int loadMonth;
@@ -47,6 +50,9 @@ public class DataManager {
         this.loadMonth = month;
         this.loadDay = day;
 
+//        insertDummyTodoData();
+//        insertDummyDiaryData();
+//        insertDummyExpenseData();
         updateTodoData();
         updateDiaryData();
         updateExpenseData();
@@ -57,27 +63,6 @@ public class DataManager {
         loadedDataTodo.clear();
         // select all data from db_mine_todo
         // fill array with selected data
-    }
-
-    private void insertDummyTodoData() {
-        loadedDataTodo.clear();
-
-        // create common data
-        Date datetime = Calendar.getInstance().getTime();
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Todo");
-        hashtags.add("Weekly");
-        hashtags.add("Happy");
-        hashtags.add("VeryVeryLongHashTagForTodo");
-        hashtags.add("Energy");
-
-        for (int i=0; i<20; i++) {
-            if (i%3 == 0) {
-                addEmptyTodo(datetime);
-            } else {
-                insertTodo(datetime, (i%2) == 0 ? 1 : 0, hashtags, i%5);
-            }
-        }
     }
 
     private void addTodo(Date datetime, boolean status, ArrayList<String> hastags, int keyTagIndex) {
@@ -105,74 +90,6 @@ public class DataManager {
         // fill array with selected data
     }
 
-    private void insertDummyDiaryData() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Diary");
-        hashtags.add("Monthly");
-        hashtags.add("Sad");
-        hashtags.add("ThisIsAVeryLongHashTagForDiary");
-        hashtags.add("NotHungry");
-
-        String text = "일기의 내용을 아무거나 집어넣어 보자\n" +
-                "물은 춤을 추는 뱀이다.\n" +
-                "\n" +
-                "물을 늘리려고\n" +
-                "\n" +
-                "손으로 억지로 짓이겨 죽이면,\n" +
-                "\n" +
-                "흐리게 터진다.\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "감정 표현이 극과 극인 사람은\n" +
-                "\n" +
-                "쇠, 매끄러운 가죽이다.\n" +
-                "\n" +
-                "한 쪽 면은 아주 진하고\n" +
-                "\n" +
-                "다른 면은 아주 광채가 난다.\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "나는 레오나르도 다빈치를 닮았다.\n" +
-                "\n" +
-                "여러 방면의 세계를 맛보는걸 즐기며,\n" +
-                "\n" +
-                "나보다는 나의 후손들에게 이로운걸 남긴다.\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "자동차는 오리다.\n" +
-                "\n" +
-                "꽥꽥거린다.\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "한국인은 고블린이다.\n" +
-                "\n" +
-                "생긴거도 고블린이고\n" +
-                "\n" +
-                "사기치는거도 그 종족과 흡사 하다.\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "올림픽은 악마의 눈가림이다.\n" +
-                "\n" +
-                "선수들은 열정을 다 하지만\n" +
-                "\n" +
-                "결국 남는건 후회일 것이다.";
-
-        Date datetime = Calendar.getInstance().getTime();
-        for (int i=0; i<20; i++) {
-            if (i%4 == 0) {
-                addEmptyDiary(datetime);
-            } else {
-                insertDiary(datetime, text, hashtags, i%5);
-            }
-        }
-    }
-
     private void addDiary(Date date, String text, ArrayList<String> hastags, int keyTagIndex) {
         DiaryData diary = new DiaryData();
 
@@ -196,24 +113,6 @@ public class DataManager {
         loadedDataTodo.clear();
         // select all data from db_mine_todo
         // fill array with selected data
-    }
-
-    private void insertDummyExpenseData() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Brunch");
-        hashtags.add("Lunch");
-        hashtags.add("Dinner");
-        hashtags.add("HashTagThatCouldBeQuiteLong");
-        hashtags.add("Hello");
-
-        Date datetime = Calendar.getInstance().getTime();
-        for (int i=0; i<20; i++) {
-            if (i%2 == 0) {
-                addEmptyExpense(datetime);
-            } else {
-                insertExpense(datetime, i*1000 + 1000, hashtags, i%5);
-            }
-        }
     }
 
     private void addExpense(Date date, int amount, ArrayList<String> hastags, int keyTagIndex) {
@@ -397,4 +296,205 @@ public class DataManager {
     public int getLoadYear() {
         return loadYear;
     }
+
+    private void insertDummyTodoData() {
+        ArrayList<String> hashtags = new ArrayList<String>();
+        hashtags.add("Todo");
+        hashtags.add("Weekly");
+        hashtags.add("Happy");
+        hashtags.add("VeryVeryLongHashTagForTodo");
+        hashtags.add("Energy");
+
+        Date datetime = Calendar.getInstance().getTime();
+        int year = 2016;
+        int month = 12;
+        int count = 0;
+
+        int status;
+        int keyTagIndex;
+
+        for (int day=1; day<31; day++) {
+            for (int hour=9; hour < 24; hour += 2) {
+
+                int minutes = 0;
+                while (minutes < 60) {
+                    String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
+
+                    try {
+                        datetime = datetimeFormat.parse(datetimeStr);
+                    } catch (Exception e) {
+                        Log.i("DATETIME", "ERROR");
+                        continue;
+                    }
+
+                    status = (count%2) == 0 ? 1 : 0;
+                    keyTagIndex = count%hashtags.size();
+
+                    if (count++ % 3 == 0) {
+                        addEmptyTodo(datetime);
+                    } else {
+                        insertTodo(datetime, status, hashtags, keyTagIndex);
+                    }
+
+                    if (count%2 == 1) {
+                        minutes += 15;
+                    }
+                }
+            }
+        }
+    }
+
+    private void insertDummyDiaryData() {
+        ArrayList<String> hashtags = new ArrayList<String>();
+        hashtags.add("Diary");
+        hashtags.add("Monthly");
+        hashtags.add("Sad");
+        hashtags.add("ThisIsAVeryLongHashTagForDiary");
+        hashtags.add("NotHungry");
+
+        Date datetime = Calendar.getInstance().getTime();
+        int year = 2016;
+        int month = 12;
+        int count = 0;
+
+        int keyTagIndex;
+
+        for (int day=1; day<31; day++) {
+            for (int hour=9; hour < 24; hour += 5) {
+
+                int minutes = 0;
+                while (minutes < 60) {
+                    String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
+
+                    try {
+                        datetime = datetimeFormat.parse(datetimeStr);
+                    } catch (Exception e) {
+                        Log.i("DATETIME", "ERROR");
+                        continue;
+                    }
+
+                    keyTagIndex = count%hashtags.size();
+
+                    if (count%4 == 0) {
+                        addEmptyDiary(datetime);
+                    } else {
+                        insertDiary(datetime, sample_diary_contents, hashtags, keyTagIndex);
+                    }
+
+                    if (count%2 == 1) {
+                        minutes += 20;
+                    }
+                }
+            }
+        }
+    }
+
+    private void insertDummyExpenseData() {
+        ArrayList<String> hashtags = new ArrayList<String>();
+        hashtags.add("Brunch");
+        hashtags.add("Lunch");
+        hashtags.add("Dinner");
+        hashtags.add("HashTagThatCouldBeQuiteLong");
+        hashtags.add("Hello");
+
+        Date datetime = Calendar.getInstance().getTime();
+        int year = 2016;
+        int month = 12;
+        int count = 0;
+
+        int amount;
+        int keyTagIndex;
+
+        for (int day=1; day<31; day++) {
+            for (int hour=9; hour < 24; hour += 5) {
+
+                int minutes = 0;
+                while (minutes < 60) {
+                    String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
+
+                    try {
+                        datetime = datetimeFormat.parse(datetimeStr);
+                    } catch (Exception e) {
+                        Log.i("DATETIME", "ERROR");
+                        continue;
+                    }
+
+                    amount = count * 500 + 1000;
+                    keyTagIndex = count%hashtags.size();
+
+                    if (count%2 == 0) {
+                        addEmptyExpense(datetime);
+                    } else {
+                        insertExpense(datetime, amount, hashtags, keyTagIndex);
+                    }
+
+                    if (count%2 == 1) {
+                        minutes += 30;
+                    }
+                }
+            }
+        }
+    }
+
+    private String createDateString(int year, int month, int day) {
+        return String.format(dateFmtStr, year, month, day);
+    }
+
+    private String createTimeString(int hour, int minutes) {
+        return String.format(timeFmtStr, hour, minutes);
+    }
+
+    private String createDateTimeString(int year, int month, int day, int hour, int minutes) {
+        return String.format(datetimeFmtStr, createDateString(year,month,day), createTimeString(hour,minutes));
+    }
+
+    static private String sample_diary_contents = "일기의 내용을 아무거나 집어넣어 보자\n" +
+            "물은 춤을 추는 뱀이다.\n" +
+            "\n" +
+            "물을 늘리려고\n" +
+            "\n" +
+            "손으로 억지로 짓이겨 죽이면,\n" +
+            "\n" +
+            "흐리게 터진다.\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "감정 표현이 극과 극인 사람은\n" +
+            "\n" +
+            "쇠, 매끄러운 가죽이다.\n" +
+            "\n" +
+            "한 쪽 면은 아주 진하고\n" +
+            "\n" +
+            "다른 면은 아주 광채가 난다.\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "나는 레오나르도 다빈치를 닮았다.\n" +
+            "\n" +
+            "여러 방면의 세계를 맛보는걸 즐기며,\n" +
+            "\n" +
+            "나보다는 나의 후손들에게 이로운걸 남긴다.\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "자동차는 오리다.\n" +
+            "\n" +
+            "꽥꽥거린다.\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "한국인은 고블린이다.\n" +
+            "\n" +
+            "생긴거도 고블린이고\n" +
+            "\n" +
+            "사기치는거도 그 종족과 흡사 하다.\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "올림픽은 악마의 눈가림이다.\n" +
+            "\n" +
+            "선수들은 열정을 다 하지만\n" +
+            "\n" +
+            "결국 남는건 후회일 것이다.";
 }
