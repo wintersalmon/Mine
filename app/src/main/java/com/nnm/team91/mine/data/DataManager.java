@@ -19,6 +19,9 @@ import java.util.Date;
 // TODO: 2016-12-04 remove Logs from db connection methods
 public class DataManager {
     static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    static private String dateFmtStr = "%4d/%02d/%02d";
+    static private String timeFmtStr = "%02d:%02d";
+    static private String datetimeFmtStr = "%s %s";
 
     private int loadYear;
     private int loadMonth;
@@ -40,10 +43,9 @@ public class DataManager {
 
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
         // TODO: 2016-12-04 remove unused dummy insert statements
-//        insertDummyTodoData();
-//        insertDummyDiaryData();
-//        insertDummyExpenseData();
-//        context.deleteDatabase("mine.db");
+
+//        fillDummyData();
+//        deleteDataBase(context);
     }
 
     public void updateLoadedData(int year, int month, int day) {
@@ -52,9 +54,6 @@ public class DataManager {
         this.loadMonth = month;
         this.loadDay = day;
 
-//        insertDummyTodoData();
-//        insertDummyDiaryData();
-//        insertDummyExpenseData();
         updateTodoData();
         updateDiaryData();
         updateExpenseData();
@@ -97,7 +96,7 @@ public class DataManager {
         selectDiary();
     }
 
-    private void addDiary(Date date, String text, ArrayList<String> hastags, int keyTagIndex) {
+    private void addDiary(int id, Date date, String text, ArrayList<String> hastags, String keyTag) {
         DiaryData diary = new DiaryData();
 
         diary.setId(id);
@@ -606,6 +605,16 @@ public class DataManager {
 
     private String createDateTimeString(int year, int month, int day, int hour, int minutes) {
         return String.format(datetimeFmtStr, createDateString(year,month,day), createTimeString(hour,minutes));
+    }
+
+    private void fillDummyData() {
+        insertDummyTodoData();
+        insertDummyDiaryData();
+        insertDummyExpenseData();
+    }
+
+    private void deleteDataBase(Context context) {
+        context.deleteDatabase("mine.db");
     }
 
     static private String sample_diary_contents = "일기의 내용을 아무거나 집어넣어 보자\n" +
