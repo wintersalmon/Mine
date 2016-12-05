@@ -60,7 +60,9 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".NoticeActivity"></activity>
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".edit.EditTodoActivity" />
+        <activity android:name=".DetailTodoActivity"></activity>
     </application>
 
 </manifest>

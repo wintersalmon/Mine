@@ -15,8 +15,10 @@ public class CommonData {
     static private DateFormat dateFormat = new SimpleDateFormat("MM/dd");
     static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
+    int id;
     Date datetime;
     int keyTagIndex;
+    String keyTag;
     ArrayList<String> hashTagList;
 
     public CommonData() {
@@ -24,7 +26,9 @@ public class CommonData {
         keyTagIndex = 1;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setDate(Date date) {
         datetime = date;
     }
@@ -34,6 +38,9 @@ public class CommonData {
             hashTagList.add(tag);
         }
     }
+    public void setKeyTag(String keyTag) {
+        this.keyTag = keyTag;
+    }
     public void setKeyTagIndex(int keyTagIndex) {
         if (keyTagIndex < 0 || keyTagIndex > hashTagList.size()){
             this.keyTagIndex = 1;
@@ -41,13 +48,22 @@ public class CommonData {
             this.keyTagIndex = keyTagIndex;
         }
     }
-    public Date getRawDateTime() { return datetime; }
+
+    public int getId() {
+        return id;
+    }
+    public Date getRawDateTime() {
+        return datetime;
+    }
     public String getDateTime() {
         return datetimeFormat.format(datetime);
     }
-    public String getDate() { return dateFormat.format(datetime); }
-    public String getTime() { return timeFormat.format(datetime); }
-
+    public String getDate() {
+        return dateFormat.format(datetime);
+    }
+    public String getTime() {
+        return timeFormat.format(datetime);
+    }
     public String getHasTagList() {
         String output = "";
         for (String tag : hashTagList) {
@@ -55,9 +71,7 @@ public class CommonData {
         }
         return output;
     }
-
     public String getKeyTag() {
-        return hashTagList.get(keyTagIndex);
+        return keyTag;
     }
-
 }
