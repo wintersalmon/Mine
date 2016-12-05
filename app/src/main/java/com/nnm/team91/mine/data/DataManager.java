@@ -43,8 +43,6 @@ public class DataManager {
 
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
         // TODO: 2016-12-04 remove unused dummy insert statements
-
-//        fillDummyData();
 //        deleteDataBase(context);
     }
 
@@ -54,6 +52,7 @@ public class DataManager {
         this.loadMonth = month;
         this.loadDay = day;
 
+//        fillDummyData();
         updateTodoData();
         updateDiaryData();
         updateExpenseData();
@@ -251,7 +250,6 @@ public class DataManager {
         values.put("is_key_tag", isKeyTag);
 
         db.insert("hashtag_in_common", null, values);
-        db.close();
     }
 
     public void insertTodo(Date datetime, int status, ArrayList<String> hashtags, int keyTagIndex) {
@@ -478,7 +476,7 @@ public class DataManager {
                 int minutes = 0;
                 while (minutes < 60) {
                     String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-
+                    Log.i("TODO", datetimeStr);
                     try {
                         datetime = datetimeFormat.parse(datetimeStr);
                     } catch (Exception e) {
@@ -498,6 +496,7 @@ public class DataManager {
                     if (count%2 == 1) {
                         minutes += 15;
                     }
+                    count++;
                 }
             }
         }
@@ -524,7 +523,7 @@ public class DataManager {
                 int minutes = 0;
                 while (minutes < 60) {
                     String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-
+                    Log.i("DIARY", datetimeStr);
                     try {
                         datetime = datetimeFormat.parse(datetimeStr);
                     } catch (Exception e) {
@@ -543,6 +542,7 @@ public class DataManager {
                     if (count%2 == 1) {
                         minutes += 20;
                     }
+                    count++;
                 }
             }
         }
@@ -565,12 +565,12 @@ public class DataManager {
         int keyTagIndex;
 
         for (int day=1; day<31; day++) {
-            for (int hour=9; hour < 24; hour += 5) {
+            for (int hour=9; hour < 24; hour += 3) {
 
                 int minutes = 0;
                 while (minutes < 60) {
                     String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-
+                    Log.i("EXPENSE", datetimeStr);
                     try {
                         datetime = datetimeFormat.parse(datetimeStr);
                     } catch (Exception e) {
@@ -590,6 +590,7 @@ public class DataManager {
                     if (count%2 == 1) {
                         minutes += 30;
                     }
+                    count++;
                 }
             }
         }
