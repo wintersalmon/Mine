@@ -18,10 +18,10 @@ import java.util.Date;
  */
 // TODO: 2016-12-04 remove Logs from db connection methods
 public class DataManager {
-    static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-    static private String dateFmtStr = "%4d/%02d/%02d";
-    static private String timeFmtStr = "%02d:%02d";
-    static private String datetimeFmtStr = "%s %s";
+    private DateFormat datetimeFormat;
+    private String dateFmtStr;
+    private String timeFmtStr;
+    private String datetimeFmtStr;
 
     private int loadYear;
     private int loadMonth;
@@ -44,6 +44,13 @@ public class DataManager {
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
         // TODO: 2016-12-04 remove unused dummy insert statements
 //        deleteDataBase(context);
+    }
+
+    private void initDataManager() {
+        datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        dateFmtStr = "%4d/%02d/%02d";
+        timeFmtStr = "%02d:%02d";
+        datetimeFmtStr = "%s %s";
     }
 
     public void updateLoadedData(int year, int month, int day) {
@@ -566,11 +573,11 @@ public class DataManager {
 
         for (int day=1; day<31; day++) {
             for (int hour=9; hour < 24; hour += 3) {
-
+                Log.i("EXPENSE", "day:" + day);
                 int minutes = 0;
                 while (minutes < 60) {
                     String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-                    Log.i("EXPENSE", datetimeStr);
+
                     try {
                         datetime = datetimeFormat.parse(datetimeStr);
                     } catch (Exception e) {
