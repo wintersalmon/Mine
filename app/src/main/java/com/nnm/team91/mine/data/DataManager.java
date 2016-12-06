@@ -22,7 +22,6 @@ public class DataManager {
     private String dateFmtStr;
     private String timeFmtStr;
     private String datetimeFmtStr;
-    private String datetimeFullFmtStr;
 
     private int loadYear;
     private int loadMonth;
@@ -157,12 +156,12 @@ public class DataManager {
     }
 
     private void updateTimelineData() {
-        TodoData todo = null;
-        DiaryData diary = null;
-        ExpenseData expense = null;
-        TodoEmptyData emptyTodo = null;
-        DiaryEmtpyData emptyDiary = null;
-        ExpenseEmptyData expenseEmpty = null;
+        TodoData todo;
+        DiaryData diary;
+        ExpenseData expense;
+        TodoEmptyData emptyTodo;
+        DiaryEmtpyData emptyDiary;
+        ExpenseEmptyData expenseEmpty;
         Date datetime = null;
         int todoIdx = 0, todoCount = getLoadedDataTodo().size();
         int diaryIdx = 0, diaryCount = getLoadedDataDiary().size();
@@ -307,8 +306,8 @@ public class DataManager {
     private String selectDatetimeFromCommon(int _id) {
         String datetime = "";
         db = helper.getReadableDatabase();
-        String[] selectionArgs = new String[1];
-        selectionArgs[0] = String.valueOf(_id);
+//        String[] selectionArgs = new String[1];
+//        selectionArgs[0] = String.valueOf(_id);
 
 //        Cursor c = db.query("common", columns, selection, selectionArgs, null, null, null);
         Cursor c = db.rawQuery("SELECT datetime FROM common WHERE _id = '" + String.valueOf(_id) + "'",null);
@@ -320,7 +319,8 @@ public class DataManager {
             Log.i("db_select_common","success id:" + String.valueOf(_id) + " : " + datetime);
         }
 
-        c.close();
+        if (c != null) c.close();
+
         return datetime;
     }
 
@@ -333,6 +333,8 @@ public class DataManager {
             String tag = c.getString(c.getColumnIndex("tag"));
             hashtags.add(tag);
         }
+
+        c.close();
 
         return hashtags;
     }
@@ -350,6 +352,9 @@ public class DataManager {
                 break;
             }
         }
+
+        c.close();
+
         return keyTag;
     }
 
@@ -541,6 +546,56 @@ public class DataManager {
 
         c.close();
     }
+
+    public void deleteTodo(int id) {
+        db = helper.getWritableDatabase();
+        try {
+            db.delete("hashtag_in_common", "common_id=?", new String[]{String.valueOf(id)});
+            db.delete("todo", "common_id=?", new String[]{String.valueOf(id)});
+            db.delete("common", "_id=?", new String[]{String.valueOf(id)});
+        } catch (Exception e) {
+            Log.i("DELETE_TODO", e.toString());
+        }
+    }
+
+    public void deleteDiary(int id) {
+        db = helper.getWritableDatabase();
+        try {
+            db.delete("hashtag_in_common", "common_id=?", new String[]{String.valueOf(id)});
+            db.delete("diary", "common_id=?", new String[]{String.valueOf(id)});
+            db.delete("common", "_id=?", new String[]{String.valueOf(id)});
+        } catch (Exception e) {
+            Log.i("DELETE_TODO", e.toString());
+        }
+    }
+
+    public void deleteExpense(int id) {
+        db = helper.getWritableDatabase();
+        try {
+            db.delete("hashtag_in_common", "common_id=?", new String[]{String.valueOf(id)});
+            db.delete("expense", "common_id=?", new String[]{String.valueOf(id)});
+            db.delete("common", "_id=?", new String[]{String.valueOf(id)});
+        } catch (Exception e) {
+            Log.i("DELETE_TODO", e.toString());
+        }
+    }
+
+//    private void testDeleteAllData() {
+//        for (TodoData todo : loadedDataTodo) {
+//            int id = todo.getId();
+//            deleteTodo(id);
+//        }
+//
+//        for (DiaryData diary : loadedDataDiary) {
+//            int id = diary.getId();
+//            deleteDiary(id);
+//        }
+//
+//        for (ExpenseData expense : loadedDataExpense) {
+//            int id = expense.getId();
+//            deleteExpense(id);
+//        }
+//    }
 
     public ArrayList<TimelineData> getLoadedDataTimeline() {
         return loadedDataTimeline;
