@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat;
  */
 
 public class CommonData {
-    static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-    static private DateFormat dateFormat = new SimpleDateFormat("MM/dd");
+    static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    static private DateFormat dateFormat = new SimpleDateFormat("MM-dd");
     static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     int id;

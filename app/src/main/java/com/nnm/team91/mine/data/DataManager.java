@@ -22,6 +22,7 @@ public class DataManager {
     private String dateFmtStr;
     private String timeFmtStr;
     private String datetimeFmtStr;
+    private String datetimeFullFmtStr;
 
     private int loadYear;
     private int loadMonth;
@@ -40,6 +41,7 @@ public class DataManager {
         loadedDataTodo = new ArrayList<TodoData>();
         loadedDataDiary = new ArrayList<DiaryData>();
         loadedDataExpense = new ArrayList<ExpenseData>();
+        initDataManager();
 
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
         // TODO: 2016-12-04 remove unused dummy insert statements
@@ -47,8 +49,8 @@ public class DataManager {
     }
 
     private void initDataManager() {
-        datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        dateFmtStr = "%4d/%02d/%02d";
+        datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFmtStr = "%4d-%02d-%02d";
         timeFmtStr = "%02d:%02d";
         datetimeFmtStr = "%s %s";
     }
@@ -70,7 +72,8 @@ public class DataManager {
         loadedDataTodo.clear();
         // TODO: 2016-12-04 select all data from db_mine_todo
         // TODO: 2016-12-04 fill array with selected data
-        selectTodo();
+//        selectTodo();
+        selectTodo(loadYear,loadMonth,loadDay);
     }
 
     private void addTodo(int id, Date datetime, int status, ArrayList<String> hastags, String keyTag) {
@@ -99,7 +102,7 @@ public class DataManager {
         loadedDataDiary.clear();
         // TODO: 2016-12-04 select all data from db_mine_todo
         // TODO: 2016-12-04 fill array with selected data
-        selectDiary();
+        selectDiary(loadYear,loadMonth,loadDay);
     }
 
     private void addDiary(int id, Date date, String text, ArrayList<String> hastags, String keyTag) {
@@ -127,7 +130,7 @@ public class DataManager {
         loadedDataExpense.clear();
         // TODO: 2016-12-04 select all data from db_mine_todo
         // TODO: 2016-12-04 fill array with selected data
-        selectExpense();
+        selectExpense(loadYear,loadMonth,loadDay);
     }
 
 
@@ -304,12 +307,17 @@ public class DataManager {
     private String selectDatetimeFromCommon(int _id) {
         String datetime = "";
         db = helper.getReadableDatabase();
+        String[] selectionArgs = new String[1];
+        selectionArgs[0] = String.valueOf(_id);
+
+//        Cursor c = db.query("common", columns, selection, selectionArgs, null, null, null);
         Cursor c = db.rawQuery("SELECT datetime FROM common WHERE _id = '" + String.valueOf(_id) + "'",null);
+//        Cursor c = db.rawQuery("SELECT datetime FROM common WHERE _id = ?", selectionArgs);
 
         if (c != null) {
             c.moveToFirst();
-            Log.i("db_select_common","success id:" + String.valueOf(_id));
             datetime = c.getString(c.getColumnIndex("datetime"));
+            Log.i("db_select_common","success id:" + String.valueOf(_id) + " : " + datetime);
         }
 
         c.close();
@@ -345,7 +353,7 @@ public class DataManager {
         return keyTag;
     }
 
-    public void selectTodo() {
+    public void selectAllTodo() {
         TodoData todo = null;
         db = helper.getReadableDatabase();
         Cursor c = db.query("todo", null, null, null, null, null, null);
@@ -360,7 +368,7 @@ public class DataManager {
             try {
                 datetime = datetimeFormat.parse(datetimeStr);
             } catch (Exception e) {
-                Log.i("db_select_exception", "err");
+                Log.i("db_select_exception", e.toString());
             }
 
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
@@ -375,7 +383,41 @@ public class DataManager {
         c.close();
     }
 
-    public void selectDiary() {
+    public void selectTodo(int year, int month, int day) {
+        TodoData todo = null;
+        db = helper.getReadableDatabase();
+        String[] selectionArgs = new String[2];
+        selectionArgs[0] = createDateString(year,month,day);
+        selectionArgs[1] = createDateString(year,month,day);
+
+        Cursor c  = db.rawQuery("SELECT * FROM todo t LEFT OUTER JOIN common c ON c._id = t.common_id WHERE c.datetime BETWEEN date(?,'start of day') AND date(?,'start of day','+1 day')", selectionArgs);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            int status = c.getInt(c.getColumnIndex("status"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+
+            Date datetime = null;
+            String datetimeStr = selectDatetimeFromCommon(common_id);
+            try {
+                datetime = datetimeFormat.parse(datetimeStr);
+            } catch (Exception e) {
+                Log.i("db_select_exception", e.toString());
+            }
+
+            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
+            String keyTag = selectKeyTagInCommon(common_id);
+
+            addTodo(common_id,datetime,status,hashtags,keyTag);
+
+            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
+            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+        }
+
+        c.close();
+    }
+
+    public void selectAllDiary() {
         db = helper.getReadableDatabase();
         Cursor c = db.query("diary",null,null,null,null,null,null);
 
@@ -389,7 +431,7 @@ public class DataManager {
             try {
                 datetime = datetimeFormat.parse(datetimeStr);
             } catch (Exception e) {
-                Log.i("db_select_exception", "err");
+                Log.i("db_select_exception", e.toString());
             }
 
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
@@ -404,7 +446,41 @@ public class DataManager {
         c.close();
     }
 
-    public void selectExpense() {
+    public void selectDiary(int year, int month, int day) {
+        db = helper.getReadableDatabase();
+        String[] selectionArgs = new String[2];
+        selectionArgs[0] = createDateString(year,month,day);
+        selectionArgs[1] = createDateString(year,month,day);
+
+        Cursor c  = db.rawQuery("SELECT * FROM diary d LEFT OUTER JOIN common c ON c._id = d.common_id WHERE c.datetime BETWEEN date(?,'start of day') AND date(?,'start of day','+1 day')", selectionArgs);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            String contents = c.getString(c.getColumnIndex("contents"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+
+            Date datetime = null;
+            String datetimeStr = selectDatetimeFromCommon(common_id);
+            try {
+                datetime = datetimeFormat.parse(datetimeStr);
+            } catch (Exception e) {
+                Log.i("db_select_exception", e.toString());
+            }
+
+            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
+            String keyTag = selectKeyTagInCommon(common_id);
+
+            addDiary(common_id,datetime,contents,hashtags,keyTag);
+
+            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
+            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+        }
+
+        c.close();
+    }
+
+
+    public void selectAllExpense() {
         db = helper.getReadableDatabase();
         Cursor c = db.query("expense",null,null,null,null,null,null);
 
@@ -418,7 +494,40 @@ public class DataManager {
             try {
                 datetime = datetimeFormat.parse(datetimeStr);
             } catch (Exception e) {
-                Log.i("db_select_exception", "err");
+                Log.i("db_select_exception", e.toString());
+            }
+
+            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
+            String keyTag = selectKeyTagInCommon(common_id);
+
+            addExpense(common_id,datetime,amount,hashtags,keyTag);
+
+            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
+            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+        }
+
+        c.close();
+    }
+
+    public void selectExpense(int year, int month, int day) {
+        db = helper.getReadableDatabase();
+        String[] selectionArgs = new String[2];
+        selectionArgs[0] = createDateString(year,month,day);
+        selectionArgs[1] = createDateString(year,month,day);
+
+        Cursor c  = db.rawQuery("SELECT * FROM expense e LEFT OUTER JOIN common c ON c._id = e.common_id WHERE c.datetime BETWEEN date(?,'start of day') AND date(?,'start of day','+1 day')", selectionArgs);
+
+        while (c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex("_id"));
+            int amount = c.getInt(c.getColumnIndex("amount"));
+            int common_id = c.getInt(c.getColumnIndex("common_id"));
+
+            Date datetime = null;
+            String datetimeStr = selectDatetimeFromCommon(common_id);
+            try {
+                datetime = datetimeFormat.parse(datetimeStr);
+            } catch (Exception e) {
+                Log.i("db_select_exception", e.toString());
             }
 
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
@@ -477,7 +586,7 @@ public class DataManager {
         int status;
         int keyTagIndex;
 
-        for (int day=1; day<31; day++) {
+        for (int day=1; day<3; day++) {
             for (int hour=9; hour < 24; hour += 2) {
 
                 int minutes = 0;
@@ -487,7 +596,7 @@ public class DataManager {
                     try {
                         datetime = datetimeFormat.parse(datetimeStr);
                     } catch (Exception e) {
-                        Log.i("DATETIME", "ERROR");
+                        Log.i("insertDummyTodoData", e.toString());
                         continue;
                     }
 
@@ -524,7 +633,7 @@ public class DataManager {
 
         int keyTagIndex;
 
-        for (int day=1; day<31; day++) {
+        for (int day=1; day<3; day++) {
             for (int hour=9; hour < 24; hour += 5) {
 
                 int minutes = 0;
@@ -534,7 +643,7 @@ public class DataManager {
                     try {
                         datetime = datetimeFormat.parse(datetimeStr);
                     } catch (Exception e) {
-                        Log.i("DATETIME", "ERROR");
+                        Log.i("insertDummyDiaryData", e.toString());
                         continue;
                     }
 
@@ -571,7 +680,7 @@ public class DataManager {
         int amount;
         int keyTagIndex;
 
-        for (int day=1; day<31; day++) {
+        for (int day=1; day<3; day++) {
             for (int hour=9; hour < 24; hour += 3) {
                 Log.i("EXPENSE", "day:" + day);
                 int minutes = 0;
@@ -581,7 +690,7 @@ public class DataManager {
                     try {
                         datetime = datetimeFormat.parse(datetimeStr);
                     } catch (Exception e) {
-                        Log.i("DATETIME", "ERROR");
+                        Log.i("insertDummyExpenseData", e.toString());
                         continue;
                     }
 
