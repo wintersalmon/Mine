@@ -68,14 +68,12 @@ public class DataManager {
         updateExpenseData();
         matchDataArrayLength();
         updateTimelineData();
-//        testUpdateAllData();
     }
 
     private void updateTodoData() {
         loadedDataTodo.clear();
         // TODO: 2016-12-04 select all data from db_mine_todo
         // TODO: 2016-12-04 fill array with selected data
-//        selectTodo();
         selectTodo(loadYear,loadMonth,loadDay);
     }
 
@@ -167,6 +165,8 @@ public class DataManager {
         Date expenseDate;
 
         // TODO: 2016. 12. 6. add exception handle for loaded data size 0
+        if (loadedDataTodo.size() == 0 && loadedDataDiary.size() == 0 && loadedDataExpense.size() == 0)
+            return;
         todoDate = loadedDataTodo.get(0).getRawDateTime();
         diaryDate = loadedDataDiary.get(0).getRawDateTime();
         expenseDate = loadedDataExpense.get(0).getRawDateTime();

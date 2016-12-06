@@ -57,7 +57,7 @@
 
     <android.support.design.widget.FloatingActionButton
         app:fabSize="normal"
-        android:id="@+id/todo_edit_flt_btn"
+        android:id="@+id/todo_edit_float_btn"
         android:src="@drawable/ic_apps_black"
         android:layout_gravity="center|bottom"
         android:layout_margin="@dimen/fab_margin"
