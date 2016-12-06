@@ -171,7 +171,6 @@ public class DataManager {
         diaryDate = loadedDataDiary.get(0).getRawDateTime();
         expenseDate = loadedDataExpense.get(0).getRawDateTime();
 
-//        int maxLength = 0;
         int loadedTodoLength = loadedDataTodo.size();
         int loadedDiaryLength = loadedDataDiary.size();
         int loadedExpenseLength = loadedDataExpense.size();
