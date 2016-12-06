@@ -30,12 +30,12 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="40dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.v7.widget.ButtonBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         android:layout_gravity="bottom">
 
         <Button
@@ -44,8 +44,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="/"
-            android:textSize="60px"
+            android:text="@string/main_menu_btn_datepicker"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
             android:id="@+id/search_btn"
@@ -53,8 +54,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="#"
-            android:textSize="60px"
+            android:text="@string/main_menu_btn_search"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
             android:id="@+id/plus_btn"
@@ -62,8 +64,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="+"
-            android:textSize="60px"
+            android:text="@string/main_menu_btn_plus"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
             android:id="@+id/settings_btn"
@@ -71,15 +74,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="*"
-            android:textSize="60px"
+            android:text="@string/main_menu_btn_setting"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
             android:background="@null"/>
 
     </android.support.v7.widget.ButtonBarLayout>
 
     <android.support.design.widget.FloatingActionButton
         app:fabSize="normal"
-        android:id="@+id/goto_list_float_btn"
+        android:id="@+id/main_change_view_mode_float_btn"
         android:src="@drawable/ic_apps_black"
         android:layout_gravity="center|bottom"
         android:layout_margin="@dimen/fab_margin"

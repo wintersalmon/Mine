@@ -177,5 +177,13 @@ mine 서비스는 휴대기기에서 사용할 수 있습니다. 트래픽 또�
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="main_menu_btn_datepicker">/</string>
+    <string name="main_menu_btn_search">#</string>
+    <string name="main_menu_btn_plus">+</string>
+    <string name="main_menu_btn_setting">*</string>
 
+    <string name="edit_menu_btn_a">A</string>
+    <string name="edit_menu_btn_b">B</string>
+    <string name="edit_menu_btn_c">C</string>
+    <string name="edit_menu_btn_d">D</string>
 </resources>

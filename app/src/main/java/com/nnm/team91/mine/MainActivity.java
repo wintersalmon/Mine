@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         tabLayout.setupWithViewPager(mViewPager);
 
         // find all widgets and save
-        gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.goto_list_float_btn);
+        gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.main_change_view_mode_float_btn);
 
         // set btn listeners
         gotoListFloatBtn.setOnClickListener(new View.OnClickListener() {
