@@ -31,6 +31,7 @@ public class DataManager {
     private ArrayList<TodoData> loadedDataTodo;
     private ArrayList<DiaryData> loadedDataDiary;
     private ArrayList<ExpenseData> loadedDataExpense;
+    private ArrayList<Date> loadedDatetime;
 
     private SQLiteDatabase db;
     private MineSQLiteOpenHelper helper;
@@ -40,6 +41,7 @@ public class DataManager {
         loadedDataTodo = new ArrayList<TodoData>();
         loadedDataDiary = new ArrayList<DiaryData>();
         loadedDataExpense = new ArrayList<ExpenseData>();
+        loadedDatetime = new ArrayList<Date>();
         initDataManager();
 
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
@@ -64,6 +66,7 @@ public class DataManager {
         updateTodoData();
         updateDiaryData();
         updateExpenseData();
+        matchDataArrayLength();
         updateTimelineData();
     }
 
@@ -88,13 +91,13 @@ public class DataManager {
         loadedDataTodo.add(todo);
     }
 
-    private void addEmptyTodo(Date datetime) {
+    private void addEmptyTodo(int index, Date datetime) {
         TodoData emptyTodo = new TodoEmptyData();
 
         emptyTodo.setId(0);
         emptyTodo.setDate(datetime);
 
-        loadedDataTodo.add(emptyTodo);
+        loadedDataTodo.add(index, emptyTodo);
     }
 
     private void updateDiaryData() {
@@ -116,13 +119,13 @@ public class DataManager {
         loadedDataDiary.add(diary);
     }
 
-    private void addEmptyDiary(Date datetime) {
+    private void addEmptyDiary(int index, Date datetime) {
         DiaryEmtpyData emptyDiary = new DiaryEmtpyData();
 
         emptyDiary.setId(0);
         emptyDiary.setDate(datetime);
 
-        loadedDataDiary.add(emptyDiary);
+        loadedDataDiary.add(index,emptyDiary);
     }
 
     private void updateExpenseData() {
@@ -146,13 +149,59 @@ public class DataManager {
         loadedDataExpense.add(expense);
     }
 
-    private void addEmptyExpense(Date datetime) {
+    private void addEmptyExpense(int index, Date datetime) {
         ExpenseEmptyData emptyExpense = new ExpenseEmptyData();
 
         emptyExpense.setId(0);
         emptyExpense.setDate(datetime);
 
-        loadedDataExpense.add(emptyExpense);
+        loadedDataExpense.add(index, emptyExpense);
+    }
+
+    private void matchDataArrayLength() {
+        // init datetime
+        Date currentDate;
+        Date todoDate;
+        Date diaryDate;
+        Date expenseDate;
+
+        int maxLength = 0;
+        int loadedTodoLength = loadedDataTodo.size();
+        int loadedDiaryLength = loadedDataDiary.size();
+        int loadedExpenseLength = loadedDataExpense.size();
+
+        loadedTodoLength = maxLength;
+        if (maxLength < loadedDiaryLength) maxLength = loadedDiaryLength;
+        if (maxLength < loadedExpenseLength) maxLength = loadedExpenseLength;
+
+        int todoIndex = 0;
+        int diaryIndex = 0;
+        int expenseIndex = 0;
+
+        while ( todoIndex < maxLength || diaryIndex < maxLength || expenseIndex < maxLength) {
+
+            // get current item datetime
+            todoDate = loadedDataTodo.get(todoIndex).getRawDateTime();
+            diaryDate = loadedDataDiary.get(diaryIndex).getRawDateTime();
+            expenseDate = loadedDataExpense.get(expenseIndex).getRawDateTime();
+
+            // find min datetime
+            currentDate = todoDate;
+            if (currentDate.after(diaryDate)) currentDate = diaryDate;
+            if (currentDate.after(expenseDate)) currentDate = expenseDate;
+
+            loadedDatetime.add(currentDate);
+
+            if (todoDate.compareTo(currentDate) != 0) addEmptyTodo(todoIndex,currentDate);
+            if (diaryDate.compareTo(currentDate) != 0) addEmptyDiary(diaryIndex,currentDate);
+            if (expenseDate.compareTo(currentDate) != 0) addEmptyExpense(expenseIndex,currentDate);
+
+
+            todoIndex++; diaryIndex++; expenseIndex++;
+            Log.i("MATCH_LENGTH", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
+
+        }
+        Log.i("MATCH_LENGTH_DONE", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
     }
 
     private void updateTimelineData() {
@@ -161,7 +210,7 @@ public class DataManager {
         ExpenseData expense;
         TodoEmptyData emptyTodo;
         DiaryEmtpyData emptyDiary;
-        ExpenseEmptyData expenseEmpty;
+        ExpenseEmptyData emptyExpense;
         Date datetime = null;
         int todoIdx = 0, todoCount = getLoadedDataTodo().size();
         int diaryIdx = 0, diaryCount = getLoadedDataDiary().size();
@@ -191,15 +240,15 @@ public class DataManager {
             if (expenseIdx < expenseCount) {
                 expense = getLoadedDataExpense().get(expenseIdx++);
                 datetime = expense.getRawDateTime();
-                expenseEmpty = null;
+                emptyExpense = null;
             } else {
-                expenseEmpty = new ExpenseEmptyData();
-                expense = expenseEmpty;
+                emptyExpense = new ExpenseEmptyData();
+                expense = emptyExpense;
             }
 
             if (emptyTodo != null) emptyTodo.setDate(datetime);
             if (emptyDiary != null) emptyDiary.setDate(datetime);
-            if (expenseEmpty != null) expenseEmpty.setDate(datetime);
+            if (emptyExpense != null) emptyExpense.setDate(datetime);
 
             addTimeline(todo,diary,expense);
         }
@@ -658,11 +707,7 @@ public class DataManager {
                     status = (count%2) == 0 ? 1 : 0;
                     keyTagIndex = count%hashtags.size();
 
-                    if (count++ % 3 == 0) {
-                        addEmptyTodo(datetime);
-                    } else {
-                        insertTodo(datetime, status, hashtags, keyTagIndex);
-                    }
+                    insertTodo(datetime, status, hashtags, keyTagIndex);
 
                     if (count%2 == 1) {
                         minutes += 15;
@@ -704,11 +749,7 @@ public class DataManager {
 
                     keyTagIndex = count%hashtags.size();
 
-                    if (count%4 == 0) {
-                        addEmptyDiary(datetime);
-                    } else {
-                        insertDiary(datetime, sample_diary_contents, hashtags, keyTagIndex);
-                    }
+                    insertDiary(datetime, sample_diary_contents, hashtags, keyTagIndex);
 
                     if (count%2 == 1) {
                         minutes += 20;
@@ -752,11 +793,7 @@ public class DataManager {
                     amount = count * 500 + 1000;
                     keyTagIndex = count%hashtags.size();
 
-                    if (count%2 == 0) {
-                        addEmptyExpense(datetime);
-                    } else {
-                        insertExpense(datetime, amount, hashtags, keyTagIndex);
-                    }
+                    insertExpense(datetime, amount, hashtags, keyTagIndex);
 
                     if (count%2 == 1) {
                         minutes += 30;
