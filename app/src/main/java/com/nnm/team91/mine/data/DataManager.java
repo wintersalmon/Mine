@@ -68,6 +68,7 @@ public class DataManager {
         updateExpenseData();
         matchDataArrayLength();
         updateTimelineData();
+//        testUpdateAllData();
     }
 
     private void updateTodoData() {
@@ -165,42 +166,77 @@ public class DataManager {
         Date diaryDate;
         Date expenseDate;
 
-        int maxLength = 0;
+        // TODO: 2016. 12. 6. add exception handle for loaded data size 0
+        todoDate = loadedDataTodo.get(0).getRawDateTime();
+        diaryDate = loadedDataDiary.get(0).getRawDateTime();
+        expenseDate = loadedDataExpense.get(0).getRawDateTime();
+
+//        int maxLength = 0;
         int loadedTodoLength = loadedDataTodo.size();
         int loadedDiaryLength = loadedDataDiary.size();
         int loadedExpenseLength = loadedDataExpense.size();
 
-        loadedTodoLength = maxLength;
-        if (maxLength < loadedDiaryLength) maxLength = loadedDiaryLength;
-        if (maxLength < loadedExpenseLength) maxLength = loadedExpenseLength;
+        int addedTodoCount = 0;
+        int addedDiaryCount = 0;
+        int addedExpenseCount = 0;
 
         int todoIndex = 0;
         int diaryIndex = 0;
         int expenseIndex = 0;
 
-        while ( todoIndex < maxLength || diaryIndex < maxLength || expenseIndex < maxLength) {
+        while (addedTodoCount < loadedTodoLength || addedDiaryCount < loadedDiaryLength || addedExpenseCount < loadedExpenseLength) {
 
             // get current item datetime
-            todoDate = loadedDataTodo.get(todoIndex).getRawDateTime();
-            diaryDate = loadedDataDiary.get(diaryIndex).getRawDateTime();
-            expenseDate = loadedDataExpense.get(expenseIndex).getRawDateTime();
+            if (todoIndex < loadedDataTodo.size()) {
+                todoDate = loadedDataTodo.get(todoIndex).getRawDateTime();
+            } else {
+                todoDate = null;
+            }
+
+            if (diaryIndex < loadedDataDiary.size()) {
+                diaryDate = loadedDataDiary.get(diaryIndex).getRawDateTime();
+            } else {
+                diaryDate = null;
+            }
+
+            if (expenseIndex < loadedDataExpense.size()) {
+                expenseDate = loadedDataExpense.get(expenseIndex).getRawDateTime();
+            } else {
+                expenseDate = null;
+            }
+
 
             // find min datetime
-            currentDate = todoDate;
-            if (currentDate.after(diaryDate)) currentDate = diaryDate;
-            if (currentDate.after(expenseDate)) currentDate = expenseDate;
+            if (todoDate != null)
+                currentDate = todoDate;
+            else if(diaryDate != null)
+                currentDate = diaryDate;
+            else
+                currentDate = expenseDate;
+
+            if (diaryDate != null && currentDate.after(diaryDate)) currentDate = diaryDate;
+            if (expenseDate != null && currentDate.after(expenseDate)) currentDate = expenseDate;
 
             loadedDatetime.add(currentDate);
 
-            if (todoDate.compareTo(currentDate) != 0) addEmptyTodo(todoIndex,currentDate);
-            if (diaryDate.compareTo(currentDate) != 0) addEmptyDiary(diaryIndex,currentDate);
-            if (expenseDate.compareTo(currentDate) != 0) addEmptyExpense(expenseIndex,currentDate);
+            if (todoDate != null && todoDate.compareTo(currentDate) != 0) addEmptyTodo(todoIndex,currentDate);
+            else  addedTodoCount++;
 
+            if (diaryDate != null && diaryDate.compareTo(currentDate) != 0) addEmptyDiary(diaryIndex,currentDate);
+            else addedDiaryCount++;
 
-            todoIndex++; diaryIndex++; expenseIndex++;
+            if (expenseDate != null && expenseDate.compareTo(currentDate) != 0) addEmptyExpense(expenseIndex,currentDate);
+            else addedExpenseCount++;
+
+            todoIndex++;
+            diaryIndex++;
+            expenseIndex++;
+
+            Log.i("MATCH_LENGTH", addedTodoCount + ", " + addedDiaryCount  + ", " +  addedExpenseCount);
             Log.i("MATCH_LENGTH", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
 
         }
+        Log.i("MATCH_LENGTH_DONE", loadedTodoLength + ", " + loadedDiaryLength  + ", " +  loadedExpenseLength);
         Log.i("MATCH_LENGTH_DONE", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
     }
 
@@ -643,6 +679,63 @@ public class DataManager {
 //        for (ExpenseData expense : loadedDataExpense) {
 //            int id = expense.getId();
 //            deleteExpense(id);
+//        }
+//    }
+
+    public void updateTodo(TodoData todo) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if (todo != null && todo.getId() != 0) {
+            if (todo.getStatus()) values.put("status", 1);
+            else values.put("status", 0);
+
+            // TODO: 2016. 12. 6. add hashtag update function
+            Log.i("UPDATE_TODO", values.toString());
+            db.update("todo", values, "common_id = ?", new String[]{String.valueOf(todo.getId())});
+        }
+    }
+
+    public void updateDiary(DiaryData diary) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if (diary != null && diary.getId() != 0) {
+            values.put("contents", diary.getText());
+
+            // TODO: 2016. 12. 6. add hashtag update function
+            Log.i("UPDATE_DIARY", values.toString());
+            db.update("diary", values, "common_id = ?", new String[]{String.valueOf(diary.getId())});
+        }
+    }
+
+    public void updateExpense(ExpenseData expense) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if (expense != null && expense.getId() != 0) {
+            values.put("amount", expense.getAmount());
+
+            // TODO: 2016. 12. 6. add hashtag update function
+            Log.i("UPDATE_EXPENSE", values.toString());
+            db.update("expense", values, "common_id = ?", new String[]{String.valueOf(expense.getId())});
+        }
+    }
+
+//    private void testUpdateAllData() {
+//        for (TodoData todo : loadedDataTodo) {
+//            todo.setStatus(false);
+//            updateTodo(todo);
+//        }
+//
+//        for (DiaryData diary : loadedDataDiary) {
+//            diary.setText("hi");
+//            updateDiary(diary);
+//        }
+//
+//        for (ExpenseData expense : loadedDataExpense) {
+//            expense.setAmount(9999);
+//            updateExpense(expense);
 //        }
 //    }
 

@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         datamanager.updateLoadedData(2016,12,1);
     }
 
-    public void DetailTodo() {
+    public void DetailTodo(int position) {
         Intent intent = new Intent(MainActivity.this, DetailTodoActivity.class);
         startActivity(intent);
     }
