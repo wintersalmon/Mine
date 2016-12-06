@@ -5,7 +5,7 @@
     android:id="@+id/activity_detail_todo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nnm.team91.mine.DetailTodoActivity">
+    tools:context="com.nnm.team91.mine.detail.DetailTodoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,26 +15,67 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin" >
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="hello world"/>
-        <TextView
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/detail_todo_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="4"
+                android:textSize="25sp"
+                android:text="YYYY-MM-DD" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="hello world"/>
-        <TextView
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/detail_todo_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="2"
+                android:textSize="25sp"
+                android:text="HH/MM" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="hello world"/>
-        <TextView
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/detail_todo_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:checked="true" />
+            <TextView
+                android:id="@+id/detail_todo_key_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:text="KeyTag"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="hello world"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/detail_todo_hash_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="25sp"
+                android:text="HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
     <android.support.v7.widget.ButtonBarLayout
@@ -43,42 +84,42 @@
         android:layout_gravity="bottom">
 
         <Button
-            android:id="@+id/edit_bottom_button_01"
+            android:id="@+id/detail_bottom_button_prev"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="@string/edit_menu_btn_a"
+            android:text="<"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
-            android:id="@+id/edit_bottom_button_02"
+            android:id="@+id/detail_bottom_button_edit"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="@string/edit_menu_btn_b"
+            android:text="E"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
-            android:id="@+id/edit_bottom_button_03"
+            android:id="@+id/detail_bottom_button_delete"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="@string/edit_menu_btn_c"
+            android:text="D"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
-            android:id="@+id/edit_bottom_button_04"
+            android:id="@+id/detail_bottom_button_next"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="@string/edit_menu_btn_d"
+            android:text=">"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
