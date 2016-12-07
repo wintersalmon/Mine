@@ -1,16 +1,17 @@
 package com.nnm.team91.mine.detail;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.edit.EditTodoActivity;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,6 @@ public class DetailTodoActivity extends AppCompatActivity {
     private Button nextButton;
     private Button editButton;
     private Button deleteButton;
-    private FloatingActionButton refreshFloatButton;
 
 
     private TextView dateTextView;
@@ -52,29 +52,51 @@ public class DetailTodoActivity extends AppCompatActivity {
         nextButton = (Button) findViewById(R.id.detail_todo_button_next);
         editButton = (Button) findViewById(R.id.detail_todo_button_edit);
         deleteButton = (Button) findViewById(R.id.detail_todo_button_delete);
-        refreshFloatButton = (FloatingActionButton) findViewById(R.id.todo_detail_float_btn);
+
+        dateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
+                // TODO: 2016. 12. 7. add prev function
             }
         });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // TODO: 2016. 12. 7. add next function
             }
         });
 
-
-        refreshFloatButton.setOnClickListener(new View.OnClickListener() {
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                reloadContent();
+                Intent intent = new Intent(DetailTodoActivity.this, EditTodoActivity.class);
+
+                Bundle b = new Bundle();
+                b.putInt("position", position);
+                b.putInt("common_id", commonId);
+                b.putString("date", date);
+                b.putString("time", time);
+                b.putBoolean("status", status);
+                b.putString("key_tag", keyTag);
+                b.putStringArrayList("hash_tag_list", hashTagList);
+
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2016. 12. 7. add delete dialog function
             }
         });
 

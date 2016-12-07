@@ -1,5 +1,6 @@
 package com.nnm.team91.mine;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -14,11 +15,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,18 +113,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        // find all widgets and save
-        gotoListFloatBtn = (FloatingActionButton) findViewById(R.id.main_change_view_mode_float_btn);
-
-        // set btn listeners
-        gotoListFloatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChangePageMode();
-            }
-        });
-
-
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         DatePickerBtn = (Button) findViewById(R.id.datepicker_btn);
@@ -129,12 +122,42 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         DatePickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //TODO: 캘린더 버튼 클릭시 년/월/일 상자가 뜰 수 있도록 수정
-                DialogFragment picker = new DatePickerFragment();
-                picker.show(getSupportFragmentManager(), "DatePicker");
-                //TODO: http://androidtrainningcenter.blogspot.kr/2012/10/creating-datepicker-using.html
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+
+                final View dialogEditView = inflater.inflate(R.layout.dialog_edit_date, null);
+
+                AlertDialog.Builder buider = new AlertDialog.Builder(MainActivity.this);
+                buider.setTitle("Member Information"); //Dialog 제목
+                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
+                buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
+
+                buider.setPositiveButton("Complite", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO: 2016. 12. 7. 메인의 선택된 날짜 변경 & 데이터 리로드
+                    }
+                });
+
+                buider.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO: 2016. 12. 7. 취소 출력 메세지 변경
+                        Toast.makeText(MainActivity.this, "취소", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = buider.create();
+//                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                // TODO: 2016. 12. 7.  안쓰는 코드 삭제
+                // DialogFragment picker = new DatePickerFragment();
+                // picker.show(getSupportFragmentManager(), "DatePicker");
+                // TODO: http://androidtrainningcenter.blogspot.kr/2012/10/creating-datepicker-using.html
             }
         });
+
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
