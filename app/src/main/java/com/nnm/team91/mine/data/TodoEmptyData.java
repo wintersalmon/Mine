@@ -23,7 +23,7 @@ public class TodoEmptyData extends TodoData {
     }
 
     @Override
-    public String getHasTagList() {
+    public String getHasTagListString() {
         return emptyString;
     }
 }

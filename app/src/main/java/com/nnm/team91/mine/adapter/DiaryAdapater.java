@@ -54,7 +54,7 @@ public class DiaryAdapater extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         timeTextView.setText(diary.getTime());
         keyTagTextView.setText(diary.getKeyTag());
-        hashTagTextView.setText(diary.getHasTagList());
+        hashTagTextView.setText(diary.getHasTagListString());
 
         return convertView;
     }

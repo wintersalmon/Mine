@@ -56,7 +56,7 @@ public class ExpenseAdapter extends BaseAdapter {
         timeTextView.setText(expense.getTime());
         amountTextView.setText(expense.getAmount());
         keyTagTextView.setText(expense.getKeyTag());
-        hashTagTextView.setText(expense.getHasTagList());
+        hashTagTextView.setText(expense.getHasTagListString());
 
         return convertView;
     }

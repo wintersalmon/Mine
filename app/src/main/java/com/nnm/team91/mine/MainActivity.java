@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private SectionsPagerAdapter mSectionsTimelinePagerAdapter;
     private FloatingActionButton gotoListFloatBtn;
+
+    private int selectedTodoPosition;
+    private TodoData selectedTodo;
 
     private DataManager datamanager;
 
@@ -153,9 +157,44 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         datamanager.updateLoadedData(2016,12,1);
     }
 
+    public TodoData getSelectedTodo() {
+        if (selectedTodo != null && selectedTodo.getId() != 0) {
+            return selectedTodo;
+        } else {
+            return null;
+        }
+    }
+
     public void DetailTodo(int position) {
-        Intent intent = new Intent(MainActivity.this, DetailTodoActivity.class);
-        startActivity(intent);
+        try {
+            selectedTodo = datamanager.getLoadedDataTodo().get(position);
+        } catch (NullPointerException e) {
+            selectedTodo = null;
+        }
+
+        if (selectedTodo != null && selectedTodo.getId() != 0) {
+            Intent intent = new Intent(MainActivity.this, DetailTodoActivity.class);
+
+            Bundle b = new Bundle();
+            b.putInt("position", position);
+            b.putInt("common_id", selectedTodo.getId());
+            b.putString("date", selectedTodo.getDate());
+            b.putString("time", selectedTodo.getTime());
+            b.putBoolean("status", selectedTodo.getStatus());
+            b.putString("key_tag", selectedTodo.getKeyTag());
+            b.putStringArrayList("hash_tag_list", selectedTodo.getHashTagList());
+
+            intent.putExtras(b);
+            startActivity(intent);
+        }
+    }
+
+    public void DetailDiary(int position) {
+
+    }
+
+    public void DetailExpense(int position) {
+
     }
 
     public void ChangePageMode() {

@@ -13,7 +13,7 @@ public class DiaryEmtpyData extends DiaryData {
     }
 
     @Override
-    public String getHasTagList() {
+    public String getHasTagListString() {
         return emptyString;
     }
 

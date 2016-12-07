@@ -52,25 +52,35 @@ public class CommonData {
     public int getId() {
         return id;
     }
+
     public Date getRawDateTime() {
         return datetime;
     }
+
     public String getDateTime() {
         return datetimeFormat.format(datetime);
     }
+
     public String getDate() {
         return dateFormat.format(datetime);
     }
+
     public String getTime() {
         return timeFormat.format(datetime);
     }
-    public String getHasTagList() {
+
+    public String getHasTagListString() {
         String output = "";
         for (String tag : hashTagList) {
             output += tag + " ";
         }
         return output;
     }
+
+    public ArrayList<String> getHashTagList() {
+        return hashTagList;
+    }
+
     public String getKeyTag() {
         return keyTag;
     }

@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text="<"
+            android:text="PREV"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
@@ -119,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:text=">"
+            android:text="NEXT"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>

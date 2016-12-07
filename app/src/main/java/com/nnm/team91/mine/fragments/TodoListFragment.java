@@ -87,7 +87,7 @@ public class TodoListFragment extends Fragment {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // TODO: 2016. 12. 2. add function to OnItemClickListener
                 MainActivity main = (MainActivity) getActivity();
-                main.DetailTodo(10);
+                main.DetailTodo(position);
             }
         }) ;
 

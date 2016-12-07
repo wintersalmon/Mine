@@ -66,7 +66,7 @@ public class TodoAdapter  extends BaseAdapter {
         }
 
         keyTagView.setText(todoItem.getKeyTag());
-        hashTagView.setText(todoItem.getHasTagList());
+        hashTagView.setText(todoItem.getHasTagListString());
         return convertView;
     }
 
