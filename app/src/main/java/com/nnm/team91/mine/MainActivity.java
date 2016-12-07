@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nnm.team91.mine.adapter.DiaryAdapater;
 import com.nnm.team91.mine.adapter.ExpenseAdapter;
@@ -52,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
      */
 
     public static final int REQUEST_CODE = 101;
+    public static final int REQUEST_TODO_PREV = 1000;
+    public static final int REQUEST_TODO_NEXT = 1001;
+    public static final int REQUEST_DIARY_PREV = 2000;
+    public static final int REQUEST_DIARY_NEXT = 2001;
+    public static final int REQUEST_EXPENSE_PREV = 3000;
+    public static final int REQUEST_EXPENSE_NEXT = 3001;
+
     Button DatePickerBtn, searchBtn, plusBtn, settingBtn;
     private final long FINISH_INTERVAL_TIME = 2000;
     private long   backPressedTime = 0;
@@ -221,6 +229,35 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_list, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_TODO_NEXT) {
+            Toast.makeText(MainActivity.this, "REQUEST_TODO_NEXT", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == REQUEST_TODO_PREV) {
+            Toast.makeText(MainActivity.this, "REQUEST_TODO_PREV", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == REQUEST_DIARY_NEXT) {
+            Toast.makeText(MainActivity.this, "REQUEST_DIARY_NEXT", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == REQUEST_DIARY_PREV) {
+            Toast.makeText(MainActivity.this, "REQUEST_DIARY_PREV", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == REQUEST_EXPENSE_NEXT) {
+            Toast.makeText(MainActivity.this, "REQUEST_EXPENSE_NEXT", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == REQUEST_DIARY_PREV) {
+            Toast.makeText(MainActivity.this, "REQUEST_DIARY_PREV", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

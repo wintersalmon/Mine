@@ -84,7 +84,7 @@
         android:layout_gravity="bottom">
 
         <Button
-            android:id="@+id/detail_bottom_button_prev"
+            android:id="@+id/detail_todo_button_prev"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
-            android:id="@+id/detail_bottom_button_edit"
+            android:id="@+id/detail_todo_button_edit"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
-            android:id="@+id/detail_bottom_button_delete"
+            android:id="@+id/detail_todo_button_delete"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
-            android:id="@+id/detail_bottom_button_next"
+            android:id="@+id/detail_todo_button_next"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

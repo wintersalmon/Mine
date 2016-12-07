@@ -1,28 +1,23 @@
 package com.nnm.team91.mine.detail;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
 import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
-import com.nnm.team91.mine.data.TodoData;
 
 import java.util.ArrayList;
 
 public class DetailTodoActivity extends AppCompatActivity {
     private Button prevButton;
     private Button nextButton;
-    private Button EditButton;
+    private Button editButton;
     private Button deleteButton;
     private FloatingActionButton refreshFloatButton;
 
@@ -53,7 +48,29 @@ public class DetailTodoActivity extends AppCompatActivity {
         keyTextView = (TextView) findViewById(R.id.detail_todo_key_tag);
         hashTextView = (TextView) findViewById(R.id.detail_todo_hash_tag);
 
+        prevButton = (Button) findViewById(R.id.detail_todo_button_prev);
+        nextButton = (Button) findViewById(R.id.detail_todo_button_next);
+        editButton = (Button) findViewById(R.id.detail_todo_button_edit);
+        deleteButton = (Button) findViewById(R.id.detail_todo_button_delete);
         refreshFloatButton = (FloatingActionButton) findViewById(R.id.todo_detail_float_btn);
+
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         refreshFloatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,12 +81,12 @@ public class DetailTodoActivity extends AppCompatActivity {
         reloadViewContents();
     }
 
-//    @Override
-//    protected void onPostResume() {
-//        super.onPostResume();
-//        setTodoData();
-//        setViewData();
-//    }
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        setTodoData();
+        setViewData();
+    }
 
     private void reloadViewContents() {
         setTodoData();
