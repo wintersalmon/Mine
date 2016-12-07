@@ -1,15 +1,19 @@
 package com.nnm.team91.mine;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nnm.team91.mine.data.TodoData;
 
 import java.util.ArrayList;
 
@@ -26,6 +30,8 @@ public class DetailTodoActivity extends AppCompatActivity {
     private TextView keyTextView;
     private TextView hashTextView;
 
+    private TodoData selectedTodo;
+
     private int position;
     private int commonId;
     private String date;
@@ -35,10 +41,18 @@ public class DetailTodoActivity extends AppCompatActivity {
     private String hashTagString;
     private ArrayList<String> hashTagList;
 
+    private OnDetailActivityInteractionListener mListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_todo);
+
+        // TODO: 2016. 12. 8. use better method to gain MainActivity instance
+        Context context = (Context) MainActivity.activity;
+        if (context instanceof OnDetailActivityInteractionListener ) {
+            mListener = (OnDetailActivityInteractionListener) context;
+        }
 
         dateTextView = (TextView) findViewById(R.id.detail_todo_date);
         timeTextView = (TextView) findViewById(R.id.detail_todo_time);
@@ -174,8 +188,7 @@ public class DetailTodoActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        setTodoData();
-        setViewData();
+        reloadViewContents();
     }
 
     private void reloadViewContents() {
@@ -187,12 +200,15 @@ public class DetailTodoActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if (b != null) {
             position = b.getInt("position");
-            commonId = b.getInt("common_id");
-            date = b.getString("date");
-            time = b.getString("time");
-            status = b.getBoolean("status");
-            keyTag = b.getString("key_tag");
-            hashTagList = b.getStringArrayList("hash_tag_list");
+            selectedTodo = mListener.getSelectedTodo(position);
+            if (selectedTodo != null) {
+                commonId = selectedTodo.getId();
+                date = selectedTodo.getDate();
+                time = selectedTodo.getTime();
+                status = selectedTodo.getStatus();
+                keyTag = selectedTodo.getKeyTag();
+                hashTagList = selectedTodo.getHashTagList();
+            }
         }
     }
 
@@ -207,5 +223,9 @@ public class DetailTodoActivity extends AppCompatActivity {
             hashTagString += s + " ";
         }
         hashTextView.setText(hashTagString);
+    }
+
+    public interface OnDetailActivityInteractionListener {
+        TodoData getSelectedTodo(int position);
     }
 }

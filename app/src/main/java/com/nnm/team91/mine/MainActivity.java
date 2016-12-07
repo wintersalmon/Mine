@@ -41,7 +41,7 @@ import com.nnm.team91.mine.fragments.TodoListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnDetailActivityInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
+    public static AppCompatActivity activity;
 
     public static final int REQUEST_CODE = 101;
     public static final int REQUEST_TODO_PREV = 1000;
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity = this;
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -185,6 +188,14 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         datamanager.updateLoadedData(2016,12,1);
     }
 
+    public void updateTodoData(TodoData todo) {
+        datamanager.updateTodo(todo);
+    }
+
+    public void deleteTodoData(int id) {
+        datamanager.deleteTodo(id);
+    }
+
     public TodoData getSelectedTodo() {
         if (selectedTodo != null && selectedTodo.getId() != 0) {
             return selectedTodo;
@@ -205,14 +216,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
             Bundle b = new Bundle();
             b.putInt("position", position);
-            b.putInt("common_id", selectedTodo.getId());
-            b.putString("date", selectedTodo.getDate());
-            b.putString("time", selectedTodo.getTime());
-            b.putBoolean("status", selectedTodo.getStatus());
-            b.putString("key_tag", selectedTodo.getKeyTag());
-            b.putStringArrayList("hash_tag_list", selectedTodo.getHashTagList());
-
             intent.putExtras(b);
+
             startActivity(intent);
         }
     }
@@ -384,6 +389,22 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         adapter.clear();
         for (ExpenseData data : datamanager.getLoadedDataExpense()) {
             adapter.addItem(data);
+        }
+    }
+
+    @Override
+    public TodoData getSelectedTodo(int position) {
+        TodoData todo;
+        try {
+            todo = datamanager.getLoadedDataTodo().get(position);
+        } catch (NullPointerException e) {
+            todo = null;
+        }
+
+        if (todo != null && todo.getId() != 0) {
+            return todo;
+        } else {
+            return null;
         }
     }
 
