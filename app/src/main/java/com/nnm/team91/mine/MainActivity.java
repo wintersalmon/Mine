@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,13 +16,10 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +33,6 @@ import com.nnm.team91.mine.data.DiaryData;
 import com.nnm.team91.mine.data.ExpenseData;
 import com.nnm.team91.mine.data.TimelineData;
 import com.nnm.team91.mine.data.TodoData;
-import com.nnm.team91.mine.detail.DetailTodoActivity;
 import com.nnm.team91.mine.fragments.DiaryListFragment;
 import com.nnm.team91.mine.fragments.ExpenseListFragment;
 import com.nnm.team91.mine.fragments.TimelineListFragment;
@@ -77,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
     private int selectedTodoPosition;
     private TodoData selectedTodo;
+    private DiaryData selectedDiary;
+    private ExpenseData selectedExpense;
 
     private DataManager datamanager;
 
@@ -128,18 +125,18 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
                 final View dialogEditView = inflater.inflate(R.layout.dialog_edit_date, null);
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(MainActivity.this);
-                buider.setTitle("Member Information"); //Dialog 제목
+                buider.setTitle("날짜 선택"); //Dialog 제목
                 buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
-                buider.setPositiveButton("Complite", new DialogInterface.OnClickListener() {
+                buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 메인의 선택된 날짜 변경 & 데이터 리로드
                     }
                 });
 
-                buider.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                buider.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 취소 출력 메세지 변경
@@ -221,11 +218,51 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     public void DetailDiary(int position) {
+        try {
+            selectedDiary = datamanager.getLoadedDataDiary().get(position);
+        } catch (NullPointerException e) {
+            selectedDiary = null;
+        }
 
+        if (selectedDiary != null && selectedDiary.getId() != 0) {
+            Intent intent = new Intent(MainActivity.this, DetailDiaryActivity.class);
+
+            Bundle b = new Bundle();
+            b.putInt("position", position);
+            b.putInt("common_id", selectedDiary.getId());
+            b.putString("date", selectedDiary.getDate());
+            b.putString("time", selectedDiary.getTime());
+            b.putString("contents", selectedDiary.getText());
+            b.putString("key_tag", selectedDiary.getKeyTag());
+            b.putStringArrayList("hash_tag_list", selectedDiary.getHashTagList());
+
+            intent.putExtras(b);
+            startActivity(intent);
+        }
     }
 
     public void DetailExpense(int position) {
+        try {
+            selectedExpense = datamanager.getLoadedDataExpense().get(position);
+        } catch (NullPointerException e) {
+            selectedExpense = null;
+        }
 
+        if (selectedExpense != null && selectedExpense.getId() != 0) {
+            Intent intent = new Intent(MainActivity.this, DetailExpenseActivity.class);
+
+            Bundle b = new Bundle();
+            b.putInt("position", position);
+            b.putInt("common_id", selectedExpense.getId());
+            b.putString("date", selectedExpense.getDate());
+            b.putString("time", selectedExpense.getTime());
+            b.putInt("amount", selectedExpense.getAmountValue());
+            b.putString("key_tag", selectedExpense.getKeyTag());
+            b.putStringArrayList("hash_tag_list", selectedExpense.getHashTagList());
+
+            intent.putExtras(b);
+            startActivity(intent);
+        }
     }
 
     public void ChangePageMode() {

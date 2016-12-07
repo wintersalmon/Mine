@@ -61,8 +61,10 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".NoticeActivity" />
-        <activity android:name=".edit.EditTodoActivity" />
-        <activity android:name=".detail.DetailTodoActivity"></activity>
+        <activity android:name=".EditActivity" />
+        <activity android:name=".DetailTodoActivity" />
+        <activity android:name=".DetailDiaryActivity" />
+        <activity android:name=".DetailExpenseActivity"></activity>
     </application>
 
 </manifest>

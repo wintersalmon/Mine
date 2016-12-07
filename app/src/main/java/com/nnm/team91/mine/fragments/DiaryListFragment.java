@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.DiaryAdapater;
 
@@ -86,6 +87,8 @@ public class DiaryListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // TODO: 2016. 12. 2. add function to OnItemClickListener
+                MainActivity main = (MainActivity) getActivity();
+                main.DetailDiary(position);
             }
         }) ;
 

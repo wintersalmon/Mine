@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_detail_todo"
+    android:id="@+id/activity_detail_diary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nnm.team91.mine.DetailTodoActivity">
+    tools:context="com.nnm.team91.mine.DetailDiaryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
             <TextView
-                android:id="@+id/detail_todo_date"
+                android:id="@+id/detail_diary_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/detail_todo_time"
+                android:id="@+id/detail_diary_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -45,33 +45,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/detail_todo_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:checked="true" />
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/detail_todo_key_tag"
+                android:id="@+id/detail_diary_key_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@android:color/black"
                 android:textSize="25sp"
                 android:text="KeyTag"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
             <TextView
-                android:id="@+id/detail_todo_hash_tag"
+                android:id="@+id/detail_diary_hash_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textSize="25sp"
-                android:text="HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag"
+                android:text="@string/sample_diary_hash_tag"
+                />
+            <TextView
+                android:id="@+id/detail_diary_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="25sp"
+                android:text="@string/sample_diary_contents"
                 />
         </LinearLayout>
 

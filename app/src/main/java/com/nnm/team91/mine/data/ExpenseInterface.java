@@ -8,4 +8,5 @@ package com.nnm.team91.mine.data;
 public interface ExpenseInterface {
     void setAmount(int amount);
     String getAmount();
+    int getAmountValue();
 }

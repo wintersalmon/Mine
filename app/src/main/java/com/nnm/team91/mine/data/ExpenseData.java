@@ -26,4 +26,9 @@ public class ExpenseData extends CommonData implements ExpenseInterface {
         return currency + String.valueOf(amount);
     }
 
+
+    @Override
+    public int getAmountValue() {
+        return amount;
+    }
 }

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_edit_todo"
+    android:id="@+id/activity_detail_expense"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nnm.team91.mine.edit.EditTodoActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.nnm.team91.mine.DetailExpenseActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,9 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-
             <TextView
-                android:id="@+id/edit_todo_date"
+                android:id="@+id/detail_expense_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/edit_todo_time"
+                android:id="@+id/detail_expense_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -47,35 +49,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/edit_todo_status"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/detail_expense_key_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:textSize="25sp"
-                android:checked="true" />
-            <EditText
-                android:id="@+id/edit_todo_key_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@android:color/black"
                 android:textSize="25sp"
                 android:text="KeyTag"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/edit_todo_hash_tag"
+            <TextView
+                android:id="@+id/detail_expense_hash_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textSize="25sp"
-                android:text="HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag"
+                android:text="@string/sample_diary_hash_tag"
+                />
+            <TextView
+                android:id="@+id/detail_expense_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="25sp"
+                android:text="$10000"
                 />
         </LinearLayout>
 
@@ -87,24 +84,42 @@
         android:layout_gravity="bottom">
 
         <Button
-            android:id="@+id/edit_todo_button_cancel"
+            android:id="@+id/detail_expense_button_prev"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:gravity="center_horizontal"
-            android:text="CANCEL"
+            android:text="PREV"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>
         <Button
-            android:id="@+id/detail_todo_button_next"
+            android:id="@+id/detail_expense_button_edit"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
-            android:gravity="center_horizontal"
-            android:text="OK"
+            android:text="E"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/detail_expense_button_delete"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:text="D"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/detail_expense_button_next"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:text="NEXT"
             android:textSize="25sp"
             android:textColor="@color/buttonMenu"
             android:background="@null"/>

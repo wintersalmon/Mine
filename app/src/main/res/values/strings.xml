@@ -186,4 +186,55 @@ mine 서비스는 휴대기기에서 사용할 수 있습니다. 트래픽 또�
     <string name="edit_menu_btn_b">B</string>
     <string name="edit_menu_btn_c">C</string>
     <string name="edit_menu_btn_d">D</string>
+    <string name="sample_diary_hash_tag">HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag</string>
+    <string name="sample_diary_contents">
+        물은 춤을 추는 뱀이다.
+
+물을 늘리려고
+
+손으로 억지로 짓이겨 죽이면,
+
+흐리게 터진다.
+
+
+
+감정 표현이 극과 극인 사람은
+
+쇠, 매끄러운 가죽이다.
+
+한 쪽 면은 아주 진하고
+
+다른 면은 아주 광채가 난다.
+
+
+
+
+나는 레오나르도 다빈치를 닮았다.
+
+여러 방면의 세계를 맛보는걸 즐기며,
+
+나보다는 나의 후손들에게 이로운걸 남긴다.
+
+
+
+자동차는 오리다.
+
+꽥꽥거린다.
+
+
+
+한국인은 고블린이다.
+
+생긴거도 고블린이고
+
+사기치는거도 그 종족과 흡사 하다.
+
+
+
+올림픽은 악마의 눈가림이다.
+
+선수들은 열정을 다 하지만
+
+결국 남는건 후회일 것이다.
+    </string>
 </resources>
