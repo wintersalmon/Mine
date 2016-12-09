@@ -4,11 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
@@ -23,7 +25,7 @@ import com.nnm.team91.mine.adapter.TodoAdapter;
  * Use the {@link TodoListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodoListFragment extends Fragment {
+public class TodoListFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,30 +72,37 @@ public class TodoListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
-        ListView listview = (ListView) view.findViewById(R.id.listview_todo);
+//        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
+//        ListView listview = (ListView) view.findViewById(R.id.listview_todo);
 
         // Make Checkbox not to conflict with setOnItemClickListener
-        listview.setItemsCanFocus(false);
+//        listview.setItemsCanFocus(false);
 
         // Adapter 생성
         adapter = new TodoAdapter();
 
         // 리스트뷰 참조 및 Adapter달기
-        listview.setAdapter(adapter);
+        setListAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // TODO: 2016. 12. 2. add function to OnItemClickListener
-                MainActivity main = (MainActivity) getActivity();
-                main.DetailTodo(position);
-            }
-        }) ;
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView parent, View v, int position, long id) {
+//                // TODO: 2016. 12. 2. add function to OnItemClickListener
+//
+//            }
+//        }) ;
 
         mListener.updateTodoAdapter(adapter);
 
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Toast.makeText(getContext(), "TodoList", Toast.LENGTH_SHORT).show();
+        MainActivity main = (MainActivity) getActivity();
+        main.DetailTodo(position);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

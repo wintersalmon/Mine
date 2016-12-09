@@ -1,6 +1,7 @@
 package com.nnm.team91.mine.data;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,8 +13,12 @@ import java.text.SimpleDateFormat;
 
 public class CommonData {
     static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    static private DateFormat dateFormat = new SimpleDateFormat("MM-dd");
+    static private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+    static private String dateFormatStr = "%04d-%02d-%02d";
+    static private String timeFormatStr = "%02d:%02d";
+    static private String datetimeFormatStr = "%s %s";
 
     int id;
     Date datetime;
@@ -31,6 +36,16 @@ public class CommonData {
     }
     public void setDate(Date date) {
         datetime = date;
+    }
+    public void setDate(int year, int month, int day) {
+        String dateStr = String.format(dateFormatStr, year, month, day);
+        String timeStr = getTime();
+        String datetimeStr = String.format(datetimeFormatStr, dateStr, timeStr);
+        try {
+            datetime = datetimeFormat.parse(datetimeStr);
+        } catch (Exception e) {
+
+        }
     }
     public void setHashTagList(ArrayList<String> list) {
         hashTagList.clear();
@@ -83,5 +98,18 @@ public class CommonData {
 
     public String getKeyTag() {
         return keyTag;
+    }
+
+    // TODO: 2016. 12. 9. fix constant data to calander
+    public int getYear() {
+        return 2016;
+    }
+
+    public int getMonth() {
+        return 12;
+    }
+
+    public int getDay() {
+        return 1;
     }
 }

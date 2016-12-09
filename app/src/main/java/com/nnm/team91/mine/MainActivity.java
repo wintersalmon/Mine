@@ -70,7 +70,12 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     private boolean bTimeline;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private SectionsPagerAdapter mSectionsTimelinePagerAdapter;
-    private FloatingActionButton gotoListFloatBtn;
+
+    private TodoListFragment todoListFragment;
+    private DiaryListFragment diaryListFragment;
+    private ExpenseListFragment expenseListFragment;
+    private TimelineListFragment timelineListFragment;
+
 
     private int selectedTodoPosition;
     private TodoData selectedTodo;
@@ -94,13 +99,18 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
+        todoListFragment = TodoListFragment.newInstance("DUMMY", "DUMMY");
+        diaryListFragment = DiaryListFragment.newInstance("DUMMY", "DUMMY");
+        expenseListFragment = ExpenseListFragment.newInstance("DUMMY", "DUMMY");
+        timelineListFragment = TimelineListFragment.newInstance("DUMMY", "DUMMY");
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsPagerAdapter.addFragment(new TodoListFragment(), "ToDo");
-        mSectionsPagerAdapter.addFragment(new DiaryListFragment(), "Diary");
-        mSectionsPagerAdapter.addFragment(new ExpenseListFragment(), "Expense");
+        mSectionsPagerAdapter.addFragment(todoListFragment, "ToDo");
+        mSectionsPagerAdapter.addFragment(diaryListFragment, "Diary");
+        mSectionsPagerAdapter.addFragment(expenseListFragment, "Expense");
 
         mSectionsTimelinePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsTimelinePagerAdapter.addFragment(new TimelineListFragment(), "Timeline");
+        mSectionsTimelinePagerAdapter.addFragment(timelineListFragment, "Timeline");
 
         // Set into timeline mode
         bTimeline = true;
@@ -188,20 +198,21 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         datamanager.updateLoadedData(2016,12,1);
     }
 
+    public void refreshAll() {
+        todoListFragment.getListView().invalidate();
+        diaryListFragment.getListView().invalidate();
+        expenseListFragment.getListView().invalidate();
+        timelineListFragment.getListView().invalidate();
+    }
+
+    @Override
     public void updateTodoData(TodoData todo) {
         datamanager.updateTodo(todo);
+        refreshAll();
     }
 
     public void deleteTodoData(int id) {
         datamanager.deleteTodo(id);
-    }
-
-    public TodoData getSelectedTodo() {
-        if (selectedTodo != null && selectedTodo.getId() != 0) {
-            return selectedTodo;
-        } else {
-            return null;
-        }
     }
 
     public void DetailTodo(int position) {
@@ -214,9 +225,11 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         if (selectedTodo != null && selectedTodo.getId() != 0) {
             Intent intent = new Intent(MainActivity.this, DetailTodoActivity.class);
 
-            Bundle b = new Bundle();
-            b.putInt("position", position);
-            intent.putExtras(b);
+            selectedTodoPosition = position;
+
+//            Bundle b = new Bundle();
+//            b.putInt("position", position);
+//            intent.putExtras(b);
 
             startActivity(intent);
         }
@@ -268,6 +281,11 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
             intent.putExtras(b);
             startActivity(intent);
         }
+    }
+
+    public void invalidateAllView() {
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        mSectionsTimelinePagerAdapter.notifyDataSetChanged();
     }
 
     public void ChangePageMode() {
@@ -393,16 +411,9 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     @Override
-    public TodoData getSelectedTodo(int position) {
-        TodoData todo;
-        try {
-            todo = datamanager.getLoadedDataTodo().get(position);
-        } catch (NullPointerException e) {
-            todo = null;
-        }
-
-        if (todo != null && todo.getId() != 0) {
-            return todo;
+    public TodoData getSelectedTodo() {
+        if (selectedTodo != null && selectedTodo.getId() != 0) {
+            return selectedTodo;
         } else {
             return null;
         }

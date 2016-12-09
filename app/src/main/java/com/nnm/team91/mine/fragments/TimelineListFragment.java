@@ -4,11 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
@@ -23,7 +25,7 @@ import com.nnm.team91.mine.adapter.TimelineAdapter;
  * Use the {@link TimelineListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TimelineListFragment extends Fragment {
+public class TimelineListFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,37 +74,43 @@ public class TimelineListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
-        timelineListview = (ListView) view.findViewById(R.id.listview_timeline);
+//        View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
+//        timelineListview = (ListView) view.findViewById(R.id.listview_timeline);
 
         // Make Checkbox not to conflict with setOnItemClickListener
-        timelineListview.setItemsCanFocus(false);
+//        timelineListview.setItemsCanFocus(false);
 
         adapter = new TimelineAdapter();
+        setListAdapter(adapter);
 
-        timelineListview.setAdapter(adapter);
-
-        // Change MainActivity ViewMode if ListItem is selected
-        timelineListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                MainActivity main = (MainActivity) getActivity();
-                main.ChangePageMode();
-            }
-        });
-
-        // Set ListView Focus to Current Item
-        timelineListview.post(new Runnable() {
-            @Override
-            public void run() {
-                // TODO: 2016. 12. 2. add listview focus change function here
-//                timelineListview.scrollTo(0, timelineListview.getBottom());
-//                timelineListview.setSelection(timelineListview.getAdapter().getCount() - 1);
-            }
-        });
+//        // Change MainActivity ViewMode if ListItem is selected
+//        timelineListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView parent, View v, int position, long id) {
+//
+//            }
+//        });
+//
+//        // Set ListView Focus to Current Item
+//        timelineListview.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                // TODO: 2016. 12. 2. add listview focus change function here
+////                timelineListview.scrollTo(0, timelineListview.getBottom());
+////                timelineListview.setSelection(timelineListview.getAdapter().getCount() - 1);
+//            }
+//        });
 
         mListener.updateTimelineAdapter(adapter);
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Toast.makeText(getContext(), "TimelineList", Toast.LENGTH_SHORT).show();
+        MainActivity main = (MainActivity) getActivity();
+        main.ChangePageMode();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

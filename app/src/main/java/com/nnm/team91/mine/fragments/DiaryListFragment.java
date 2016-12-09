@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.DiaryAdapater;
 
@@ -24,7 +24,7 @@ import com.nnm.team91.mine.adapter.DiaryAdapater;
  * Use the {@link DiaryListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiaryListFragment extends Fragment {
+public class DiaryListFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,27 +74,24 @@ public class DiaryListFragment extends Fragment {
     }
 
     @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        // TODO: 2016. 12. 2. add function to OnItemClickListener
+        Toast.makeText(getContext(), "Diary", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
-        ListView listview = (ListView) view.findViewById(R.id.listview_diary);
+//        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
+//        ListView listview = (ListView) view.findViewById(R.id.listview_diary);
 
         adapter = new DiaryAdapater();
-
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // TODO: 2016. 12. 2. add function to OnItemClickListener
-                MainActivity main = (MainActivity) getActivity();
-                main.DetailDiary(position);
-            }
-        }) ;
+        setListAdapter(adapter);
 
         mListener.updateDairyAdapater(adapter);
 
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 

@@ -56,6 +56,10 @@ public class DataManager {
         datetimeFmtStr = "%s %s";
     }
 
+    public void updateLoadedData() {
+        updateLoadedData(loadYear, loadMonth, loadDay);
+    }
+
     public void updateLoadedData(int year, int month, int day) {
         // TODO : Verify year month day
         this.loadYear = year;
@@ -231,12 +235,12 @@ public class DataManager {
             diaryIndex++;
             expenseIndex++;
 
-            Log.i("MATCH_LENGTH", addedTodoCount + ", " + addedDiaryCount  + ", " +  addedExpenseCount);
-            Log.i("MATCH_LENGTH", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
+//            Log.i("MATCH_LENGTH", addedTodoCount + ", " + addedDiaryCount  + ", " +  addedExpenseCount);
+//            Log.i("MATCH_LENGTH", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
 
         }
-        Log.i("MATCH_LENGTH_DONE", loadedTodoLength + ", " + loadedDiaryLength  + ", " +  loadedExpenseLength);
-        Log.i("MATCH_LENGTH_DONE", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
+//        Log.i("MATCH_LENGTH_DONE", loadedTodoLength + ", " + loadedDiaryLength  + ", " +  loadedExpenseLength);
+//        Log.i("MATCH_LENGTH_DONE", todoIndex + ", " + diaryIndex  + ", " +  expenseIndex);
     }
 
     private void updateTimelineData() {
@@ -357,6 +361,7 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("todo", null, values);
+        updateLoadedData();
     }
 
     public void insertDiary(Date datetime, String contents, ArrayList<String> hashtags, int keyTagIndex) {
@@ -371,6 +376,7 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("diary", null, values);
+        updateLoadedData();
     }
 
     public void insertExpense(Date datetime, int amount, ArrayList<String> hashtags, int keyTagIndex) {
@@ -385,6 +391,7 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("expense", null, values);
+        updateLoadedData();
     }
 
     private String selectDatetimeFromCommon(int _id) {
@@ -400,7 +407,7 @@ public class DataManager {
         if (c != null) {
             c.moveToFirst();
             datetime = c.getString(c.getColumnIndex("datetime"));
-            Log.i("db_select_common","success id:" + String.valueOf(_id) + " : " + datetime);
+//            Log.i("db_select_common","success id:" + String.valueOf(_id) + " : " + datetime);
         }
 
         if (c != null) c.close();
@@ -465,8 +472,8 @@ public class DataManager {
 
             addTodo(common_id,datetime,status,hashtags,keyTag);
 
-            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
-            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+//            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
+//            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -499,8 +506,8 @@ public class DataManager {
 
             addTodo(common_id,datetime,status,hashtags,keyTag);
 
-            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
-            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+//            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
+//            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -528,8 +535,8 @@ public class DataManager {
 
             addDiary(common_id,datetime,contents,hashtags,keyTag);
 
-            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
-            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+//            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
+//            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -561,8 +568,8 @@ public class DataManager {
 
             addDiary(common_id,datetime,contents,hashtags,keyTag);
 
-            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
-            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+//            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
+//            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -591,8 +598,8 @@ public class DataManager {
 
             addExpense(common_id,datetime,amount,hashtags,keyTag);
 
-            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
-            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+//            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
+//            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -624,8 +631,8 @@ public class DataManager {
 
             addExpense(common_id,datetime,amount,hashtags,keyTag);
 
-            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
-            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
+//            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
+//            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -640,6 +647,7 @@ public class DataManager {
         } catch (Exception e) {
             Log.i("DELETE_TODO", e.toString());
         }
+        updateLoadedData();
     }
 
     public void deleteDiary(int id) {
@@ -651,6 +659,7 @@ public class DataManager {
         } catch (Exception e) {
             Log.i("DELETE_TODO", e.toString());
         }
+        updateLoadedData();
     }
 
     public void deleteExpense(int id) {
@@ -662,6 +671,7 @@ public class DataManager {
         } catch (Exception e) {
             Log.i("DELETE_TODO", e.toString());
         }
+        updateLoadedData();
     }
 
 //    private void testDeleteAllData() {
@@ -681,44 +691,66 @@ public class DataManager {
 //        }
 //    }
 
+    public void updateCommonDate(CommonData common) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if (common != null && common.getId() != 0) {
+            values.put("datetime", common.getDateTime());
+            int result = db.update("common", values, "_id = ?", new String[]{String.valueOf(common.getId())});
+        }
+    }
+
     public void updateTodo(TodoData todo) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
+
+        updateCommonDate(todo);
 
         if (todo != null && todo.getId() != 0) {
             if (todo.getStatus()) values.put("status", 1);
             else values.put("status", 0);
 
-            // TODO: 2016. 12. 6. add hashtag update function
-            Log.i("UPDATE_TODO", values.toString());
             db.update("todo", values, "common_id = ?", new String[]{String.valueOf(todo.getId())});
         }
+
+        // TODO: 2016. 12. 6. add hashtag update function
+
+        updateLoadedData();
     }
 
     public void updateDiary(DiaryData diary) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        updateCommonDate(diary);
+
         if (diary != null && diary.getId() != 0) {
             values.put("contents", diary.getText());
 
-            // TODO: 2016. 12. 6. add hashtag update function
             Log.i("UPDATE_DIARY", values.toString());
             db.update("diary", values, "common_id = ?", new String[]{String.valueOf(diary.getId())});
         }
+
+        // TODO: 2016. 12. 6. add hashtag update function
+        updateLoadedData();
     }
 
     public void updateExpense(ExpenseData expense) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        updateCommonDate(expense);
+
         if (expense != null && expense.getId() != 0) {
             values.put("amount", expense.getAmount());
 
-            // TODO: 2016. 12. 6. add hashtag update function
             Log.i("UPDATE_EXPENSE", values.toString());
             db.update("expense", values, "common_id = ?", new String[]{String.valueOf(expense.getId())});
         }
+
+        // TODO: 2016. 12. 6. add hashtag update function
+        updateLoadedData();
     }
 
 //    private void testUpdateAllData() {
