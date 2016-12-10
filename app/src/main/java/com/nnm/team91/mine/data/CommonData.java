@@ -1,5 +1,7 @@
 package com.nnm.team91.mine.data;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class CommonData {
     static private String datetimeFormatStr = "%s %s";
 
     int id;
-    Date datetime;
+    Calendar datetime;
     int keyTagIndex;
     String keyTag;
     ArrayList<String> hashTagList;
@@ -34,18 +36,21 @@ public class CommonData {
     public void setId(int id) {
         this.id = id;
     }
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         datetime = date;
     }
     public void setDate(int year, int month, int day) {
-        String dateStr = String.format(dateFormatStr, year, month, day);
-        String timeStr = getTime();
-        String datetimeStr = String.format(datetimeFormatStr, dateStr, timeStr);
-        try {
-            datetime = datetimeFormat.parse(datetimeStr);
-        } catch (Exception e) {
+        datetime.set(year,month,day);
+        Log.d("DATETIME", datetime.getTime().toString());
 
-        }
+//        String dateStr = String.format(dateFormatStr, year, month, day);
+//        String timeStr = getTime();
+//        String datetimeStr = String.format(datetimeFormatStr, dateStr, timeStr);
+//        try {
+//
+//        } catch (Exception e) {
+//
+//        }
     }
     public void setHashTagList(ArrayList<String> list) {
         hashTagList.clear();
@@ -68,20 +73,26 @@ public class CommonData {
         return id;
     }
 
-    public Date getRawDateTime() {
+    public Calendar getRawDateTime() {
         return datetime;
     }
 
     public String getDateTime() {
-        return datetimeFormat.format(datetime);
+        return String.format(datetimeFormatStr, getDate(), getTime());
     }
 
     public String getDate() {
-        return dateFormat.format(datetime);
+        int year = datetime.get(Calendar.YEAR);
+        int month = datetime.get(Calendar.MONTH);
+        int day = datetime.get(Calendar.DAY_OF_MONTH);
+
+        return String.format(dateFormatStr, year, month + 1, day);
     }
 
     public String getTime() {
-        return timeFormat.format(datetime);
+        int hour = datetime.get(Calendar.HOUR_OF_DAY);
+        int minute = datetime.get(Calendar.MINUTE);
+        return String.format(timeFormatStr, hour, minute);
     }
 
     public String getHasTagListString() {
@@ -100,16 +111,15 @@ public class CommonData {
         return keyTag;
     }
 
-    // TODO: 2016. 12. 9. fix constant data to calander
     public int getYear() {
-        return 2016;
+        return datetime.get(Calendar.YEAR);
     }
 
     public int getMonth() {
-        return 12;
+        return datetime.get(Calendar.MONTH);
     }
 
     public int getDay() {
-        return 1;
+        return datetime.get(Calendar.DAY_OF_MONTH);
     }
 }

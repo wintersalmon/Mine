@@ -89,11 +89,16 @@ public class DiaryListFragment extends ListFragment {
         adapter = new DiaryAdapater();
         setListAdapter(adapter);
 
-        mListener.updateDairyAdapater(adapter);
+//        mListener.updateDairyAdapater(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListener.updateDairyAdapater(adapter);
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

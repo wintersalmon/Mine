@@ -34,6 +34,10 @@ public class TimelineListFragment extends ListFragment {
     TimelineAdapter adapter;
     ListView timelineListview;
 
+    public TimelineAdapter getAdapter() {
+        return adapter;
+    }
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -101,8 +105,13 @@ public class TimelineListFragment extends ListFragment {
 //            }
 //        });
 
-        mListener.updateTimelineAdapter(adapter);
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListener.updateTimelineAdapter(adapter);
     }
 
     @Override

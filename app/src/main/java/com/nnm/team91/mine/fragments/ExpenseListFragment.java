@@ -35,6 +35,10 @@ public class ExpenseListFragment extends ListFragment {
     private static final String ARG_PARAM2 = "param2";
     ExpenseAdapter adapter;
 
+    public ExpenseAdapter getAdapter() {
+        return adapter;
+    }
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -90,9 +94,15 @@ public class ExpenseListFragment extends ListFragment {
 //        }) ;
 
 
-        mListener.updateExpenseAdapter(adapter);
+//        mListener.updateExpenseAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListener.updateExpenseAdapter(adapter);
     }
 
     @Override

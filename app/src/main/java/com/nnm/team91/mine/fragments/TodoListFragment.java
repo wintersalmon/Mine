@@ -32,6 +32,10 @@ public class TodoListFragment extends ListFragment {
     private static final String ARG_PARAM2 = "param2";
     TodoAdapter adapter;
 
+    public TodoAdapter getAdapter() {
+        return adapter;
+    }
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -92,9 +96,15 @@ public class TodoListFragment extends ListFragment {
 //            }
 //        }) ;
 
-        mListener.updateTodoAdapter(adapter);
+//        mListener.updateTodoAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListener.updateTodoAdapter(adapter);
     }
 
     @Override

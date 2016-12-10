@@ -198,17 +198,25 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         datamanager.updateLoadedData(2016,12,1);
     }
 
-    public void refreshAll() {
-        todoListFragment.getListView().invalidate();
-        diaryListFragment.getListView().invalidate();
-        expenseListFragment.getListView().invalidate();
-        timelineListFragment.getListView().invalidate();
-    }
+//    public void refreshAll() {
+//        if (todoListFragment != null && todoListFragment.getListView() != null) {
+//
+//        }
+//        if (diaryListFragment.getListView() != null) {
+//            diaryListFragment.getListView().invalidate();
+//        }
+//        if (expenseListFragment.getListView() != null) {
+//            expenseListFragment.getListView().invalidate();
+//        }
+//        if (timelineListFragment.getListView() != null) {
+//            timelineListFragment.getListView().invalidate();
+//        }
+//    }
 
     @Override
     public void updateTodoData(TodoData todo) {
         datamanager.updateTodo(todo);
-        refreshAll();
+//        refreshAll();
     }
 
     public void deleteTodoData(int id) {
@@ -384,6 +392,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (TimelineData data : datamanager.getLoadedDataTimeline()) {
             adapter.addItem(data);
         }
+        timelineListFragment.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -392,6 +401,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (TodoData data : datamanager.getLoadedDataTodo()) {
             adapter.addItem(data);
         }
+        todoListFragment.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -400,6 +410,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (DiaryData data : datamanager.getLoadedDataDiary()) {
             adapter.addItem(data);
         }
+        diaryListFragment.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -408,6 +419,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (ExpenseData data : datamanager.getLoadedDataExpense()) {
             adapter.addItem(data);
         }
+        expenseListFragment.getAdapter().notifyDataSetChanged();
     }
 
     @Override
