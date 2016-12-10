@@ -41,16 +41,13 @@ public class CommonData {
     }
     public void setDate(int year, int month, int day) {
         datetime.set(year,month,day);
-        Log.d("DATETIME", datetime.getTime().toString());
+    }
+    public void setTime(int hour, int minute) {
+        int year = datetime.get(Calendar.YEAR);
+        int month = datetime.get(Calendar.MONTH);
+        int day = datetime.get(Calendar.DAY_OF_MONTH);
 
-//        String dateStr = String.format(dateFormatStr, year, month, day);
-//        String timeStr = getTime();
-//        String datetimeStr = String.format(datetimeFormatStr, dateStr, timeStr);
-//        try {
-//
-//        } catch (Exception e) {
-//
-//        }
+        datetime.set(year,month,day,hour,minute);
     }
     public void setHashTagList(ArrayList<String> list) {
         hashTagList.clear();
@@ -121,5 +118,13 @@ public class CommonData {
 
     public int getDay() {
         return datetime.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getHour() {
+        return datetime.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public int getMinute() {
+        return datetime.get(Calendar.MINUTE);
     }
 }

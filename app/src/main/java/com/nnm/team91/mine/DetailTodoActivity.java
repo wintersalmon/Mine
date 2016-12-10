@@ -3,6 +3,7 @@ package com.nnm.team91.mine;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +14,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nnm.team91.mine.data.DataManager;
 import com.nnm.team91.mine.data.TodoData;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class DetailTodoActivity extends AppCompatActivity {
@@ -72,23 +75,12 @@ public class DetailTodoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = getLayoutInflater();
-
                 final View dialogEditView = inflater.inflate(R.layout.dialog_edit_date, null);
-                DatePicker picker = (DatePicker) dialogEditView.findViewById(R.id.dialog_edit_date_picker);
-
-                MainActivity main = (MainActivity) MainActivity.activity;
-                DataManager manager = main.getDatamanager();
-
-
-//
-//                Log.d("DAY", year + "-" + month + "-" + day);
-//                picker.updateDate(year,month-1,day);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(DetailTodoActivity.this);
                 builder.setTitle("날짜 선택"); //Dialog 제목
 //                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 builder.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
-
 
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
@@ -106,7 +98,7 @@ public class DetailTodoActivity extends AppCompatActivity {
                         mListener.updateTodoData(selectedTodo);
 
                         dateTextView.setText(selectedTodo.getDate());
-                        dateTextView.invalidate();
+//                        dateTextView.invalidate();
                     }
                 });
 
@@ -134,18 +126,35 @@ public class DetailTodoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = getLayoutInflater();
-
                 final View dialogEditView = inflater.inflate(R.layout.dialog_edit_time, null);
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(DetailTodoActivity.this);
                 buider.setTitle("시간 선택"); //Dialog 제목
-                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
+//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // get time
+                        TimePicker TimePicker = (TimePicker) dialogEditView.findViewById(R.id.dialog_edit_time_picker);
+                        int hour, minute;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            hour = TimePicker.getHour();
+                            minute = TimePicker.getMinute();
+                        } else {
+                            hour = TimePicker.getCurrentHour();
+                            minute = TimePicker.getCurrentMinute();
+                        }
 
+                        // set time
+                        MainActivity main = (MainActivity) MainActivity.activity;
+                        selectedTodo.setTime(hour,minute);
+
+                        mListener.updateTodoData(selectedTodo);
+
+                        timeTextView.setText(selectedTodo.getTime());
+//                        timeTextView.invalidate();
                     }
                 });
 
@@ -159,7 +168,18 @@ public class DetailTodoActivity extends AppCompatActivity {
 
                 AlertDialog dialog = buider.create();
 
-
+                // Set TimePicker Time to current selected time
+                TimePicker timePicker = (TimePicker) dialogEditView.findViewById(R.id.dialog_edit_time_picker);
+                int hour = selectedTodo.getHour();
+                int minute = selectedTodo.getMinute();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    timePicker.setHour(hour);
+                    timePicker.setMinute(minute);
+                }
+                else {
+                    timePicker.setCurrentHour(hour);
+                    timePicker.setCurrentMinute(minute);
+                }
 
                 dialog.show();
 
