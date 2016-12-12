@@ -42,7 +42,7 @@ import com.nnm.team91.mine.fragments.TodoListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnTodoDetailActivityInteractionListener, DetailDiaryActivity.OnDiaryDetailActivityInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnTodoDetailActivityInteractionListener, DetailDiaryActivity.OnDiaryDetailActivityInteractionListener, DetailExpenseActivity.OnExpenseDetailActivityInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -359,7 +359,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (TimelineData data : datamanager.getLoadedDataTimeline()) {
             adapter.addItem(data);
         }
-        timelineListFragment.getAdapter().notifyDataSetChanged();
+        if (timelineListFragment.getAdapter() != null)
+            timelineListFragment.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -368,7 +369,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (TodoData data : datamanager.getLoadedDataTodo()) {
             adapter.addItem(data);
         }
-        todoListFragment.getAdapter().notifyDataSetChanged();
+        if (todoListFragment.getAdapter() != null)
+            todoListFragment.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -377,7 +379,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (DiaryData data : datamanager.getLoadedDataDiary()) {
             adapter.addItem(data);
         }
-        diaryListFragment.getAdapter().notifyDataSetChanged();
+        if (diaryListFragment.getAdapter() != null)
+            diaryListFragment.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -386,7 +389,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         for (ExpenseData data : datamanager.getLoadedDataExpense()) {
             adapter.addItem(data);
         }
-        expenseListFragment.getAdapter().notifyDataSetChanged();
+        if (expenseListFragment.getAdapter() != null)
+            expenseListFragment.getAdapter().notifyDataSetChanged();
     }
 
 
@@ -491,6 +495,57 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     public void deleteDiaryData(DiaryData diary) {
         datamanager.deleteDiary(diary.getId());
         selectedDiary = null;
+    }
+
+    /*
+     *
+     * Override OnExpenseDetailActivityInteractionListener Override
+     *
+     */
+    @Override
+    public ExpenseData getSelectedExpense() {
+        if (selectedExpense != null && selectedExpense.getId() != 0) {
+            return selectedExpense;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public ExpenseData findPrevExpense() {
+        for (int position = selectedExpensePosition - 1; position >= 0; position--) {
+            ExpenseData expense = findExpenseWithPosition(position);
+            if (expense != null && expense.getId() != 0) {
+                selectedExpense = expense;
+                selectedExpensePosition = position;
+                return selectedExpense;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public ExpenseData findNextExpense() {
+        for (int position = selectedExpensePosition + 1; position < datamanager.getLoadedDataExpense().size(); position++) {
+            ExpenseData expense = findExpenseWithPosition(position);
+            if (expense != null && expense.getId() != 0) {
+                selectedExpense = expense;
+                selectedExpensePosition = position;
+                return selectedExpense;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateExpenseData(ExpenseData expense) {
+        datamanager.updateExpense(expense);
+    }
+
+    @Override
+    public void deleteExpenseData(ExpenseData expense) {
+        datamanager.deleteExpense(expense.getId());
+        selectedExpense = null;
     }
 
     /**

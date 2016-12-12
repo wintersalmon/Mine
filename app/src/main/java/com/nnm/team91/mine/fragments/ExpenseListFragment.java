@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.ExpenseAdapter;
 
@@ -110,6 +111,8 @@ public class ExpenseListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Toast.makeText(getContext(), "ExpenseList", Toast.LENGTH_SHORT).show();
+        MainActivity main = (MainActivity) getActivity();
+        main.DetailExpense(position);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

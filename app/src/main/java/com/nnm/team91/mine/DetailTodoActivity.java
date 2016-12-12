@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -94,6 +95,7 @@ public class DetailTodoActivity extends AppCompatActivity {
 
                 // Set DatePicker Date to current selected date
                 DatePicker datePicker = (DatePicker) dialogEditView.findViewById(R.id.dialog_edit_date_picker);
+
                 int year = selectedTodo.getYear();
                 int month =  selectedTodo.getMonth();
                 int day = selectedTodo.getDay();
@@ -194,6 +196,8 @@ public class DetailTodoActivity extends AppCompatActivity {
                     }
                 });
                 AlertDialog dialog = buider.create();
+                TextView hashTab = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                hashTab.setText(selectedTodo.getHasTagListString());
                 dialog.show();
             }
         });
@@ -245,7 +249,6 @@ public class DetailTodoActivity extends AppCompatActivity {
                         });
                 AlertDialog confirm = buider.create();
                 confirm.show();
-
             }
         });
 

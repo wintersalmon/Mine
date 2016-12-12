@@ -6,10 +6,13 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,7 +35,6 @@ public class DetailDiaryActivity extends AppCompatActivity {
 
     private OnDiaryDetailActivityInteractionListener mListener;
 
-//    private OnDetailActivityInteractionListener mListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,12 +113,12 @@ public class DetailDiaryActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 final View dialogEditView = inflater.inflate(R.layout.dialog_edit_time, null);
 
-                AlertDialog.Builder buider = new AlertDialog.Builder(DetailDiaryActivity.this);
-                buider.setTitle("시간 선택"); //Dialog 제목
-//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
-                buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailDiaryActivity.this);
+                builder.setTitle("시간 선택"); //Dialog 제목
+//                builder.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
+                builder.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
-                buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // get time
@@ -139,7 +141,7 @@ public class DetailDiaryActivity extends AppCompatActivity {
                     }
                 });
 
-                buider.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 취소 출력 메세지 변경
@@ -147,7 +149,7 @@ public class DetailDiaryActivity extends AppCompatActivity {
                     }
                 });
 
-                AlertDialog dialog = buider.create();
+                AlertDialog dialog = builder.create();
 
                 // Set TimePicker Time to current selected time
                 TimePicker timePicker = (TimePicker) dialogEditView.findViewById(R.id.dialog_edit_time_picker);
@@ -174,26 +176,69 @@ public class DetailDiaryActivity extends AppCompatActivity {
 
                 final View dialogEditView = inflater.inflate(R.layout.dialog_edit_hash_tag, null);
 
-                AlertDialog.Builder buider = new AlertDialog.Builder(DetailDiaryActivity.this);
-                buider.setTitle("해시 태그 선택"); //Dialog 제목
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailDiaryActivity.this);
+                builder.setTitle("해시 태그 선택"); //Dialog 제목
 //                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
-                buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
+                builder.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
-                buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 해쉬태그 변경 기능 추가
                     }
                 });
 
-                buider.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 취소 출력 메세지 변경
                         Toast.makeText(DetailDiaryActivity.this, "취소", Toast.LENGTH_SHORT).show();
                     }
                 });
-                AlertDialog dialog = buider.create();
+                AlertDialog dialog = builder.create();
+                TextView hashTab = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                hashTab.setText(selectedDiary.getHasTagListString());
+                dialog.show();
+            }
+        });
+
+        contentsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+
+                final View dialogEditView = inflater.inflate(R.layout.dialog_edit_contents, null);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailDiaryActivity.this);
+                builder.setTitle("내용 입력");
+                builder.setView(dialogEditView);
+
+                builder.setPositiveButton("저장", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText edittext = (EditText) dialogEditView.findViewById(R.id.dialog_edit_contents_text);
+                        Editable editableText = edittext.getText();
+                        String contentsString = editableText.toString();
+                        selectedDiary.setText(contentsString);
+
+                        mListener.updateDiaryData(selectedDiary);
+
+                        contentsTextView.setText(contentsString);
+                    }
+                });
+
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(DetailDiaryActivity.this, "취소", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+
+                EditText edittext = (EditText) dialogEditView.findViewById(R.id.dialog_edit_contents_text);
+                edittext.setText(selectedDiary.getText(), TextView.BufferType.EDITABLE);
+
                 dialog.show();
             }
         });
@@ -245,7 +290,6 @@ public class DetailDiaryActivity extends AppCompatActivity {
                         });
                 AlertDialog confirm = buider.create();
                 confirm.show();
-
             }
         });
 

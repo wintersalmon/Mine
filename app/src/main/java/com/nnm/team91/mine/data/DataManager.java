@@ -743,7 +743,7 @@ public class DataManager {
         updateCommonDate(expense);
 
         if (expense != null && expense.getId() != 0) {
-            values.put("amount", expense.getAmount());
+            values.put("amount", expense.getAmount().substring(1));
 
             Log.i("UPDATE_EXPENSE", values.toString());
             db.update("expense", values, "common_id = ?", new String[]{String.valueOf(expense.getId())});
