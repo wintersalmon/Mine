@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -43,7 +42,7 @@ import com.nnm.team91.mine.fragments.TodoListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnDetailActivityInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnTodoDetailActivityInteractionListener, DetailDiaryActivity.OnDiaryDetailActivityInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -75,7 +74,11 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
     private int selectedTodoPosition;
     private TodoData selectedTodo;
+
+    private int selectedDiaryPosition;
     private DiaryData selectedDiary;
+
+    private int selectedExpensePosition;
     private ExpenseData selectedExpense;
 
     private DataManager datamanager;
@@ -209,63 +212,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         datamanager.updateLoadedData(2016,12,1);
     }
 
-
-
-
-    // Override OnDetailActivityInteractionListener
-    @Override
-    public TodoData getSelectedTodo() {
-        if (selectedTodo != null && selectedTodo.getId() != 0) {
-            return selectedTodo;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public TodoData findPrevTodo() {
-        for (int position = selectedTodoPosition - 1; position >= 0; position--) {
-            TodoData todo = findTodoWithPosition(position);
-            if (todo != null && todo.getId() != 0) {
-                selectedTodo = todo;
-                selectedTodoPosition = position;
-                return selectedTodo;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public TodoData findNextTodo() {
-        for (int position = selectedTodoPosition + 1; position < datamanager.getLoadedDataTodo().size(); position++) {
-            TodoData todo = findTodoWithPosition(position);
-            if (todo != null && todo.getId() != 0) {
-                selectedTodo = todo;
-                selectedTodoPosition = position;
-                return selectedTodo;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void updateTodoData(TodoData todo) {
-        datamanager.updateTodo(todo);
-    }
-
-    @Override
-    public void deleteTodoData(TodoData todo) {
-        datamanager.deleteTodo(todo.getId());
-        selectedTodo = null;
-    }
-
-
-
-
-    public void deleteTodoData(int id) {
-        datamanager.deleteTodo(id);
-    }
-
     private TodoData findTodoWithPosition(int position) {
         TodoData todo;
         try {
@@ -277,6 +223,38 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         if (todo != null && todo.getId() != 0) {
             selectedTodoPosition = position;
             return todo;
+        } else {
+            return null;
+        }
+    }
+
+    private DiaryData findDiaryWithPosition(int position) {
+        DiaryData diary;
+        try {
+            diary = datamanager.getLoadedDataDiary().get(position);
+        } catch (NullPointerException e) {
+            diary = null;
+        }
+
+        if (diary != null && diary.getId() != 0) {
+            selectedDiaryPosition = position;
+            return diary;
+        } else {
+            return null;
+        }
+    }
+
+    private ExpenseData findExpenseWithPosition(int position) {
+        ExpenseData expense;
+        try {
+            expense = datamanager.getLoadedDataExpense().get(position);
+        } catch (NullPointerException e) {
+            expense = null;
+        }
+
+        if (expense != null && expense.getId() != 0) {
+            selectedExpensePosition = position;
+            return expense;
         } else {
             return null;
         }
@@ -294,60 +272,28 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     public void DetailDiary(int position) {
-        try {
-            selectedDiary = datamanager.getLoadedDataDiary().get(position);
-        } catch (NullPointerException e) {
-            selectedDiary = null;
-        }
+        DiaryData diary = findDiaryWithPosition(position);
+        if (diary != null) {
+            selectedDiary = diary;
+            selectedDiaryPosition = position;
 
-        if (selectedDiary != null && selectedDiary.getId() != 0) {
             Intent intent = new Intent(MainActivity.this, DetailDiaryActivity.class);
-
-            Bundle b = new Bundle();
-            b.putInt("position", position);
-            b.putInt("common_id", selectedDiary.getId());
-            b.putString("date", selectedDiary.getDate());
-            b.putString("time", selectedDiary.getTime());
-            b.putString("contents", selectedDiary.getText());
-            b.putString("key_tag", selectedDiary.getKeyTag());
-            b.putStringArrayList("hash_tag_list", selectedDiary.getHashTagList());
-
-            intent.putExtras(b);
             startActivity(intent);
         }
     }
 
     public void DetailExpense(int position) {
-        try {
-            selectedExpense = datamanager.getLoadedDataExpense().get(position);
-        } catch (NullPointerException e) {
-            selectedExpense = null;
-        }
+        ExpenseData expense = findExpenseWithPosition(position);
+        if (expense != null) {
+            selectedExpense = expense;
+            selectedExpensePosition = position;
 
-        if (selectedExpense != null && selectedExpense.getId() != 0) {
             Intent intent = new Intent(MainActivity.this, DetailExpenseActivity.class);
-
-            Bundle b = new Bundle();
-            b.putInt("position", position);
-            b.putInt("common_id", selectedExpense.getId());
-            b.putString("date", selectedExpense.getDate());
-            b.putString("time", selectedExpense.getTime());
-            b.putInt("amount", selectedExpense.getAmountValue());
-            b.putString("key_tag", selectedExpense.getKeyTag());
-            b.putStringArrayList("hash_tag_list", selectedExpense.getHashTagList());
-
-            intent.putExtras(b);
             startActivity(intent);
         }
     }
 
-    public void invalidateAllView() {
-        mSectionsPagerAdapter.notifyDataSetChanged();
-        mSectionsTimelinePagerAdapter.notifyDataSetChanged();
-    }
-
     public void ChangePageMode() {
-//        mViewPager.setAdapter(null);
         if (bTimeline) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -441,6 +387,110 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
             adapter.addItem(data);
         }
         expenseListFragment.getAdapter().notifyDataSetChanged();
+    }
+
+
+    /*
+     *
+     * Override OnTodoDetailActivityInteractionListener
+     *
+     */
+    @Override
+    public TodoData getSelectedTodo() {
+        if (selectedTodo != null && selectedTodo.getId() != 0) {
+            return selectedTodo;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public TodoData findPrevTodo() {
+        for (int position = selectedTodoPosition - 1; position >= 0; position--) {
+            TodoData todo = findTodoWithPosition(position);
+            if (todo != null && todo.getId() != 0) {
+                selectedTodo = todo;
+                selectedTodoPosition = position;
+                return selectedTodo;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public TodoData findNextTodo() {
+        for (int position = selectedTodoPosition + 1; position < datamanager.getLoadedDataTodo().size(); position++) {
+            TodoData todo = findTodoWithPosition(position);
+            if (todo != null && todo.getId() != 0) {
+                selectedTodo = todo;
+                selectedTodoPosition = position;
+                return selectedTodo;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateTodoData(TodoData todo) {
+        datamanager.updateTodo(todo);
+    }
+
+    @Override
+    public void deleteTodoData(TodoData todo) {
+        datamanager.deleteTodo(todo.getId());
+        selectedTodo = null;
+    }
+
+
+    /*
+     *
+     * Override OnDiaryDetailActivityInteractionListener
+     *
+     */
+    @Override
+    public DiaryData getSelectedDiary() {
+        if (selectedDiary != null && selectedDiary.getId() != 0) {
+            return selectedDiary;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public DiaryData findPrevDiary() {
+        for (int position = selectedDiaryPosition - 1; position >= 0; position--) {
+            DiaryData diary = findDiaryWithPosition(position);
+            if (diary != null && diary.getId() != 0) {
+                selectedDiary = diary;
+                selectedDiaryPosition = position;
+                return selectedDiary;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public DiaryData findNextDiary() {
+        for (int position = selectedDiaryPosition + 1; position < datamanager.getLoadedDataDiary().size(); position++) {
+            DiaryData diary = findDiaryWithPosition(position);
+            if (diary != null && diary.getId() != 0) {
+                selectedDiary = diary;
+                selectedDiaryPosition = position;
+                return selectedDiary;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateDiaryData(DiaryData diary) {
+        datamanager.updateDiary(diary);
+    }
+
+    @Override
+    public void deleteDiaryData(DiaryData diary) {
+        datamanager.deleteDiary(diary.getId());
+        selectedDiary = null;
     }
 
     /**

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.DiaryAdapater;
 
@@ -78,6 +79,8 @@ public class DiaryListFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
         // TODO: 2016. 12. 2. add function to OnItemClickListener
         Toast.makeText(getContext(), "Diary", Toast.LENGTH_SHORT).show();
+        MainActivity main = (MainActivity) getActivity();
+        main.DetailDiary(position);
     }
 
     @Override

@@ -2,12 +2,10 @@ package com.nnm.team91.mine;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,11 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.nnm.team91.mine.data.DataManager;
 import com.nnm.team91.mine.data.TodoData;
-
-import java.sql.Time;
-import java.util.ArrayList;
 
 public class DetailTodoActivity extends AppCompatActivity {
     private Button prevButton;
@@ -37,7 +31,7 @@ public class DetailTodoActivity extends AppCompatActivity {
 
     private TodoData selectedTodo;
 
-    private OnDetailActivityInteractionListener mListener;
+    private OnTodoDetailActivityInteractionListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +40,8 @@ public class DetailTodoActivity extends AppCompatActivity {
 
         // TODO: 2016. 12. 8. use better method to gain MainActivity instance
         final Context context = (Context) MainActivity.activity;
-        if (context instanceof OnDetailActivityInteractionListener ) {
-            mListener = (OnDetailActivityInteractionListener) context;
+        if (context instanceof OnTodoDetailActivityInteractionListener) {
+            mListener = (OnTodoDetailActivityInteractionListener) context;
         }
 
         dateTextView = (TextView) findViewById(R.id.detail_todo_date);
@@ -81,7 +75,6 @@ public class DetailTodoActivity extends AppCompatActivity {
                         int day = datePicker.getDayOfMonth();
 
                         // set date
-                        MainActivity main = (MainActivity) MainActivity.activity;
                         selectedTodo.setDate(year,month + 1,day);
 
                         mListener.updateTodoData(selectedTodo);
@@ -293,7 +286,7 @@ public class DetailTodoActivity extends AppCompatActivity {
         }
     }
 
-    public interface OnDetailActivityInteractionListener {
+    public interface OnTodoDetailActivityInteractionListener {
         TodoData getSelectedTodo();
         TodoData findPrevTodo();
         TodoData findNextTodo();
