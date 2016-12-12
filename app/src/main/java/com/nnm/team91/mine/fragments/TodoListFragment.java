@@ -3,17 +3,18 @@ package com.nnm.team91.mine.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nnm.team91.mine.MainActivity;
-import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.TodoAdapter;
 
 
@@ -25,12 +26,23 @@ import com.nnm.team91.mine.adapter.TodoAdapter;
  * Use the {@link TodoListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodoListFragment extends ListFragment {
+public class TodoListFragment extends ListFragment implements AbsListView.OnScrollListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     TodoAdapter adapter;
+
+    private int currentPosition;
+
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
 
     public TodoAdapter getAdapter() {
         return adapter;
@@ -102,17 +114,11 @@ public class TodoListFragment extends ListFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (mListener != null)
-            mListener.updateTodoAdapter(adapter);
-    }
-
-    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Toast.makeText(getContext(), "TodoList", Toast.LENGTH_SHORT).show();
         MainActivity main = (MainActivity) getActivity();
+//        main.setSelectedPosition(position);
         main.DetailTodo(position);
     }
 
@@ -138,6 +144,43 @@ public class TodoListFragment extends ListFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getListView().setOnScrollListener(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        MainActivity main = (MainActivity) getActivity();
+        if (main == null)
+            return;
+        if (isVisibleToUser) {
+            currentPosition = main.getSelectedPosition();
+            getListView().setSelectionFromTop(currentPosition, 0);
+        } else {
+            main.setSelectedPosition(currentPosition);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mListener != null) {
+            mListener.updateTodoAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        currentPosition = view.getFirstVisiblePosition();
     }
 
     /**

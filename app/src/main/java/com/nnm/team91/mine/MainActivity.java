@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -71,14 +72,22 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     private ExpenseListFragment expenseListFragment;
     private TimelineListFragment timelineListFragment;
 
-
     private int selectedTodoPosition;
-    private TodoData selectedTodo;
-
     private int selectedDiaryPosition;
-    private DiaryData selectedDiary;
-
     private int selectedExpensePosition;
+
+    private int selectedPosition;
+
+    public void setSelectedPosition(int position) {
+        selectedPosition = position;
+    }
+
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    private TodoData selectedTodo;
+    private DiaryData selectedDiary;
     private ExpenseData selectedExpense;
 
     private DataManager datamanager;
@@ -208,8 +217,36 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         });
 
+        // TODO: 2016. 12. 12. set current date
         datamanager = new DataManager(MainActivity.this, 1);
         datamanager.updateLoadedData(2016,12,1);
+
+        // TODO: 2016. 12. 12. set current focus position to closest current time
+        selectedPosition = 0;
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                if (positionOffset == 0 && positionOffsetPixels == 0) {
+//                    timelineListFragment.setCurrentPosition(getSelectedPosition());
+//                    todoListFragment.setCurrentPosition(getSelectedPosition());
+//                    diaryListFragment.setCurrentPosition(getSelectedPosition());
+//                    expenseListFragment.setCurrentPosition(getSelectedPosition());
+//
+//                    timelineListFragment.setScrollTop(true);
+//                }
+//                Log.d("SCROLLED", ":" + position + "," + positionOffset + ", " + positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                Log.d("SELECTED", ":" + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     private TodoData findTodoWithPosition(int position) {
@@ -295,11 +332,13 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
     public void ChangePageMode() {
         if (bTimeline) {
+            timelineListFragment.setCurrentPosition(getSelectedPosition());
             mViewPager.setAdapter(mSectionsPagerAdapter);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
             bTimeline = false;
         } else {
+            setSelectedPosition(timelineListFragment.getCurrentPosition());
             mViewPager.setAdapter(mSectionsTimelinePagerAdapter);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
@@ -563,6 +602,12 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
+        }
+
+        public Fragment getFragment(int position) {
+            if (position < 0 || position > mFragmentList.size())
+                return null;
+            return mFragmentList.get(position);
         }
 
 
