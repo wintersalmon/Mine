@@ -16,11 +16,13 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,12 +57,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     public static AppCompatActivity activity;
 
     public static final int REQUEST_CODE = 101;
-    public static final int REQUEST_TODO_PREV = 1000;
-    public static final int REQUEST_TODO_NEXT = 1001;
-    public static final int REQUEST_DIARY_PREV = 2000;
-    public static final int REQUEST_DIARY_NEXT = 2001;
-    public static final int REQUEST_EXPENSE_PREV = 3000;
-    public static final int REQUEST_EXPENSE_NEXT = 3001;
 
     Button DatePickerBtn, searchBtn, plusBtn, settingBtn;
     private final long FINISH_INTERVAL_TIME = 2000;
@@ -83,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     private ExpenseData selectedExpense;
 
     private DataManager datamanager;
-
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -139,13 +134,28 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(MainActivity.this);
                 buider.setTitle("날짜 선택"); //Dialog 제목
-                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
+//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 메인의 선택된 날짜 변경 & 데이터 리로드
+                        DatePicker datePicker = (DatePicker) dialogEditView.findViewById(R.id.dialog_edit_date_picker);
+                        int year = datePicker.getYear();
+                        int month = datePicker.getMonth() + 1;
+                        int day = datePicker.getDayOfMonth();
+
+                        Log.d("DATA_AFTER", year + "-" + month  + "-" + day);
+
+                        datamanager.updateLoadedData(year,month,day);
+                        SectionsPagerAdapter adapter = (SectionsPagerAdapter) mViewPager.getAdapter();
+                        int itemPosition = mViewPager.getCurrentItem();
+                        adapter.getItem(itemPosition).onResume();
+//                        todoListFragment.onResume();
+//                        diaryListFragment.onResume();
+//                        expenseListFragment.onResume();
+//                        timelineListFragment.onResume();
                     }
                 });
 
@@ -158,13 +168,14 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
                 });
 
                 AlertDialog dialog = buider.create();
-//                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
+                DatePicker datePicker = (DatePicker) dialogEditView.findViewById(R.id.dialog_edit_date_picker);
 
-                // TODO: 2016. 12. 7.  안쓰는 코드 삭제
-                // DialogFragment picker = new DatePickerFragment();
-                // picker.show(getSupportFragmentManager(), "DatePicker");
-                // TODO: http://androidtrainningcenter.blogspot.kr/2012/10/creating-datepicker-using.html
+                int year = datamanager.getLoadYear();
+                int month = datamanager.getLoadMonth();
+                int day = datamanager.getLoadDay();
+                Log.d("DATA_BEFORE", year + "-" + month  + "-" + day);
+                datePicker.updateDate(year, month - 1, day);
+                dialog.show();
             }
         });
 
@@ -198,47 +209,86 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         datamanager.updateLoadedData(2016,12,1);
     }
 
-//    public void refreshAll() {
-//        if (todoListFragment != null && todoListFragment.getListView() != null) {
-//
-//        }
-//        if (diaryListFragment.getListView() != null) {
-//            diaryListFragment.getListView().invalidate();
-//        }
-//        if (expenseListFragment.getListView() != null) {
-//            expenseListFragment.getListView().invalidate();
-//        }
-//        if (timelineListFragment.getListView() != null) {
-//            timelineListFragment.getListView().invalidate();
-//        }
-//    }
+
+
+
+    // Override OnDetailActivityInteractionListener
+    @Override
+    public TodoData getSelectedTodo() {
+        if (selectedTodo != null && selectedTodo.getId() != 0) {
+            return selectedTodo;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public TodoData findPrevTodo() {
+        for (int position = selectedTodoPosition - 1; position >= 0; position--) {
+            TodoData todo = findTodoWithPosition(position);
+            if (todo != null && todo.getId() != 0) {
+                selectedTodo = todo;
+                selectedTodoPosition = position;
+                return selectedTodo;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public TodoData findNextTodo() {
+        for (int position = selectedTodoPosition + 1; position < datamanager.getLoadedDataTodo().size(); position++) {
+            TodoData todo = findTodoWithPosition(position);
+            if (todo != null && todo.getId() != 0) {
+                selectedTodo = todo;
+                selectedTodoPosition = position;
+                return selectedTodo;
+            }
+        }
+        return null;
+    }
 
     @Override
     public void updateTodoData(TodoData todo) {
         datamanager.updateTodo(todo);
-//        refreshAll();
     }
+
+    @Override
+    public void deleteTodoData(TodoData todo) {
+        datamanager.deleteTodo(todo.getId());
+        selectedTodo = null;
+    }
+
+
+
 
     public void deleteTodoData(int id) {
         datamanager.deleteTodo(id);
     }
 
-    public void DetailTodo(int position) {
+    private TodoData findTodoWithPosition(int position) {
+        TodoData todo;
         try {
-            selectedTodo = datamanager.getLoadedDataTodo().get(position);
+            todo = datamanager.getLoadedDataTodo().get(position);
         } catch (NullPointerException e) {
-            selectedTodo = null;
+            todo = null;
         }
 
-        if (selectedTodo != null && selectedTodo.getId() != 0) {
-            Intent intent = new Intent(MainActivity.this, DetailTodoActivity.class);
+        if (todo != null && todo.getId() != 0) {
+            selectedTodoPosition = position;
+            return todo;
+        } else {
+            return null;
+        }
+    }
 
+    public void DetailTodo(int position) {
+        TodoData todo = findTodoWithPosition(position);
+        if (todo != null) {
+            selectedTodo = todo;
             selectedTodoPosition = position;
 
-//            Bundle b = new Bundle();
-//            b.putInt("position", position);
-//            intent.putExtras(b);
-
+            Intent intent = new Intent(MainActivity.this, DetailTodoActivity.class);
             startActivity(intent);
         }
     }
@@ -297,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     public void ChangePageMode() {
-        mViewPager.setAdapter(null);
+//        mViewPager.setAdapter(null);
         if (bTimeline) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -320,35 +370,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_list, menu);
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_TODO_NEXT) {
-            Toast.makeText(MainActivity.this, "REQUEST_TODO_NEXT", Toast.LENGTH_SHORT).show();
-        }
-
-        if (requestCode == REQUEST_TODO_PREV) {
-            Toast.makeText(MainActivity.this, "REQUEST_TODO_PREV", Toast.LENGTH_SHORT).show();
-        }
-
-        if (requestCode == REQUEST_DIARY_NEXT) {
-            Toast.makeText(MainActivity.this, "REQUEST_DIARY_NEXT", Toast.LENGTH_SHORT).show();
-        }
-
-        if (requestCode == REQUEST_DIARY_PREV) {
-            Toast.makeText(MainActivity.this, "REQUEST_DIARY_PREV", Toast.LENGTH_SHORT).show();
-        }
-
-        if (requestCode == REQUEST_EXPENSE_NEXT) {
-            Toast.makeText(MainActivity.this, "REQUEST_EXPENSE_NEXT", Toast.LENGTH_SHORT).show();
-        }
-
-        if (requestCode == REQUEST_DIARY_PREV) {
-            Toast.makeText(MainActivity.this, "REQUEST_DIARY_PREV", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -422,15 +443,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         expenseListFragment.getAdapter().notifyDataSetChanged();
     }
 
-    @Override
-    public TodoData getSelectedTodo() {
-        if (selectedTodo != null && selectedTodo.getId() != 0) {
-            return selectedTodo;
-        } else {
-            return null;
-        }
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -483,7 +495,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
                 super.onBackPressed();
             } else {
                 backPressedTime = tempTime;
-//            Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
                 Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), R.string.two_time_back, Snackbar.LENGTH_LONG);
                 View snackbarView = snackbar.getView();
                 snackbarView.setBackgroundColor(Color.WHITE);

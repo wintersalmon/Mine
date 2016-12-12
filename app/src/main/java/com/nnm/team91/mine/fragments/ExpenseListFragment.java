@@ -102,7 +102,8 @@ public class ExpenseListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mListener.updateExpenseAdapter(adapter);
+        if (mListener != null)
+            mListener.updateExpenseAdapter(adapter);
     }
 
     @Override

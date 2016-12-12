@@ -104,7 +104,8 @@ public class TodoListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mListener.updateTodoAdapter(adapter);
+        if (mListener != null)
+            mListener.updateTodoAdapter(adapter);
     }
 
     @Override

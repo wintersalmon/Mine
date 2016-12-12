@@ -245,6 +245,7 @@ public class DataManager {
     }
 
     private void updateTimelineData() {
+        loadedDataTimeline.clear();
         TodoData todo;
         DiaryData diary;
         ExpenseData expense;
@@ -314,10 +315,9 @@ public class DataManager {
         return db.insert("hashtag", null, values);
     }
 
-    private long insertCommon(Date datetime) {
+    private long insertCommon(String datetimeStr) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        String datetimeStr = datetimeFormat.format(datetime);
 
         values.put("datetime", datetimeStr);
 
@@ -350,11 +350,11 @@ public class DataManager {
         db.insert("hashtag_in_common", null, values);
     }
 
-    public void insertTodo(Date datetime, int status, ArrayList<String> hashtags, int keyTagIndex) {
+    public void insertTodo(String datetimeStr, int status, ArrayList<String> hashtags, int keyTagIndex) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        long common_id = insertCommon(datetime);
+        long common_id = insertCommon(datetimeStr);
 
         values.put("status", status);
         values.put("common_id", common_id);
@@ -362,14 +362,14 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("todo", null, values);
-        updateLoadedData();
+//        updateLoadedData();
     }
 
-    public void insertDiary(Date datetime, String contents, ArrayList<String> hashtags, int keyTagIndex) {
+    public void insertDiary(String datetimeStr, String contents, ArrayList<String> hashtags, int keyTagIndex) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        long common_id = insertCommon(datetime);
+        long common_id = insertCommon(datetimeStr);
 
         values.put("contents", contents);
         values.put("common_id", common_id);
@@ -377,14 +377,14 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("diary", null, values);
-        updateLoadedData();
+//        updateLoadedData();
     }
 
-    public void insertExpense(Date datetime, int amount, ArrayList<String> hashtags, int keyTagIndex) {
+    public void insertExpense(String datetimeStr, int amount, ArrayList<String> hashtags, int keyTagIndex) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        long common_id = insertCommon(datetime);
+        long common_id = insertCommon(datetimeStr);
 
         values.put("amount", amount);
         values.put("common_id", common_id);
@@ -392,7 +392,7 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("expense", null, values);
-        updateLoadedData();
+//        updateLoadedData();
     }
 
     private Calendar selectDatetimeFromCommon(int _id) {
@@ -806,7 +806,6 @@ public class DataManager {
         hashtags.add("VeryVeryLongHashTagForTodo");
         hashtags.add("Energy");
 
-        Date datetime = Calendar.getInstance().getTime();
         int year = 2016;
         int month = 12;
         int count = 0;
@@ -815,28 +814,24 @@ public class DataManager {
         int keyTagIndex;
 
         for (int day=1; day<3; day++) {
-            for (int hour=9; hour < 24; hour += 2) {
+            int startHour = (day%2 == 0) ? 9 : 11;
+            for (int hour=startHour; hour < 24; hour += 2) {
 
                 int minutes = 0;
                 while (minutes < 60) {
                     String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
                     Log.i("TODO", datetimeStr);
-                    try {
-                        datetime = datetimeFormat.parse(datetimeStr);
-                    } catch (Exception e) {
-                        Log.i("insertDummyTodoData", e.toString());
-                        continue;
-                    }
 
                     status = (count%2) == 0 ? 1 : 0;
                     keyTagIndex = count%hashtags.size();
 
-                    insertTodo(datetime, status, hashtags, keyTagIndex);
+                    insertTodo(datetimeStr, status, hashtags, keyTagIndex);
 
                     if (count%2 == 1) {
                         minutes += 15;
                     }
                     count++;
+                    Log.i("TODO", datetimeStr);
                 }
             }
         }
@@ -850,7 +845,6 @@ public class DataManager {
         hashtags.add("ThisIsAVeryLongHashTagForDiary");
         hashtags.add("NotHungry");
 
-        Date datetime = Calendar.getInstance().getTime();
         int year = 2016;
         int month = 12;
         int count = 0;
@@ -858,22 +852,16 @@ public class DataManager {
         int keyTagIndex;
 
         for (int day=1; day<3; day++) {
-            for (int hour=9; hour < 24; hour += 5) {
+            int startHour = (day%2 == 0) ? 11 : 12;
+            for (int hour=startHour; hour < 24; hour += 5) {
 
                 int minutes = 0;
                 while (minutes < 60) {
                     String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-                    Log.i("DIARY", datetimeStr);
-                    try {
-                        datetime = datetimeFormat.parse(datetimeStr);
-                    } catch (Exception e) {
-                        Log.i("insertDummyDiaryData", e.toString());
-                        continue;
-                    }
 
                     keyTagIndex = count%hashtags.size();
 
-                    insertDiary(datetime, sample_diary_contents, hashtags, keyTagIndex);
+                    insertDiary(datetimeStr, sample_diary_contents, hashtags, keyTagIndex);
 
                     if (count%2 == 1) {
                         minutes += 20;
@@ -892,7 +880,6 @@ public class DataManager {
         hashtags.add("HashTagThatCouldBeQuiteLong");
         hashtags.add("Hello");
 
-        Date datetime = Calendar.getInstance().getTime();
         int year = 2016;
         int month = 12;
         int count = 0;
@@ -901,23 +888,17 @@ public class DataManager {
         int keyTagIndex;
 
         for (int day=1; day<3; day++) {
-            for (int hour=9; hour < 24; hour += 3) {
+            int startHour = (day%2 == 0) ? 9 : 13;
+            for (int hour=startHour; hour < 24; hour += 3) {
                 Log.i("EXPENSE", "day:" + day);
                 int minutes = 0;
                 while (minutes < 60) {
                     String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
 
-                    try {
-                        datetime = datetimeFormat.parse(datetimeStr);
-                    } catch (Exception e) {
-                        Log.i("insertDummyExpenseData", e.toString());
-                        continue;
-                    }
-
                     amount = count * 500 + 1000;
                     keyTagIndex = count%hashtags.size();
 
-                    insertExpense(datetime, amount, hashtags, keyTagIndex);
+                    insertExpense(datetimeStr, amount, hashtags, keyTagIndex);
 
                     if (count%2 == 1) {
                         minutes += 30;

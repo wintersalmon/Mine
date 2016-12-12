@@ -26,7 +26,6 @@ import java.util.ArrayList;
 public class DetailTodoActivity extends AppCompatActivity {
     private Button prevButton;
     private Button nextButton;
-    private Button editButton;
     private Button deleteButton;
 
 
@@ -37,15 +36,6 @@ public class DetailTodoActivity extends AppCompatActivity {
     private TextView hashTextView;
 
     private TodoData selectedTodo;
-
-//    private int position;
-    private int commonId;
-    private String date;
-    private String time;
-    private boolean status;
-    private String keyTag;
-    private String hashTagString;
-    private ArrayList<String> hashTagList;
 
     private OnDetailActivityInteractionListener mListener;
 
@@ -68,7 +58,6 @@ public class DetailTodoActivity extends AppCompatActivity {
 
         prevButton = (Button) findViewById(R.id.detail_todo_button_prev);
         nextButton = (Button) findViewById(R.id.detail_todo_button_next);
-        editButton = (Button) findViewById(R.id.detail_todo_button_edit);
         deleteButton = (Button) findViewById(R.id.detail_todo_button_delete);
 
         dateTextView.setOnClickListener(new View.OnClickListener() {
@@ -93,12 +82,11 @@ public class DetailTodoActivity extends AppCompatActivity {
 
                         // set date
                         MainActivity main = (MainActivity) MainActivity.activity;
-                        selectedTodo.setDate(year,month,day);
+                        selectedTodo.setDate(year,month + 1,day);
 
                         mListener.updateTodoData(selectedTodo);
 
                         dateTextView.setText(selectedTodo.getDate());
-//                        dateTextView.invalidate();
                     }
                 });
 
@@ -201,7 +189,7 @@ public class DetailTodoActivity extends AppCompatActivity {
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO: 2016. 12. 7. 메인의 선택된 날짜 변경 & 데이터 리로드
+                        // TODO: 2016. 12. 7. 해쉬태그 변경 기능 추가
                     }
                 });
 
@@ -213,7 +201,6 @@ public class DetailTodoActivity extends AppCompatActivity {
                     }
                 });
                 AlertDialog dialog = buider.create();
-                //                dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
             }
         });
@@ -221,14 +208,26 @@ public class DetailTodoActivity extends AppCompatActivity {
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2016. 12. 7. add prev function
+                TodoData todo = mListener.findPrevTodo();
+                if (todo != null) {
+                    selectedTodo = todo;
+                    reloadViewContents();
+                } else {
+                    Toast.makeText(DetailTodoActivity.this, "이전 이벤트가 없습니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2016. 12. 7. add next function
+                TodoData todo = mListener.findNextTodo();
+                if (todo != null) {
+                    selectedTodo = todo;
+                    reloadViewContents();
+                } else {
+                    Toast.makeText(DetailTodoActivity.this, "다음 이벤트가 없습니다", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -236,6 +235,24 @@ public class DetailTodoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: 2016. 12. 7. add delete dialog function
+                AlertDialog.Builder buider = new AlertDialog.Builder(DetailTodoActivity.this);
+                buider.setMessage("삭제하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mListener.deleteTodoData(selectedTodo);
+                                reloadViewContents();
+                            }
+                        }).setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                return;
+                            }
+                        });
+                AlertDialog confirm = buider.create();
+                confirm.show();
+
             }
         });
 
@@ -251,35 +268,36 @@ public class DetailTodoActivity extends AppCompatActivity {
     private void reloadViewContents() {
         setTodoData();
         setViewData();
+        if (selectedTodo == null) {
+            // if selectedTodo data is null finish the view
+            finish();
+        }
     }
 
     public void setTodoData() {
         selectedTodo = mListener.getSelectedTodo();
-        if (selectedTodo != null) {
-            commonId = selectedTodo.getId();
-            date = selectedTodo.getDate();
-            time = selectedTodo.getTime();
-            status = selectedTodo.getStatus();
-            keyTag = selectedTodo.getKeyTag();
-            hashTagList = selectedTodo.getHashTagList();
-        }
     }
 
     private void setViewData() {
-        dateTextView.setText(date);
-        timeTextView.setText(time);
-        statusCheckBox.setChecked(status);
-        keyTextView.setText(keyTag);
+        if (selectedTodo != null) {
+            dateTextView.setText(selectedTodo.getDate());
+            timeTextView.setText(selectedTodo.getTime());
+            statusCheckBox.setChecked(selectedTodo.getStatus());
+            keyTextView.setText(selectedTodo.getKeyTag());
 
-        hashTagString = "";
-        for(String s : hashTagList) {
-            hashTagString += s + " ";
+            String hashTagString = "";
+            for (String tag : selectedTodo.getHashTagList()) {
+                hashTagString += tag + " ";
+            }
+            hashTextView.setText(hashTagString);
         }
-        hashTextView.setText(hashTagString);
     }
 
     public interface OnDetailActivityInteractionListener {
         TodoData getSelectedTodo();
+        TodoData findPrevTodo();
+        TodoData findNextTodo();
         void updateTodoData(TodoData todo);
+        void deleteTodoData(TodoData todo);
     }
 }

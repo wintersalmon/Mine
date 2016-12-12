@@ -32,7 +32,6 @@ public class TimelineListFragment extends ListFragment {
     private static final String ARG_PARAM2 = "param2";
 
     TimelineAdapter adapter;
-    ListView timelineListview;
 
     public TimelineAdapter getAdapter() {
         return adapter;
@@ -111,7 +110,8 @@ public class TimelineListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mListener.updateTimelineAdapter(adapter);
+        if (mListener != null)
+            mListener.updateTimelineAdapter(adapter);
     }
 
     @Override

@@ -97,7 +97,8 @@ public class DiaryListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mListener.updateDairyAdapater(adapter);
+        if (mListener != null)
+            mListener.updateDairyAdapater(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
