@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -166,6 +167,14 @@ public class DetailTodoActivity extends AppCompatActivity {
 
                 dialog.show();
 
+            }
+        });
+
+        statusCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                selectedTodo.setStatus(isChecked);
+                mListener.updateTodoData(selectedTodo);
             }
         });
 
