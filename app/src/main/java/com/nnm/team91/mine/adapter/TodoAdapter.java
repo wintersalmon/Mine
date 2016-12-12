@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.data.DataManager;
 import com.nnm.team91.mine.data.TodoData;
 import com.nnm.team91.mine.data.TodoEmptyData;
 
@@ -36,7 +39,7 @@ public class TodoAdapter  extends BaseAdapter {
 
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final Context context = parent.getContext();
 
         if (convertView == null) {
@@ -46,7 +49,7 @@ public class TodoAdapter  extends BaseAdapter {
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView datetimeView = (TextView) convertView.findViewById(R.id.todoTextViewTime);
-        CheckBox checkboxView = (CheckBox) convertView.findViewById(R.id.todoCheckBoxStatus);
+        final CheckBox checkboxView = (CheckBox) convertView.findViewById(R.id.todoCheckBoxStatus);
         TextView keyTagView = (TextView) convertView.findViewById(R.id.todoTextViewKeyTag);
         TextView hashTagView = (TextView) convertView.findViewById(R.id.todoTextViewHasTag);
 
@@ -62,6 +65,16 @@ public class TodoAdapter  extends BaseAdapter {
             checkboxView.setVisibility(View.INVISIBLE);
         } else {
             checkboxView.setVisibility(View.VISIBLE);
+            checkboxView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    MainActivity main = (MainActivity) MainActivity.activity;
+                    DataManager datamanager = main.getDatamanager();
+                    TodoData todo = datamanager.getLoadedDataTodo().get(position);
+                    todo.setStatus(isChecked);
+                    datamanager.updateTodo(todo);
+                }
+            });
         }
 
         keyTagView.setText(todoItem.getKeyTag());

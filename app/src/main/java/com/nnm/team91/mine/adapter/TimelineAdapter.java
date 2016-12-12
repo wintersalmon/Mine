@@ -11,10 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.nnm.team91.mine.MainActivity;
 import com.nnm.team91.mine.R;
+import com.nnm.team91.mine.data.DataManager;
 import com.nnm.team91.mine.data.TimelineData;
+import com.nnm.team91.mine.data.TodoData;
 import com.nnm.team91.mine.data.TodoEmptyData;
 
 import java.util.ArrayList;
@@ -39,7 +43,7 @@ public class TimelineAdapter extends BaseAdapter {
 
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final Context context = parent.getContext();
 
         if (convertView == null) {
@@ -73,6 +77,16 @@ public class TimelineAdapter extends BaseAdapter {
             todoCheckbox.setVisibility(View.INVISIBLE);
         } else {
             todoCheckbox.setVisibility(View.VISIBLE);
+            todoCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    MainActivity main = (MainActivity) MainActivity.activity;
+                    DataManager datamanager = main.getDatamanager();
+                    TodoData todo = datamanager.getLoadedDataTodo().get(position);
+                    todo.setStatus(isChecked);
+                    datamanager.updateTodo(todo);
+                }
+            });
         }
 
         return convertView;

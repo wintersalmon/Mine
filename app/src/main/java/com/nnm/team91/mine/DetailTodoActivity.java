@@ -132,7 +132,6 @@ public class DetailTodoActivity extends AppCompatActivity {
                         }
 
                         // set time
-                        MainActivity main = (MainActivity) MainActivity.activity;
                         selectedTodo.setTime(hour,minute);
 
                         mListener.updateTodoData(selectedTodo);
