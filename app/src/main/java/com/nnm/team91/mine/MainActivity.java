@@ -479,6 +479,11 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     }
 
     @Override
+    public void updateTodoDataStatus(TodoData todo) {
+        datamanager.updateTodoStatus(todo);
+    }
+
+    @Override
     public void deleteTodoData(TodoData todo) {
         datamanager.deleteTodo(todo.getId());
         selectedTodo = null;

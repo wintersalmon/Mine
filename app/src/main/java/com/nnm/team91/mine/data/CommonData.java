@@ -66,6 +66,16 @@ public class CommonData {
         }
     }
 
+    public void setHashTag(String hashTagString) {
+        String[] splited = hashTagString.split("\\s+");
+        keyTagIndex = 0;
+        keyTag = splited[0];
+        hashTagList.clear();
+        for (String tag : splited) {
+            hashTagList.add(tag);
+        }
+    }
+
     public int getId() {
         return id;
     }

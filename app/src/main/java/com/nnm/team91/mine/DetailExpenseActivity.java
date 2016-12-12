@@ -176,13 +176,23 @@ public class DetailExpenseActivity extends AppCompatActivity {
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(DetailExpenseActivity.this);
                 buider.setTitle("해시 태그 선택"); //Dialog 제목
-//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
+                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 해쉬태그 변경 기능 추가
+                        EditText hashTag = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                        Editable editableHashTag = hashTag.getText();
+                        String hashTagString = editableHashTag.toString();
+
+                        selectedExpense.setHashTag(hashTagString);
+
+                        mListener.updateExpenseData(selectedExpense);
+
+                        hashTextView.setText(selectedExpense.getHasTagListString());
+                        keyTextView.setText(selectedExpense.getKeyTag());
                     }
                 });
 
@@ -194,8 +204,8 @@ public class DetailExpenseActivity extends AppCompatActivity {
                     }
                 });
                 AlertDialog dialog = buider.create();
-                TextView hashTab = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
-                hashTab.setText(selectedExpense.getHasTagListString());
+                TextView hashTag = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                hashTag.setText(selectedExpense.getHasTagListString());
                 dialog.show();
             }
         });

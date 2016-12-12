@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -173,7 +174,7 @@ public class DetailTodoActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 selectedTodo.setStatus(isChecked);
-                mListener.updateTodoData(selectedTodo);
+                mListener.updateTodoDataStatus(selectedTodo);
             }
         });
 
@@ -193,6 +194,16 @@ public class DetailTodoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 해쉬태그 변경 기능 추가
+                        EditText hashTag = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                        Editable editableHashTag = hashTag.getText();
+                        String hashTagString = editableHashTag.toString();
+
+                        selectedTodo.setHashTag(hashTagString);
+
+                        mListener.updateTodoData(selectedTodo);
+
+                        hashTextView.setText(selectedTodo.getHasTagListString());
+                        keyTextView.setText(selectedTodo.getKeyTag());
                     }
                 });
 
@@ -204,8 +215,8 @@ public class DetailTodoActivity extends AppCompatActivity {
                     }
                 });
                 AlertDialog dialog = buider.create();
-                TextView hashTab = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
-                hashTab.setText(selectedTodo.getHasTagListString());
+                TextView hashTag = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                hashTag.setText(selectedTodo.getHasTagListString());
                 dialog.show();
             }
         });
@@ -302,6 +313,7 @@ public class DetailTodoActivity extends AppCompatActivity {
         TodoData findPrevTodo();
         TodoData findNextTodo();
         void updateTodoData(TodoData todo);
+        void updateTodoDataStatus(TodoData todo);
         void deleteTodoData(TodoData todo);
     }
 }

@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
 
 /**
@@ -307,12 +308,16 @@ public class DataManager {
     }
 
     private long insertHashtag(String tag) {
-        db = helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
+        int _id = selectHashTagId(tag);
+        if (_id == 0) {
+            db = helper.getWritableDatabase();
+            ContentValues values = new ContentValues();
 
-        values.put("tag", tag);
+            values.put("tag", tag);
 
-        return db.insert("hashtag", null, values);
+            _id = (int) db.insert("hashtag", null, values);
+        }
+        return _id;
     }
 
     private long insertCommon(String datetimeStr) {
@@ -454,6 +459,18 @@ public class DataManager {
         c.close();
 
         return keyTag;
+    }
+
+    public CommonData selectCommon(int commonId) {
+        CommonData common = new CommonData();
+
+        ArrayList<String> hashtags = selectHashtagInCommon(commonId);
+        String keyTag = selectKeyTagInCommon(commonId);
+
+        common.setId(commonId);
+        common.setHashTagList(hashtags);
+        common.setKeyTag(keyTag);
+        return common;
     }
 
     public void selectTodo(int year, int month, int day) {
@@ -691,7 +708,7 @@ public class DataManager {
 //        }
 //    }
 
-    public void updateCommonDate(CommonData common) {
+    private void updateCommonDate(CommonData common) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -699,6 +716,80 @@ public class DataManager {
             values.put("datetime", common.getDateTime());
             int result = db.update("common", values, "_id = ?", new String[]{String.valueOf(common.getId())});
         }
+    }
+
+    private void updateCommonHashTag(CommonData currCommon) {
+        int commonId = currCommon.getId();
+        db = helper.getReadableDatabase();
+
+        CommonData prevCommon = selectCommon(commonId);
+
+        HashSet<String> previousHashTag = new HashSet<String>(prevCommon.getHashTagList());
+        HashSet<String> currentHashTag = new HashSet<String>(currCommon.getHashTagList());
+
+        HashSet<String> removeTag = (HashSet<String>) previousHashTag.clone();
+        HashSet<String> insertTag = (HashSet<String>) currentHashTag.clone();
+
+        removeTag.removeAll(currentHashTag);
+        insertTag.removeAll(previousHashTag);
+
+
+        insertHashTagToCommon(commonId, insertTag);
+
+        updateKeyTagInCommon(commonId, prevCommon.getKeyTag(), currCommon.getKeyTag());
+
+        removeHashTagFromCommon(commonId, removeTag);
+    }
+
+    private void removeHashTagFromCommon(int commonId, HashSet<String> removeTag) {
+        db = helper.getWritableDatabase();
+        for(String hashTag : removeTag) {
+            int hashTagId = selectHashTagId(hashTag);
+            try {
+                db.delete("hashtag_in_common", "common_id=? AND hashtag_id=?", new String[]{String.valueOf(commonId),String.valueOf(hashTagId) });
+            } catch (Exception e) {
+                Log.d("DELETE", "HASHTAG_ERROR");
+            }
+        }
+    }
+
+    private int selectHashTagId(String hashTag) {
+        int _id;
+        db = helper.getReadableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM hashtag WHERE tag = '" + hashTag + "'", null);
+
+        if (c.moveToNext()) {
+            _id = c.getInt(c.getColumnIndex("_id"));
+        } else {
+            _id = 0;
+        }
+
+        return _id;
+    }
+
+    private void insertHashTagToCommon(int commonId, HashSet<String> insertTag) {
+        for (String hashTag : insertTag) {
+            long tag_id = insertHashtag(hashTag);
+            insertHashtagInCommon(commonId, tag_id, 0);
+        }
+    }
+
+    private void updateKeyTagInCommon(int commonId, String deleteKeyTag, String insertKeyTag) {
+        int delete_key_tag_id = selectHashTagId(deleteKeyTag);
+        int insert_key_tag_id = selectHashTagId(insertKeyTag);
+
+        ContentValues delete_values = new ContentValues();
+        delete_values.put("is_key_tag", 0);
+
+        ContentValues insert_values = new ContentValues();
+        insert_values.put("is_key_tag", 1);
+
+        db = helper.getWritableDatabase();
+
+        db.update("hashtag_in_common", delete_values, "common_id = ? and hashtag_id = ?", new String[]{String.valueOf(commonId), String.valueOf(delete_key_tag_id)});
+        db.update("hashtag_in_common", insert_values, "common_id = ? and hashtag_id = ?", new String[]{String.valueOf(commonId), String.valueOf(insert_key_tag_id)});
+
     }
 
     public void updateTodo(TodoData todo) {
@@ -715,6 +806,21 @@ public class DataManager {
         }
 
         // TODO: 2016. 12. 6. add hashtag update function
+        updateCommonHashTag(todo);
+
+        updateLoadedData();
+    }
+
+    public void updateTodoStatus(TodoData todo) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if (todo != null && todo.getId() != 0) {
+            if (todo.getStatus()) values.put("status", 1);
+            else values.put("status", 0);
+
+            db.update("todo", values, "common_id = ?", new String[]{String.valueOf(todo.getId())});
+        }
 
         updateLoadedData();
     }
@@ -733,6 +839,8 @@ public class DataManager {
         }
 
         // TODO: 2016. 12. 6. add hashtag update function
+        updateCommonHashTag(diary);
+
         updateLoadedData();
     }
 
@@ -750,6 +858,8 @@ public class DataManager {
         }
 
         // TODO: 2016. 12. 6. add hashtag update function
+        updateCommonHashTag(expense);
+
         updateLoadedData();
     }
 

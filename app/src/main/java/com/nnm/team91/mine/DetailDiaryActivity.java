@@ -176,28 +176,38 @@ public class DetailDiaryActivity extends AppCompatActivity {
 
                 final View dialogEditView = inflater.inflate(R.layout.dialog_edit_hash_tag, null);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(DetailDiaryActivity.this);
-                builder.setTitle("해시 태그 선택"); //Dialog 제목
-//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
-                builder.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
+                AlertDialog.Builder buider = new AlertDialog.Builder(DetailDiaryActivity.this);
+                buider.setTitle("해시 태그 선택"); //Dialog 제목
+                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
+                buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 해쉬태그 변경 기능 추가
+                        EditText hashTag = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                        Editable editableHashTag = hashTag.getText();
+                        String hashTagString = editableHashTag.toString();
+
+                        selectedDiary.setHashTag(hashTagString);
+
+                        mListener.updateDiaryData(selectedDiary);
+
+                        hashTextView.setText(selectedDiary.getHasTagListString());
+                        keyTextView.setText(selectedDiary.getKeyTag());
                     }
                 });
 
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                buider.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO: 2016. 12. 7. 취소 출력 메세지 변경
                         Toast.makeText(DetailDiaryActivity.this, "취소", Toast.LENGTH_SHORT).show();
                     }
                 });
-                AlertDialog dialog = builder.create();
-                TextView hashTab = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
-                hashTab.setText(selectedDiary.getHasTagListString());
+                AlertDialog dialog = buider.create();
+                TextView hashTag = (EditText) dialogEditView.findViewById(R.id.dialog_edit_hash_tag);
+                hashTag.setText(selectedDiary.getHasTagListString());
                 dialog.show();
             }
         });

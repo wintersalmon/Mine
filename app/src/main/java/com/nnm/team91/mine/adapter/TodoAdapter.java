@@ -72,7 +72,7 @@ public class TodoAdapter  extends BaseAdapter {
                     DataManager datamanager = main.getDatamanager();
                     TodoData todo = datamanager.getLoadedDataTodo().get(position);
                     todo.setStatus(isChecked);
-                    datamanager.updateTodo(todo);
+                    datamanager.updateTodoStatus(todo);
                 }
             });
         }
