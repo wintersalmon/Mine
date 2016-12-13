@@ -103,9 +103,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         setContentView(R.layout.activity_main);
         activity = this;
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-
         todoListFragment = TodoListFragment.newInstance("DUMMY", "DUMMY");
         diaryListFragment = DiaryListFragment.newInstance("DUMMY", "DUMMY");
         expenseListFragment = ExpenseListFragment.newInstance("DUMMY", "DUMMY");
@@ -121,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         // Set into timeline mode
         bTimeline = true;
-
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -145,9 +141,8 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
                 final View dialogEditView = inflater.inflate(R.layout.dialog_edit_date, null);
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(MainActivity.this);
-                buider.setTitle("날짜 선택"); //Dialog 제목
-//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
-                buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
+                buider.setTitle("날짜 선택");
+                buider.setView(dialogEditView);
 
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
@@ -164,10 +159,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
                         SectionsPagerAdapter adapter = (SectionsPagerAdapter) mViewPager.getAdapter();
                         int itemPosition = mViewPager.getCurrentItem();
                         adapter.getItem(itemPosition).onResume();
-//                        todoListFragment.onResume();
-//                        diaryListFragment.onResume();
-//                        expenseListFragment.onResume();
-//                        timelineListFragment.onResume();
                     }
                 });
 
@@ -195,8 +186,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE);
                 Intent intent = new Intent(MainActivity.this, HashTagSearchActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -205,8 +194,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, EditActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE);
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -227,30 +214,6 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         // TODO: 2016. 12. 12. set current focus position to closest current time
         selectedPosition = 0;
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                if (positionOffset == 0 && positionOffsetPixels == 0) {
-//                    timelineListFragment.setCurrentPosition(getSelectedPosition());
-//                    todoListFragment.setCurrentPosition(getSelectedPosition());
-//                    diaryListFragment.setCurrentPosition(getSelectedPosition());
-//                    expenseListFragment.setCurrentPosition(getSelectedPosition());
-//
-//                    timelineListFragment.setScrollTop(true);
-//                }
-//                Log.d("SCROLLED", ":" + position + "," + positionOffset + ", " + positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                Log.d("SELECTED", ":" + position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
     }
 
     private TodoData findTodoWithPosition(int position) {

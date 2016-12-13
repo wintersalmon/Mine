@@ -98,7 +98,6 @@ mine 서비스는 휴대기기에서 사용할 수 있습니다. 트래픽 또�
 
     <!-- edit activity -->
     <string name="edit_time">현재 시간</string>
-    <string name="edit_content">들어갈 내용 #태그도 사용해야한다. - 현재 장소</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="title_activity_settings1">Settings</string>

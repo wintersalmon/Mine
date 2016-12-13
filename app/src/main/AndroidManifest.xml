@@ -26,8 +26,6 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".EditActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="activity_settings"
@@ -39,21 +37,8 @@
             android:exported="true" />
 
         <!-- App Widget Permission -->
-        <receiver android:name=".CustomWidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/custom_widget_info" />
-        </receiver>
-
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
         <activity android:name=".NoticeActivity" />
-        <activity android:name=".EditActivity" />
         <activity android:name=".DetailTodoActivity" />
         <activity android:name=".DetailDiaryActivity" />
         <activity android:name=".DetailExpenseActivity" />
