@@ -300,9 +300,13 @@ public class AddActivity extends AppCompatActivity {
         saveTodoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.insertTodoData(commonData.getDateTime(), 0, commonData.getHashTagList(), 0);
-                Toast.makeText(AddActivity.this, "ToDo 저장 완료", Toast.LENGTH_SHORT).show();
-                finish();
+                if(commonData.getHashTagList().size() > 0) {
+                    mListener.insertTodoData(commonData.getDateTime(), 0, commonData.getHashTagList(), 0);
+                    Toast.makeText(AddActivity.this, "ToDo 저장 완료", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(AddActivity.this, "해쉬태그를 입력하세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -310,30 +314,39 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // check content exists
-                if (diaryString.length() > 0) {
-                    mListener.insertDiaryData(commonData.getDateTime(), diaryString, commonData.getHashTagList(), 0);
-                    Toast.makeText(AddActivity.this, "Diary 저장 완료", Toast.LENGTH_SHORT).show();
-                    finish();
+                if (commonData.getHashTagList().size() > 0) {
+                    if (diaryString.length() > 0) {
+                        mListener.insertDiaryData(commonData.getDateTime(), diaryString, commonData.getHashTagList(), 0);
+                        Toast.makeText(AddActivity.this, "Diary 저장 완료", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(AddActivity.this, "일기 내용이 비여있습니다", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(AddActivity.this, "일기 내용이 비여있습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddActivity.this, "해쉬태그를 입력하세요", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
         saveExpenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (expenseString.length() > 0) {
-                    try {
-                        int amount = Integer.valueOf(expenseString);
-                        mListener.insertExpenseData(commonData.getDateTime(), amount, commonData.getHashTagList(), 0);
-                        Toast.makeText(AddActivity.this, "Expense 저장 완료", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } catch (Exception e) {
-                        Toast.makeText(AddActivity.this, "지출 입력값을 확인하세요", Toast.LENGTH_SHORT).show();
+                if (commonData.getHashTagList().size() > 0) {
+                    if (expenseString.length() > 0) {
+                        try {
+                            int amount = Integer.valueOf(expenseString);
+                            mListener.insertExpenseData(commonData.getDateTime(), amount, commonData.getHashTagList(), 0);
+                            Toast.makeText(AddActivity.this, "Expense 저장 완료", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } catch (Exception e) {
+                            Toast.makeText(AddActivity.this, "지출 입력값을 확인하세요", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(AddActivity.this, "지출 내용이 비여있습니다", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(AddActivity.this, "지출 내용이 비여있습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddActivity.this, "해쉬태그를 입력하세요", Toast.LENGTH_SHORT).show();
                 }
             }
         });

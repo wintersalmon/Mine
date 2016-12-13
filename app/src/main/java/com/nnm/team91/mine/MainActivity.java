@@ -41,6 +41,8 @@ import com.nnm.team91.mine.fragments.TimelineListFragment;
 import com.nnm.team91.mine.fragments.TodoListFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnTodoDetailActivityInteractionListener, DetailDiaryActivity.OnDiaryDetailActivityInteractionListener, DetailExpenseActivity.OnExpenseDetailActivityInteractionListener, AddActivity.OnAddActivityInteractionListener {
@@ -208,12 +210,26 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
 
         });
 
-        // TODO: 2016. 12. 12. set current date
         datamanager = new DataManager(MainActivity.this, 1);
-        datamanager.updateLoadedData(2016,12,1);
+
+        Date now = Calendar.getInstance().getTime();
+        Calendar nowCal = Calendar.getInstance();
+        nowCal.setTime(now);
+        int year = nowCal.get(Calendar.YEAR);
+        int month = nowCal.get(Calendar.MONTH) + 1;
+        int day = nowCal.get(Calendar.DAY_OF_MONTH);
+        int hour = nowCal.get(Calendar.HOUR_OF_DAY);
+        datamanager.updateLoadedData(year,month,day);
 
         // TODO: 2016. 12. 12. set current focus position to closest current time
         selectedPosition = 0;
+        for (int position = 0; position < datamanager.getLoadedDataTimeline().size(); position++) {
+            TimelineData data = datamanager.getLoadedDataTimeline().get(position);
+            if(data.getHour() > hour) {
+                selectedPosition = position;
+                break;
+            }
+        }
     }
 
     private TodoData findTodoWithPosition(int position) {
