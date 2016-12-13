@@ -5,6 +5,12 @@
     <color name="colorAccent">#FF4081</color>
     <color name="buttonMenu">#000000</color>
 
+    <color name="MyBlack">#3E454C</color>
+    <color name="MyDarkBlue">#2185C5</color>
+    <color name="MyLightBlue">#7ECEFD</color>
+    <color name="MyLightYellow">#FFF6E5</color>
+    <color name="MyLightOrange">#FF7F66</color>
+
     <drawable name="item_pressed">#3F51B5</drawable>
     <drawable name="item_selected">#303F9F</drawable>
     <drawable name="item_focused">#FF4081</drawable>
