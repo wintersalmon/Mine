@@ -101,6 +101,8 @@ mine 서비스는 휴대기기에서 사용할 수 있습니다. 트래픽 또�
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="title_activity_settings1">Settings</string>
+    <string name="sample_amount">$1000</string>
+    <string name="amount_title">지출</string>
 
 
     <!-- Strings related to Settings -->

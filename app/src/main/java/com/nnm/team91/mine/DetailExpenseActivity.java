@@ -61,7 +61,6 @@ public class DetailExpenseActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(DetailExpenseActivity.this);
                 builder.setTitle("날짜 선택"); //Dialog 제목
-//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 builder.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -111,7 +110,6 @@ public class DetailExpenseActivity extends AppCompatActivity {
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(DetailExpenseActivity.this);
                 buider.setTitle("시간 선택"); //Dialog 제목
-//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -176,7 +174,6 @@ public class DetailExpenseActivity extends AppCompatActivity {
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(DetailExpenseActivity.this);
                 buider.setTitle("해시 태그 선택"); //Dialog 제목
-                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -219,7 +216,6 @@ public class DetailExpenseActivity extends AppCompatActivity {
 
                 AlertDialog.Builder buider = new AlertDialog.Builder(DetailExpenseActivity.this);
                 buider.setTitle("지출 입력"); //Dialog 제목
-//                buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogEditView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
 
                 buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {

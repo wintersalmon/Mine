@@ -2,24 +2,16 @@ package com.nnm.team91.mine.fragments;
 
 import android.app.ListFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.nnm.team91.mine.DetailTodoActivity;
-import com.nnm.team91.mine.MainActivity;
-import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.adapter.HashTagAdapter;
 import com.nnm.team91.mine.data.HashTagData;
 

@@ -6,76 +6,58 @@
     android:layout_height="match_parent"
     tools:context="com.nnm.team91.mine.DetailTodoActivity">
 
-    <LinearLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:columnCount="6"
+        android:rowCount="4"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/detail_todo_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_weight="4"
-                android:textSize="25sp"
-                android:text="YYYY-MM-DD" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/detail_todo_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_weight="2"
-                android:textSize="25sp"
-                android:text="HH/MM" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/detail_todo_time"
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"
+            android:gravity="left"
+            android:textSize="25sp"
+            android:text="HH/MM" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/detail_todo_date"
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"
+            android:gravity="right"
+            android:textSize="25sp"
+            android:text="YYYY-MM-DD" />
 
-            <CheckBox
-                android:id="@+id/detail_todo_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:checked="true" />
-            <TextView
-                android:id="@+id/detail_todo_key_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="25sp"
-                android:text="KeyTag"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/detail_todo_hash_tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textSize="25sp"
-                android:text="HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag HashTag"
-                />
-        </LinearLayout>
+        <CheckBox
+            android:id="@+id/detail_todo_status"
+            android:layout_columnSpan="2"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:checked="true" />
+        <TextView
+            android:layout_columnSpan="4"
+            android:id="@+id/detail_todo_key_tag"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:text="@string/sample_key_tag" />
 
-    </LinearLayout>
+        <TextView
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"
+            android:layout_columnSpan="2"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_columnSpan="4"
+            android:textSize="20sp"
+            android:id="@+id/detail_todo_hash_tag"
+            android:text="@string/sample_hash_tag" />
+
+    </GridLayout>
 
     <android.support.v7.widget.ButtonBarLayout
         android:layout_width="match_parent"
