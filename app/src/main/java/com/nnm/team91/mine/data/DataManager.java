@@ -307,6 +307,26 @@ public class DataManager {
         loadedDataTimeline.add(timeline);
     }
 
+    public ArrayList<HashTagData> searchHashTag(String keyword) {
+        ArrayList<HashTagData> result = new ArrayList<HashTagData>();
+
+        // TODO: 2016. 12. 13. search and get result
+        db = helper.getReadableDatabase();
+        String[] selectionArgs = new String[]{keyword};
+
+        Cursor c  = db.rawQuery("SELECT common.common_id, common.hashtag_id, common.is_key_tag, hash.tag FROM hashtag_in_common common LEFT OUTER JOIN hashtag hash ON common.hashtag_id = hash._id WHERE hash.tag LIKE ?", selectionArgs);
+        while(c.moveToNext()) {
+            int hashTagId = c.getInt(c.getColumnIndex("hashtag_id"));
+            int commonId =  c.getInt(c.getColumnIndex("common_id"));
+            String hashTagString = c.getString(c.getColumnIndex("tag"));
+
+            HashTagData tag = new HashTagData(hashTagId, commonId, hashTagString);
+            result.add(tag);
+        }
+
+        return result;
+    }
+
     private long insertHashtag(String tag) {
         int _id = selectHashTagId(tag);
         if (_id == 0) {

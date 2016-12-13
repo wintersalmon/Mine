@@ -186,6 +186,10 @@ mine 서비스는 휴대기기에서 사용할 수 있습니다. 트래픽 또�
     <string name="add_expense_title">Expense</string>
     <string name="add_diary_title">Diary</string>
 
+    <string name="hash_tag_symble">#</string>
+    <string name="hash_tag_string">HashTag</string>
+    <string name="sample_key_word">keyword</string>
+
 
     <string name="edit_menu_btn_a">A</string>
     <string name="edit_menu_btn_b">B</string>

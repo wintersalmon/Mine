@@ -195,7 +195,9 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+//                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(MainActivity.this, HashTagSearchActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
