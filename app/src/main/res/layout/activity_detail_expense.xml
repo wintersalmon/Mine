@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textSize="25sp"
-                android:text="@string/sample_diary_hash_tag"
+                android:text="@string/sample_hash_tag"
                 />
             <TextView
                 android:id="@+id/detail_expense_amount"

@@ -29,12 +29,16 @@ public class CommonData {
     ArrayList<String> hashTagList;
 
     public CommonData() {
+        datetime = Calendar.getInstance();
         hashTagList = new ArrayList<String>();
-        keyTagIndex = 1;
+        keyTagIndex = 0;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+    public void setDateTimeNow() {
+        datetime.setTime(Calendar.getInstance().getTime());
     }
     public void setDate(Calendar date) {
         datetime = date;
@@ -60,7 +64,7 @@ public class CommonData {
     }
     public void setKeyTagIndex(int keyTagIndex) {
         if (keyTagIndex < 0 || keyTagIndex > hashTagList.size()){
-            this.keyTagIndex = 1;
+            this.keyTagIndex = 0;
         }else {
             this.keyTagIndex = keyTagIndex;
         }

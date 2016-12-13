@@ -43,7 +43,7 @@ import com.nnm.team91.mine.fragments.TodoListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnTodoDetailActivityInteractionListener, DetailDiaryActivity.OnDiaryDetailActivityInteractionListener, DetailExpenseActivity.OnExpenseDetailActivityInteractionListener {
+public class MainActivity extends AppCompatActivity implements TodoListFragment.OnTodoFragmentInteractionListener, DiaryListFragment.OnDiaryListFragmentInteractionListener, ExpenseListFragment.OnExpenseFragmentInteractionListener, TimelineListFragment.OnTimelineFragmentInteractionListener, DetailTodoActivity.OnTodoDetailActivityInteractionListener, DetailDiaryActivity.OnDiaryDetailActivityInteractionListener, DetailExpenseActivity.OnExpenseDetailActivityInteractionListener, AddActivity.OnAddActivityInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -203,7 +203,9 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EditActivity.class);
+//                Intent intent = new Intent(MainActivity.this, EditActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -590,6 +592,26 @@ public class MainActivity extends AppCompatActivity implements TodoListFragment.
     public void deleteExpenseData(ExpenseData expense) {
         datamanager.deleteExpense(expense.getId());
         selectedExpense = null;
+    }
+
+    @Override
+    public ArrayList<String> loadTopHashTag(int size) {
+        return null;
+    }
+
+    @Override
+    public void insertTodoData(String datetimeStr, int status, ArrayList<String> hashtags, int keyTagIndex) {
+        datamanager.insertTodo(datetimeStr,status,hashtags,keyTagIndex);
+    }
+
+    @Override
+    public void insertDiaryData(String datetimeStr, String contents, ArrayList<String> hashtags, int keyTagIndex) {
+        datamanager.insertDiary(datetimeStr,contents,hashtags,keyTagIndex);
+    }
+
+    @Override
+    public void insertExpenseData(String datetimeStr, int amount, ArrayList<String> hashtags, int keyTagIndex) {
+        datamanager.insertExpense(datetimeStr,amount,hashtags,keyTagIndex);
     }
 
     /**

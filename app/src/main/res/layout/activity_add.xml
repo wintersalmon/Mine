@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nnm.team91.mine.AddActivity">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="6"
+        android:rowCount="6"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/add_text_time"
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:text="HH/MM" />
+
+        <TextView
+            android:id="@+id/add_text_date"
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:text="YYYY-MM-DD" />
+
+        <TextView
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/add_text_key_tag"
+            android:layout_columnSpan="2"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:text="@string/sample_key_tag"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/add_text_hash_tag"
+            android:background="@drawable/textlines"
+            android:layout_columnSpan="4" />
+
+        <TextView
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:layout_columnSpan="2"
+            android:text="@string/add_diary_title"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/add_text_contents"
+            android:layout_columnSpan="4"
+            android:background="@drawable/textlines" />
+
+        <TextView
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:layout_columnSpan="2"
+            android:text="@string/add_expense_title"/>
+        <TextView
+            android:id="@+id/add_text_amount"
+            android:layout_columnSpan="4"
+            android:layout_width="match_parent"
+            android:background="@drawable/textlines" />
+
+    </GridLayout>
+
+    <android.support.v7.widget.ButtonBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <Button
+            android:id="@+id/add_button_save_todo"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:text="t"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/add_button_save_diary"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:text="D"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/add_button_save_expense"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:text="E"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
+            android:background="@null"/>
+        <Button
+            android:id="@+id/add_button_insert_hash_tag"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:text="#"
+            android:textSize="25sp"
+            android:textColor="@color/buttonMenu"
+            android:background="@null"/>
+
+    </android.support.v7.widget.ButtonBarLayout>
+</android.support.design.widget.CoordinatorLayout>

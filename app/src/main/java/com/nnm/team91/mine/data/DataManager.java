@@ -355,6 +355,19 @@ public class DataManager {
         db.insert("hashtag_in_common", null, values);
     }
 
+    public void insertTodo(TodoData todo) {
+        int status = todo.getStatus() ? 1 : 0;
+        insertTodo(todo.getDateTime(), status, todo.getHashTagList(), 0);
+    }
+
+    public void insertDiary(DiaryData diary) {
+        insertDiary(diary.getDateTime(), diary.getText(), diary.getHashTagList(), 0);
+    }
+
+    public void insertExpense(ExpenseData expense) {
+        insertExpense(expense.getDateTime(), expense.getAmountValue(), expense.getHashTagList(), 0);
+    }
+
     public void insertTodo(String datetimeStr, int status, ArrayList<String> hashtags, int keyTagIndex) {
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
