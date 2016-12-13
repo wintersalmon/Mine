@@ -37,14 +37,6 @@ public class DiaryListFragment extends ListFragment implements AbsListView.OnScr
 
     private DiaryAdapater adapter;
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
-    }
-
     private int currentPosition;
 
     // TODO: Rename and change types of parameters
@@ -87,13 +79,8 @@ public class DiaryListFragment extends ListFragment implements AbsListView.OnScr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
-//        ListView listview = (ListView) view.findViewById(R.id.listview_diary);
-
         adapter = new DiaryAdapater();
         setListAdapter(adapter);
-
-//        mListener.updateDairyAdapater(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -139,9 +126,8 @@ public class DiaryListFragment extends ListFragment implements AbsListView.OnScr
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         // TODO: 2016. 12. 2. add function to OnItemClickListener
-        Toast.makeText(getContext(), "Diary", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Diary", Toast.LENGTH_SHORT).show();
         MainActivity main = (MainActivity) getActivity();
-//        main.setSelectedPosition(position);
         main.DetailDiary(position);
     }
 

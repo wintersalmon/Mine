@@ -4,13 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -18,7 +15,7 @@ import java.util.Locale;
  * Created by wintersalmon on 2016. 12. 1..
  * DataManager
  */
-// TODO: 2016-12-04 remove Logs from db connection methods
+
 public class DataManager {
     private SimpleDateFormat datetimeFormat;
     private String dateFmtStr;
@@ -47,7 +44,6 @@ public class DataManager {
         initDataManager();
 
         helper = new MineSQLiteOpenHelper(context, "mine.db", null, version);
-        // TODO: 2016-12-04 remove unused dummy insert statements
 //        deleteDataBase(context);
     }
 
@@ -78,8 +74,6 @@ public class DataManager {
 
     private void updateTodoData() {
         loadedDataTodo.clear();
-        // TODO: 2016-12-04 select all data from db_mine_todo
-        // TODO: 2016-12-04 fill array with selected data
         selectTodo(loadYear,loadMonth,loadDay);
     }
 
@@ -107,8 +101,6 @@ public class DataManager {
 
     private void updateDiaryData() {
         loadedDataDiary.clear();
-        // TODO: 2016-12-04 select all data from db_mine_todo
-        // TODO: 2016-12-04 fill array with selected data
         selectDiary(loadYear,loadMonth,loadDay);
     }
 
@@ -135,12 +127,8 @@ public class DataManager {
 
     private void updateExpenseData() {
         loadedDataExpense.clear();
-        // TODO: 2016-12-04 select all data from db_mine_todo
-        // TODO: 2016-12-04 fill array with selected data
         selectExpense(loadYear,loadMonth,loadDay);
     }
-
-
 
     private void addExpense(int id, Calendar date, int amount, ArrayList<String> hastags, String keyTag) {
         ExpenseData expense = new ExpenseData();
@@ -164,7 +152,6 @@ public class DataManager {
     }
 
     private void matchDataArrayLength() {
-        // init datetime
         Calendar currentDate;
         Calendar todoDate;
         Calendar diaryDate;
@@ -173,9 +160,6 @@ public class DataManager {
         // TODO: 2016. 12. 6. add exception handle for loaded data size 0
         if (loadedDataTodo.size() == 0 && loadedDataDiary.size() == 0 && loadedDataExpense.size() == 0)
             return;
-        todoDate = loadedDataTodo.get(0).getRawDateTime();
-        diaryDate = loadedDataDiary.get(0).getRawDateTime();
-        expenseDate = loadedDataExpense.get(0).getRawDateTime();
 
         int loadedTodoLength = loadedDataTodo.size();
         int loadedDiaryLength = loadedDataDiary.size();
@@ -209,7 +193,6 @@ public class DataManager {
             } else {
                 expenseDate = null;
             }
-
 
             // find min datetime
             if (todoDate != null)
@@ -310,7 +293,6 @@ public class DataManager {
     public ArrayList<HashTagData> searchHashTag(String keyword) {
         ArrayList<HashTagData> result = new ArrayList<HashTagData>();
 
-        // TODO: 2016. 12. 13. search and get result
         db = helper.getReadableDatabase();
         String[] selectionArgs = new String[]{keyword};
 
@@ -400,7 +382,6 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("todo", null, values);
-//        updateLoadedData();
     }
 
     public void insertDiary(String datetimeStr, String contents, ArrayList<String> hashtags, int keyTagIndex) {
@@ -415,7 +396,6 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("diary", null, values);
-//        updateLoadedData();
     }
 
     public void insertExpense(String datetimeStr, int amount, ArrayList<String> hashtags, int keyTagIndex) {
@@ -430,19 +410,14 @@ public class DataManager {
         insertHashtagInCommon(common_id, hashtags, keyTagIndex);
 
         db.insert("expense", null, values);
-//        updateLoadedData();
     }
 
     private Calendar selectDatetimeFromCommon(int _id) {
         Calendar datetime = Calendar.getInstance();
         String datetimeStr = "";
         db = helper.getReadableDatabase();
-//        String[] selectionArgs = new String[1];
-//        selectionArgs[0] = String.valueOf(_id);
 
-//        Cursor c = db.query("common", columns, selection, selectionArgs, null, null, null);
         Cursor c = db.rawQuery("SELECT datetime FROM common WHERE _id = '" + String.valueOf(_id) + "'",null);
-//        Cursor c = db.rawQuery("SELECT datetime FROM common WHERE _id = ?", selectionArgs);
 
         if (c != null) {
             c.moveToFirst();
@@ -450,9 +425,8 @@ public class DataManager {
             try {
                 datetime.setTime(datetimeFormat.parse(datetimeStr));
             } catch (Exception e) {
-                Log.d("DATETIME", e.toString());
+//                Log.d("DATETIME", e.toString());
             }
-//            Log.i("db_select_common","success id:" + String.valueOf(_id) + " : " + datetime);
         }
 
         if (c != null) c.close();
@@ -507,7 +481,6 @@ public class DataManager {
     }
 
     public void selectTodo(int year, int month, int day) {
-        TodoData todo = null;
         db = helper.getReadableDatabase();
         String[] selectionArgs = new String[2];
         selectionArgs[0] = createDateString(year,month,day);
@@ -524,16 +497,13 @@ public class DataManager {
             try {
                 datetime = selectDatetimeFromCommon(common_id);
             } catch (Exception e) {
-                Log.i("db_select_exception", e.toString());
+//                Log.i("db_select_exception", e.toString());
             }
 
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
             String keyTag = selectKeyTagInCommon(common_id);
 
             addTodo(common_id,datetime,status,hashtags,keyTag);
-
-//            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
-//            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -556,16 +526,13 @@ public class DataManager {
             try {
                 datetime = selectDatetimeFromCommon(common_id);
             } catch (Exception e) {
-                Log.i("db_select_exception", e.toString());
+//                Log.i("db_select_exception", e.toString());
             }
 
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
             String keyTag = selectKeyTagInCommon(common_id);
 
             addDiary(common_id,datetime,contents,hashtags,keyTag);
-
-//            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
-//            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -588,101 +555,13 @@ public class DataManager {
             try {
                 datetime = selectDatetimeFromCommon(common_id);
             } catch (Exception e) {
-                Log.i("db_select_exception", e.toString());
+//                Log.i("db_select_exception", e.toString());
             }
 
             ArrayList<String> hashtags = selectHashtagInCommon(common_id);
             String keyTag = selectKeyTagInCommon(common_id);
 
             addExpense(common_id,datetime,amount,hashtags,keyTag);
-
-//            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
-//            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
-        }
-
-        c.close();
-    }
-
-    public void selectAllTodo() {
-        TodoData todo = null;
-        db = helper.getReadableDatabase();
-        Cursor c = db.query("todo", null, null, null, null, null, null);
-
-        while (c.moveToNext()) {
-            int _id = c.getInt(c.getColumnIndex("_id"));
-            int status = c.getInt(c.getColumnIndex("status"));
-            int common_id = c.getInt(c.getColumnIndex("common_id"));
-
-            Calendar datetime = null;
-            try {
-                datetime = selectDatetimeFromCommon(common_id);
-            } catch (Exception e) {
-                Log.i("db_select_exception", e.toString());
-            }
-
-            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
-            String keyTag = selectKeyTagInCommon(common_id);
-
-            addTodo(common_id,datetime,status,hashtags,keyTag);
-
-//            Log.i("db_select_todo", "datetime:" + datetimeStr + "id:" + _id + ", status:" + status + ", common_id:" + common_id);
-//            Log.i("db_select_todo_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
-        }
-
-        c.close();
-    }
-
-    public void selectAllDiary() {
-        db = helper.getReadableDatabase();
-        Cursor c = db.query("diary",null,null,null,null,null,null);
-
-        while (c.moveToNext()) {
-            int _id = c.getInt(c.getColumnIndex("_id"));
-            String contents = c.getString(c.getColumnIndex("contents"));
-            int common_id = c.getInt(c.getColumnIndex("common_id"));
-
-            Calendar datetime = null;
-            try {
-                datetime = selectDatetimeFromCommon(common_id);
-            } catch (Exception e) {
-                Log.i("db_select_exception", e.toString());
-            }
-
-            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
-            String keyTag = selectKeyTagInCommon(common_id);
-
-            addDiary(common_id,datetime,contents,hashtags,keyTag);
-
-//            Log.i("db_select_diary", "datetime:" + datetimeStr + "id:" + _id + ", common_id:" + common_id);
-//            Log.i("db_select_diary_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
-        }
-
-        c.close();
-    }
-
-    public void selectAllExpense() {
-        db = helper.getReadableDatabase();
-        Cursor c = db.query("expense",null,null,null,null,null,null);
-
-        while (c.moveToNext()) {
-            int _id = c.getInt(c.getColumnIndex("_id"));
-            int amount = c.getInt(c.getColumnIndex("amount"));
-            int common_id = c.getInt(c.getColumnIndex("common_id"));
-
-            Calendar datetime = null;
-            try {
-                datetime = selectDatetimeFromCommon(common_id);
-            } catch (Exception e) {
-                Log.i("db_select_exception", e.toString());
-            }
-
-            ArrayList<String> hashtags = selectHashtagInCommon(common_id);
-            String keyTag = selectKeyTagInCommon(common_id);
-
-            addExpense(common_id,datetime,amount,hashtags,keyTag);
-
-//            Log.i("db_select_expense", "datetime:" + datetimeStr + "amount:" + amount + ", common_id:" + common_id);
-//            Log.i("db_select_expense_tags", "keytag:" + keyTag + " hashtags : " + hashtags.size());
         }
 
         c.close();
@@ -695,7 +574,7 @@ public class DataManager {
             db.delete("todo", "common_id=?", new String[]{String.valueOf(id)});
             db.delete("common", "_id=?", new String[]{String.valueOf(id)});
         } catch (Exception e) {
-            Log.i("DELETE_TODO", e.toString());
+//            Log.i("DELETE_TODO", e.toString());
         }
         updateLoadedData();
     }
@@ -707,7 +586,7 @@ public class DataManager {
             db.delete("diary", "common_id=?", new String[]{String.valueOf(id)});
             db.delete("common", "_id=?", new String[]{String.valueOf(id)});
         } catch (Exception e) {
-            Log.i("DELETE_TODO", e.toString());
+//            Log.i("DELETE_TODO", e.toString());
         }
         updateLoadedData();
     }
@@ -719,27 +598,10 @@ public class DataManager {
             db.delete("expense", "common_id=?", new String[]{String.valueOf(id)});
             db.delete("common", "_id=?", new String[]{String.valueOf(id)});
         } catch (Exception e) {
-            Log.i("DELETE_TODO", e.toString());
+//            Log.i("DELETE_TODO", e.toString());
         }
         updateLoadedData();
     }
-
-//    private void testDeleteAllData() {
-//        for (TodoData todo : loadedDataTodo) {
-//            int id = todo.getId();
-//            deleteTodo(id);
-//        }
-//
-//        for (DiaryData diary : loadedDataDiary) {
-//            int id = diary.getId();
-//            deleteDiary(id);
-//        }
-//
-//        for (ExpenseData expense : loadedDataExpense) {
-//            int id = expense.getId();
-//            deleteExpense(id);
-//        }
-//    }
 
     private void updateCommonDate(CommonData common) {
         db = helper.getWritableDatabase();
@@ -747,7 +609,7 @@ public class DataManager {
 
         if (common != null && common.getId() != 0) {
             values.put("datetime", common.getDateTime());
-            int result = db.update("common", values, "_id = ?", new String[]{String.valueOf(common.getId())});
+            db.update("common", values, "_id = ?", new String[]{String.valueOf(common.getId())});
         }
     }
 
@@ -781,7 +643,7 @@ public class DataManager {
             try {
                 db.delete("hashtag_in_common", "common_id=? AND hashtag_id=?", new String[]{String.valueOf(commonId),String.valueOf(hashTagId) });
             } catch (Exception e) {
-                Log.d("DELETE", "HASHTAG_ERROR");
+//                Log.d("DELETE", "HASHTAG_ERROR");
             }
         }
     }
@@ -838,7 +700,6 @@ public class DataManager {
             db.update("todo", values, "common_id = ?", new String[]{String.valueOf(todo.getId())});
         }
 
-        // TODO: 2016. 12. 6. add hashtag update function
         updateCommonHashTag(todo);
 
         updateLoadedData();
@@ -867,11 +728,10 @@ public class DataManager {
         if (diary != null && diary.getId() != 0) {
             values.put("contents", diary.getText());
 
-            Log.i("UPDATE_DIARY", values.toString());
+//            Log.i("UPDATE_DIARY", values.toString());
             db.update("diary", values, "common_id = ?", new String[]{String.valueOf(diary.getId())});
         }
 
-        // TODO: 2016. 12. 6. add hashtag update function
         updateCommonHashTag(diary);
 
         updateLoadedData();
@@ -886,32 +746,14 @@ public class DataManager {
         if (expense != null && expense.getId() != 0) {
             values.put("amount", expense.getAmount().substring(1));
 
-            Log.i("UPDATE_EXPENSE", values.toString());
+//            Log.i("UPDATE_EXPENSE", values.toString());
             db.update("expense", values, "common_id = ?", new String[]{String.valueOf(expense.getId())});
         }
 
-        // TODO: 2016. 12. 6. add hashtag update function
         updateCommonHashTag(expense);
 
         updateLoadedData();
     }
-
-//    private void testUpdateAllData() {
-//        for (TodoData todo : loadedDataTodo) {
-//            todo.setStatus(false);
-//            updateTodo(todo);
-//        }
-//
-//        for (DiaryData diary : loadedDataDiary) {
-//            diary.setText("hi");
-//            updateDiary(diary);
-//        }
-//
-//        for (ExpenseData expense : loadedDataExpense) {
-//            expense.setAmount(9999);
-//            updateExpense(expense);
-//        }
-//    }
 
     public ArrayList<TimelineData> getLoadedDataTimeline() {
         return loadedDataTimeline;
@@ -941,117 +783,6 @@ public class DataManager {
         return loadYear;
     }
 
-    private void insertDummyTodoData() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Todo");
-        hashtags.add("Weekly");
-        hashtags.add("Happy");
-        hashtags.add("VeryVeryLongHashTagForTodo");
-        hashtags.add("Energy");
-
-        int year = 2016;
-        int month = 12;
-        int count = 0;
-
-        int status;
-        int keyTagIndex;
-
-        for (int day=1; day<3; day++) {
-            int startHour = (day%2 == 0) ? 9 : 11;
-            for (int hour=startHour; hour < 24; hour += 2) {
-
-                int minutes = 0;
-                while (minutes < 60) {
-                    String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-                    Log.i("TODO", datetimeStr);
-
-                    status = (count%2) == 0 ? 1 : 0;
-                    keyTagIndex = count%hashtags.size();
-
-                    insertTodo(datetimeStr, status, hashtags, keyTagIndex);
-
-                    if (count%2 == 1) {
-                        minutes += 15;
-                    }
-                    count++;
-                    Log.i("TODO", datetimeStr);
-                }
-            }
-        }
-    }
-
-    private void insertDummyDiaryData() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Diary");
-        hashtags.add("Monthly");
-        hashtags.add("Sad");
-        hashtags.add("ThisIsAVeryLongHashTagForDiary");
-        hashtags.add("NotHungry");
-
-        int year = 2016;
-        int month = 12;
-        int count = 0;
-
-        int keyTagIndex;
-
-        for (int day=1; day<3; day++) {
-            int startHour = (day%2 == 0) ? 11 : 12;
-            for (int hour=startHour; hour < 24; hour += 5) {
-
-                int minutes = 0;
-                while (minutes < 60) {
-                    String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-
-                    keyTagIndex = count%hashtags.size();
-
-                    insertDiary(datetimeStr, sample_diary_contents, hashtags, keyTagIndex);
-
-                    if (count%2 == 1) {
-                        minutes += 20;
-                    }
-                    count++;
-                }
-            }
-        }
-    }
-
-    private void insertDummyExpenseData() {
-        ArrayList<String> hashtags = new ArrayList<String>();
-        hashtags.add("Brunch");
-        hashtags.add("Lunch");
-        hashtags.add("Dinner");
-        hashtags.add("HashTagThatCouldBeQuiteLong");
-        hashtags.add("Hello");
-
-        int year = 2016;
-        int month = 12;
-        int count = 0;
-
-        int amount;
-        int keyTagIndex;
-
-        for (int day=1; day<3; day++) {
-            int startHour = (day%2 == 0) ? 9 : 13;
-            for (int hour=startHour; hour < 24; hour += 3) {
-                Log.i("EXPENSE", "day:" + day);
-                int minutes = 0;
-                while (minutes < 60) {
-                    String datetimeStr = createDateTimeString(year,month,day,hour,minutes);
-
-                    amount = count * 500 + 1000;
-                    keyTagIndex = count%hashtags.size();
-
-                    insertExpense(datetimeStr, amount, hashtags, keyTagIndex);
-
-                    if (count%2 == 1) {
-                        minutes += 30;
-                    }
-                    count++;
-                }
-            }
-        }
-    }
-
     private String createDateString(int year, int month, int day) {
         return String.format(dateFmtStr, year, month, day);
     }
@@ -1063,64 +794,4 @@ public class DataManager {
     private String createDateTimeString(int year, int month, int day, int hour, int minutes) {
         return String.format(datetimeFmtStr, createDateString(year,month,day), createTimeString(hour,minutes));
     }
-
-    private void fillDummyData() {
-        insertDummyTodoData();
-        insertDummyDiaryData();
-        insertDummyExpenseData();
-    }
-
-    private void deleteDataBase(Context context) {
-        context.deleteDatabase("mine.db");
-    }
-
-    static private String sample_diary_contents = "일기의 내용을 아무거나 집어넣어 보자\n" +
-            "물은 춤을 추는 뱀이다.\n" +
-            "\n" +
-            "물을 늘리려고\n" +
-            "\n" +
-            "손으로 억지로 짓이겨 죽이면,\n" +
-            "\n" +
-            "흐리게 터진다.\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "감정 표현이 극과 극인 사람은\n" +
-            "\n" +
-            "쇠, 매끄러운 가죽이다.\n" +
-            "\n" +
-            "한 쪽 면은 아주 진하고\n" +
-            "\n" +
-            "다른 면은 아주 광채가 난다.\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "나는 레오나르도 다빈치를 닮았다.\n" +
-            "\n" +
-            "여러 방면의 세계를 맛보는걸 즐기며,\n" +
-            "\n" +
-            "나보다는 나의 후손들에게 이로운걸 남긴다.\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "자동차는 오리다.\n" +
-            "\n" +
-            "꽥꽥거린다.\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "한국인은 고블린이다.\n" +
-            "\n" +
-            "생긴거도 고블린이고\n" +
-            "\n" +
-            "사기치는거도 그 종족과 흡사 하다.\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "올림픽은 악마의 눈가림이다.\n" +
-            "\n" +
-            "선수들은 열정을 다 하지만\n" +
-            "\n" +
-            "결국 남는건 후회일 것이다.";
 }

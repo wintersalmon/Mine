@@ -38,14 +38,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <!-- Google Map API Key -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <!-- Google Map Permission -->
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
         <!-- App Widget Permission -->
         <receiver android:name=".CustomWidget">
             <intent-filter>

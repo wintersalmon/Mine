@@ -52,8 +52,6 @@ public class HashTagListFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private EditText searchBar;
-
     public HashTagListFragment() {
         // Required empty public constructor
     }
@@ -103,8 +101,8 @@ public class HashTagListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Toast.makeText(getContext(), "TodoList : " + position, Toast.LENGTH_SHORT).show();
         // TODO: 2016. 12. 13. Add Open Item Detail View Function
+        Toast.makeText(getContext(), "링크 구현 예정 : " + position, Toast.LENGTH_SHORT).show();
 
     }
 

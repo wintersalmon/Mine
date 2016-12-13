@@ -35,14 +35,6 @@ public class ExpenseListFragment extends ListFragment implements AbsListView.OnS
 
     private int currentPosition;
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
-    }
-
     public ExpenseAdapter getAdapter() {
         return adapter;
     }
@@ -87,23 +79,8 @@ public class ExpenseListFragment extends ListFragment implements AbsListView.OnS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_expense_list, container, false);
-//        ListView listview = (ListView) view.findViewById(R.id.listview_expense);
-
         adapter = new ExpenseAdapter();
-
         setListAdapter(adapter);
-
-//
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView parent, View v, int position, long id) {
-//                // TODO: 2016. 12. 2. add function to OnItemClickListener
-//            }
-//        }) ;
-
-
-//        mListener.updateExpenseAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -148,9 +125,8 @@ public class ExpenseListFragment extends ListFragment implements AbsListView.OnS
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Toast.makeText(getContext(), "ExpenseList", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "ExpenseList", Toast.LENGTH_SHORT).show();
         MainActivity main = (MainActivity) getActivity();
-//        main.setSelectedPosition(position);
         main.DetailExpense(position);
     }
 

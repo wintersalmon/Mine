@@ -1,14 +1,12 @@
 package com.nnm.team91.mine.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.nnm.team91.mine.HashTagSearchActivity;
 import com.nnm.team91.mine.R;
 import com.nnm.team91.mine.data.HashTagData;
 
@@ -16,6 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Created by wintersalmon on 2016. 12. 13..
+ * HashTagAdapter
  */
 
 public class HashTagAdapter extends BaseAdapter {
@@ -50,7 +49,6 @@ public class HashTagAdapter extends BaseAdapter {
         TextView hashTagId = (TextView) convertView.findViewById(R.id.hash_tag_text_view_id);
         TextView hashTagCommonId = (TextView) convertView.findViewById(R.id.hash_tag_text_view_common_id);
         TextView hashTagString = (TextView) convertView.findViewById(R.id.hash_tag_text_view_tag);
-
 
         HashTagData hashTag = hashTagItemList.get(position);
 

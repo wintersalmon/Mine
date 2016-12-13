@@ -14,19 +14,18 @@ import java.text.SimpleDateFormat;
  */
 
 public class CommonData {
-    static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    static private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
+//    static private DateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//    static private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    static private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
     static private String dateFormatStr = "%04d-%02d-%02d";
     static private String timeFormatStr = "%02d:%02d";
     static private String datetimeFormatStr = "%s %s";
 
-    int id;
-    Calendar datetime;
-    int keyTagIndex;
-    String keyTag;
-    ArrayList<String> hashTagList;
+    private int id;
+    private Calendar datetime;
+    private int keyTagIndex;
+    private String keyTag;
+    private ArrayList<String> hashTagList;
 
     public CommonData() {
         datetime = Calendar.getInstance();

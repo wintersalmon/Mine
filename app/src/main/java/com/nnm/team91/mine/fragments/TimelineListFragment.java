@@ -88,33 +88,8 @@ public class TimelineListFragment extends ListFragment implements AbsListView.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_timeline_list, container, false);
-//        timelineListview = (ListView) view.findViewById(R.id.listview_timeline);
-
-        // Make Checkbox not to conflict with setOnItemClickListener
-//        timelineListview.setItemsCanFocus(false);
-
         adapter = new TimelineAdapter();
         setListAdapter(adapter);
-
-
-//        // Change MainActivity ViewMode if ListItem is selected
-//        timelineListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView parent, View v, int position, long id) {
-//
-//            }
-//        });
-//
-//        // Set ListView Focus to Current Item
-//        timelineListview.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                // TODO: 2016. 12. 2. add listview focus change function here
-////                timelineListview.scrollTo(0, timelineListview.getBottom());
-////                timelineListview.setSelection(timelineListview.getAdapter().getCount() - 1);
-//            }
-//        });
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -176,9 +151,8 @@ public class TimelineListFragment extends ListFragment implements AbsListView.On
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Toast.makeText(getContext(), "TimelineList", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "TimelineList", Toast.LENGTH_SHORT).show();
         MainActivity main = (MainActivity) getActivity();
-//        main.setSelectedPosition(position);
         main.ChangePageMode();
     }
 

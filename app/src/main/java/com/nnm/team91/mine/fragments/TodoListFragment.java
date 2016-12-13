@@ -36,14 +36,6 @@ public class TodoListFragment extends ListFragment implements AbsListView.OnScro
 
     private int currentPosition;
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
-    }
-
     public TodoAdapter getAdapter() {
         return adapter;
     }
@@ -88,27 +80,8 @@ public class TodoListFragment extends ListFragment implements AbsListView.OnScro
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
-//        ListView listview = (ListView) view.findViewById(R.id.listview_todo);
-
-        // Make Checkbox not to conflict with setOnItemClickListener
-//        listview.setItemsCanFocus(false);
-
-        // Adapter 생성
         adapter = new TodoAdapter();
-
-        // 리스트뷰 참조 및 Adapter달기
         setListAdapter(adapter);
-
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView parent, View v, int position, long id) {
-//                // TODO: 2016. 12. 2. add function to OnItemClickListener
-//
-//            }
-//        }) ;
-
-//        mListener.updateTodoAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -116,9 +89,8 @@ public class TodoListFragment extends ListFragment implements AbsListView.OnScro
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Toast.makeText(getContext(), "TodoList", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "TodoList", Toast.LENGTH_SHORT).show();
         MainActivity main = (MainActivity) getActivity();
-//        main.setSelectedPosition(position);
         main.DetailTodo(position);
     }
 
